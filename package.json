@@ -1,11 +1,11 @@
 {
-  "name": "resin-coffeelint",
+  "name": "resin-lint",
   "version": "1.0.0",
   "description": "Resin.io coffeelint wrapper",
-  "bin": "./bin/resin-coffeelint",
-  "main": "./lib/resin-coffeelint.js",
+  "bin": "./bin/resin-lint",
+  "main": "./lib/resin-lint.js",
   "scripts": {
-    "test": "./bin/resin-coffeelint test/"
+    "test": "./bin/resin-lint test/"
   },
   "keywords": [
     "resin",

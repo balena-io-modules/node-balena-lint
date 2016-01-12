@@ -1,0 +1,21 @@
+{
+  "name": "resin-coffeelint",
+  "version": "1.0.0",
+  "description": "Resin.io coffeelint wrapper",
+  "bin": "./bin/resin-coffeelint",
+  "main": "./lib/resin-coffeelint.js",
+  "scripts": {
+    "test": "resin-coffeelint test/"
+  },
+  "keywords": [
+    "resin",
+    "coffeescript",
+    "coffeelint"
+  ],
+  "author": "Kostas Lekkas <kostas@resin.io",
+  "license": "MIT",
+  "dependencies": {
+    "coffeelint": "^1.14.2",
+    "resolve": "^1.1.6"
+  }
+}

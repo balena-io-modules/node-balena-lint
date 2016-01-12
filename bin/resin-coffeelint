@@ -1,0 +1,7 @@
+#!/usr/bin/env node
+
+'use strict';
+
+var resinlint = require('../lib/resin-coffeelint');
+
+resinlint(process.argv.slice(2));

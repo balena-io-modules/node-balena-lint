@@ -13,7 +13,7 @@
     "coffeelint"
   ],
   "author": "Kostas Lekkas <kostas@resin.io",
-  "license": "MIT",
+  "license": "Apache 2.0",
   "dependencies": {
     "coffeelint": "^1.14.2",
     "minimist": "^1.2.0",

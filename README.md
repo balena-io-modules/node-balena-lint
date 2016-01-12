@@ -1,9 +1,11 @@
-# resin-lint
+resin-lint
+==========
 
 `resin-lint` is a thin [coffeelint](https://github.com/clutchski/coffeelint) wrapper that
 detects style errors based on Resin.io coding guidelines.
 
-# Overview
+Overview
+--------
 
 `resin-lint` simply invokes
 
@@ -14,43 +16,44 @@ coffeelint -f coffeelint.json
 under the hood, using Resin's `coffeelint.json`. If a `-f` parameter is passed, the
 internal `coffeelint.json` is overridden with the one specified.
 
-# Usage
+Usage
+-----
 
 You can use this module as:
 
 1. A standalone project by installing it with `npm install -g resin-lint`:
 
-```
-kostas@macbook:~/resin/test$ resin-lint src/
-  ✓ src/test.coffee
+  ```
+  kostas@macbook:~/resin/test$ resin-lint src/
+    ✓ src/test.coffee
 
-  ✓ Ok! » 0 errors and 0 warnings in 1 file
-```
+    ✓ Ok! » 0 errors and 0 warnings in 1 file
+  ```
 
 2. A development dependency in `package.json` with ```npm install --save-dev resin-lint```. Then
   you can use the module in your build/testing process:
 
-```
-package.json
-------------
-...
-"scripts": {
-  "lint": "resin-lint src/ && echo \"Done!\""
-},
-...
+  ```
+  package.json
+  ------------
+  ...
+  "scripts": {
+    "lint": "resin-lint src/ && echo \"Done!\""
+  },
+  ...
 
-kostas@macbook:~/resin/test$ npm run lint
+  kostas@macbook:~/resin/test$ npm run lint
 
-> test@1.0.0 lint /Users/kostas/resin/test
-> resin-lint src/ && echo "Done!"
+  > test@1.0.0 lint /Users/kostas/resin/test
+  > resin-lint src/ && echo "Done!"
 
-  ✓ src/test.coffee
+    ✓ src/test.coffee
 
-  ✓ Ok! » 0 errors and 0 warnings in 1 file
+    ✓ Ok! » 0 errors and 0 warnings in 1 file
 
-  Done!
+    Done!
 
-```
+  ```
 
 Support
 -------

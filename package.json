@@ -5,7 +5,7 @@
   "bin": "./bin/resin-coffeelint",
   "main": "./lib/resin-coffeelint.js",
   "scripts": {
-    "test": "resin-coffeelint test/"
+    "test": "./bin/resin-coffeelint test/"
   },
   "keywords": [
     "resin",

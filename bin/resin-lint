@@ -2,6 +2,6 @@
 
 'use strict';
 
-var resinlint = require('../lib/resin-lint');
+var resinlint = require('../build/resin-lint');
 
 resinlint(process.argv.slice(2));

@@ -1,16 +1,18 @@
 {
   "name": "resin-lint",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Resin.io coffeelint wrapper",
   "bin": "./bin/resin-lint",
-  "main": "./lib/resin-lint.js",
+  "main": "./build/resin-lint.js",
   "homepage": "https://github.com/resin-io/resin-lint",
   "repository": {
     "type": "git",
     "url": "git@github.com:resin-io/resin-lint"
   },
   "scripts": {
-    "test": "./bin/resin-lint test/"
+    "prepublish": "npm run lint && gulp build",
+    "test": "./bin/resin-lint test/",
+    "lint": "./bin/resin-lint lib/ gulpfile.coffee"
   },
   "keywords": [
     "resin",
@@ -23,5 +25,9 @@
     "coffeelint": "^1.14.2",
     "minimist": "^1.2.0",
     "resolve": "^1.1.6"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-coffee": "^2.3.1"
   }
 }

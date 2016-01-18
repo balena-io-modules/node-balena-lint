@@ -13,7 +13,7 @@ Overview
 coffeelint -f coffeelint.json
 ```
 
-under the hood, using Resin's `coffeelint.json`. If a `-f` parameter is passed, the
+using Resin's `coffeelint.json`. If a `-f` parameter is passed, the
 internal `coffeelint.json` is overridden with the one specified.
 
 Usage
@@ -75,7 +75,7 @@ Contribute
 - Issue Tracker: [github.com/resin-io/resin-lint/issues](https://github.com/resin-io/resin-lint/issues)
 - Source Code: [github.com/resin-io/resin-lint](https://github.com/resin-io/resin-lint)
 
-Before submitting a PR, please make sure that you include tests, and that [coffeelint](http://www.coffeelint.org/) runs without any warning:
+Before submitting a PR, please make sure that you include tests, and that `npm run lint` runs without a warning.
 
 License
 -------

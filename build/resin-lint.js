@@ -30,9 +30,7 @@
     spawn_params.push.apply(spawn_params, argv['_']);
     return spawn(process.execPath, spawn_params, {
       stdio: 'inherit'
-    }).on('close', function(code) {
-      return process.exit(code);
-    });
+    }).on('close', process.exit);
   };
 
 }).call(this);

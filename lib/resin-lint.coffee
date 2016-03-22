@@ -27,5 +27,4 @@ module.exports = (passed_params) ->
 
 	spawn_params.push(argv['_']...)
 	spawn(process.execPath, spawn_params, stdio: 'inherit')
-	.on 'close', (code) ->
-		process.exit(code)
+	.on('close', process.exit)

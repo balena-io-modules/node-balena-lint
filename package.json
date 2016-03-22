@@ -23,7 +23,7 @@
   "author": "Kostas Lekkas <kostas@resin.io",
   "license": "Apache 2.0",
   "dependencies": {
-    "coffeelint": "^1.14.2",
+    "coffeelint": "^1.15.0",
     "minimist": "^1.2.0",
     "resolve": "^1.1.6"
   },

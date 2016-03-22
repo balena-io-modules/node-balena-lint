@@ -20,7 +20,10 @@ module.exports = (passed_params) ->
 
 	# Prepare parameters for 'coffeelint' execution
 	spawn_params.push(getPath('./coffeelint_wrapper.js'))
-	spawn_params.push('-f', getPath('../coffeelint.json')) if 'f' in argv
-	spawn_params.push(passed_params...)
+	if 'f' of argv
+		spawn_params.push('-f', argv['f'])
+	else
+		spawn_params.push('-f', getPath('../coffeelint.json'))
 
+	spawn_params.push(argv['_']...)
 	spawn(process.execPath, spawn_params, stdio: 'inherit')

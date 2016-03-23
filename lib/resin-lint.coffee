@@ -12,6 +12,24 @@ read = (path) ->
 	realPath = fs.realpathSync(path)
 	fs.readFileSync(realPath).toString()
 
+findFile = (name, dir) ->
+	dir = dir or process.cwd()
+	filename = path.join(dir, name)
+	parent = path.resolve(dir, '../')
+	if fs.existsSync(filename)
+		return filename
+	else if dir is parent
+		return null
+	else
+		findFile(name, parent)
+
+parseJSON = (file) ->
+	try
+		JSON.parse(fs.readFileSync(file).toString())
+	catch err
+		console.error("Could not parse #{file}")
+		throw err
+
 findCoffeeScriptFiles = (paths = []) ->
 	files = []
 	for p in paths
@@ -45,12 +63,17 @@ module.exports = (passed_params) ->
 			console.log(fs.readFileSync(CONFIG_PATH).toString())
 			process.exit(0)
 
-		config = JSON.parse(fs.readFileSync(CONFIG_PATH))
+		config = parseJSON(CONFIG_PATH)
+
 		if options.argv.f
-			# Override default config
 			configOverridePath = fs.realpathSync(options.argv.f)
-			configOverride = JSON.parse(fs.readFileSync(configOverridePath))
+
+		configOverridePath ?= findFile('coffeelint.json')
+		if configOverridePath
+			# Override default config
+			configOverride = parseJSON(configOverridePath)
 			config = merge(config, configOverride)
+
 
 		paths = options.argv._
 		scripts = findCoffeeScriptFiles(paths)

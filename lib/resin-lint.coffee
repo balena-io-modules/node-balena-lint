@@ -1,30 +1,67 @@
 fs = require 'fs'
 path = require 'path'
-minimist = require 'minimist'
-resolve = require('resolve').sync
-spawn = require('child_process').spawn
+glob = require('glob')
+merge = require('merge')
+optimist = require('optimist')
+coffeelint = require('coffeelint')
+reporter = require('coffeelint/lib/reporters/default')
 
-getPath = (dest) ->
-	path.join(__dirname, dest)
+CONFIG_PATH = path.join(__dirname, '../config/coffeelint.json')
 
-# Spawns 'coffeelint -f coffeelint.json <parameters>'
-#
-# If '-f' is passed as a parameter, then the internal 'coffeelint.json'
-# is overridden with the one specified.
-#
-# passed_params: The command-line parameters passed to 'resin-lint'
+read = (path) ->
+	realPath = fs.realpathSync(path)
+	fs.readFileSync(realPath).toString()
+
+findCoffeeScriptFiles = (paths = []) ->
+	files = []
+	for p in paths
+		if fs.statSync(p).isDirectory()
+			files = files.concat(glob.sync("#{p}/**/*.coffee"))
+		else
+			files.push(p)
+	files.map((p) -> path.join(p))
+
+lintFiles = (files, config) ->
+	errorReport = new coffeelint.getErrorReport()
+	for file in files
+		source = read(file)
+		errorReport.lint(file, source, config)
+	return errorReport
+
 module.exports = (passed_params) ->
-	argv = minimist(passed_params)
-	confgFile = []
-	spawn_params = []
+	files = []
 
-	# Prepare parameters for 'coffeelint' execution
-	spawn_params.push(getPath('./coffeelint_wrapper.js'))
-	if 'f' of argv
-		spawn_params.push('-f', argv['f'])
-	else
-		spawn_params.push('-f', getPath('../coffeelint.json'))
+	try
+		options = optimist(passed_params)
+			.usage('Usage: resin-lint [options] [...]')
+			.describe('f', 'Specify a coffeelint config file to override resin-lint rules')
+			.describe('p', 'Print default resin-lint coffeelint.json')
 
-	spawn_params.push(argv['_']...)
-	spawn(process.execPath, spawn_params, stdio: 'inherit')
-	.on('close', process.exit)
+		if options.argv._.length < 1 and not options.argv.p
+			options.showHelp()
+			process.exit(1)
+
+		if options.argv.p
+			console.log(fs.readFileSync(CONFIG_PATH).toString())
+			process.exit(0)
+
+		config = JSON.parse(fs.readFileSync(CONFIG_PATH))
+		if options.argv.f
+			# Override default config
+			configOverridePath = fs.realpathSync(options.argv.f)
+			configOverride = JSON.parse(fs.readFileSync(configOverridePath))
+			config = merge(config, configOverride)
+
+		paths = options.argv._
+		scripts = findCoffeeScriptFiles(paths)
+
+		errorReport = lintFiles(scripts, config)
+		report = new reporter errorReport,
+			colorize: process.stdout.isTTY
+			quiet: false
+		report.publish()
+
+		process.on 'exit', ->
+			process.exit(errorReport.getExitCode())
+	catch err
+		console.log(err.stack)

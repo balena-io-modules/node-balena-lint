@@ -7,7 +7,7 @@ detects style errors based on Resin.io coding guidelines.
 Overview
 --------
 
-`resin-lint` simply invokes
+`resin-lint` is a simple linter that curently lints coffescript, similar to
 
 ```
 coffeelint -f coffeelint.json

@@ -1,7 +1,4 @@
 #!/usr/bin/env node
 
-'use strict';
-
-var resinlint = require('../build/resin-lint');
-
-resinlint(process.argv.slice(2));
+require('coffee-script/register')
+require('../lib/resin-lint')(process.argv.slice(2))

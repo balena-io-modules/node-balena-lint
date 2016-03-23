@@ -1,5 +1,5 @@
-fs = require 'fs'
-path = require 'path'
+fs = require('fs')
+path = require('path')
 glob = require('glob')
 merge = require('merge')
 optimist = require('optimist')
@@ -48,12 +48,12 @@ lintFiles = (files, config) ->
 
 module.exports = (passed_params) ->
 	files = []
-
 	try
 		options = optimist(passed_params)
 			.usage('Usage: resin-lint [options] [...]')
 			.describe('f', 'Specify a coffeelint config file to override resin-lint rules')
 			.describe('p', 'Print default resin-lint coffeelint.json')
+			.describe('i', 'Ignore coffeelint.json files in project directory and its parents')
 
 		if options.argv._.length < 1 and not options.argv.p
 			options.showHelp()
@@ -68,12 +68,11 @@ module.exports = (passed_params) ->
 		if options.argv.f
 			configOverridePath = fs.realpathSync(options.argv.f)
 
-		configOverridePath ?= findFile('coffeelint.json')
+		configOverridePath ?= findFile('coffeelint.json') if not options.argv.i
 		if configOverridePath
 			# Override default config
 			configOverride = parseJSON(configOverridePath)
 			config = merge(config, configOverride)
-
 
 		paths = options.argv._
 		scripts = findCoffeeScriptFiles(paths)
@@ -83,7 +82,6 @@ module.exports = (passed_params) ->
 			colorize: process.stdout.isTTY
 			quiet: false
 		report.publish()
-
 		process.on 'exit', ->
 			process.exit(errorReport.getExitCode())
 	catch err

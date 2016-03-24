@@ -1,20 +1,16 @@
 resin-lint
 ==========
 
-`resin-lint` is a thin [coffeelint](https://github.com/clutchski/coffeelint) wrapper that
+`resin-lint` is a linter based on the [coffeelint](https://github.com/clutchski/coffeelint) API that
 detects style errors based on Resin.io coding guidelines.
 
 Overview
 --------
 
-`resin-lint` is a simple linter that curently lints coffescript, similar to
-
-```
-coffeelint -f coffeelint.json
-```
-
-using Resin's `coffeelint.json`. If a `-f` parameter is passed, the
-internal `coffeelint.json` is overridden with the one specified.
+`resin-lint` uses Resin's `coffeelint.json`. If a `coffeelint.json` is found in the to-be-linted project
+directory or its parents then the rules found in it will override the default `resin-lint` ones.
+Another way to to override the default resin-lint rules is by specifying a coffeelint configuration
+file with the `-f` parameter.
 
 Usage
 -----

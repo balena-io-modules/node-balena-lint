@@ -1,3 +1,7 @@
+v1.3.0
+
+* Integrate coffeescope2 and add unused variable reporting
+
 v1.0.0
 
 * Coffeelint wrapper for Resin.io-specific coffeelint.json.

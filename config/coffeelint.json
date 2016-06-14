@@ -18,10 +18,6 @@
         "level": "error",
         "limitComments": true
     },
-    "line_endings": {
-        "level": "warn",
-        "value": "unix"
-    },
     "no_trailing_semicolons": {
         "level": "error"
     },

@@ -103,5 +103,21 @@
     },
     "spacing_after_comma": {
         "level": "error"
+    },
+    "check_scope": {
+      "module": "coffeescope2",
+      "level": "warn",
+      "environments": [],
+      "globals": {},
+      "overwrite": false,
+      "same_scope": false,
+      "shadow": false,
+      "shadow_builtins": false,
+      "shadow_exceptions": [],
+      "undefined": false,
+      "hoist_local": true,
+      "hoist_parent": true,
+      "unused_variables": true,
+      "unused_arguments": false
     }
 }

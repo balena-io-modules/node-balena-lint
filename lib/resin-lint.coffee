@@ -47,7 +47,6 @@ lintFiles = (files, config) ->
 	return errorReport
 
 module.exports = (passed_params) ->
-	files = []
 	try
 		options = optimist(passed_params)
 			.usage('Usage: resin-lint [options] [...]')

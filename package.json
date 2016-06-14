@@ -24,6 +24,7 @@
   "dependencies": {
     "coffee-script": "^1.10.0",
     "coffeelint": "^1.15.0",
+    "coffeescope2": "^0.3.3",
     "glob": "^7.0.3",
     "merge": "^1.2.0",
     "optimist": "^0.6.1"

@@ -1,3 +1,7 @@
+v1.3.1
+
+* Remove the line ending rule
+
 v1.3.0
 
 * Integrate coffeescope2 and add unused variable reporting

@@ -1,3 +1,7 @@
+v1.3.2
+
+* Detect undefined variables
+
 v1.3.1
 
 * Remove the line ending rule

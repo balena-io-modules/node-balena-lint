@@ -103,7 +103,7 @@
     "check_scope": {
       "module": "coffeescope2",
       "level": "warn",
-      "environments": [ "builtin", "es5", "es6", "node", "mocha", "browser" ],
+      "environments": [ "builtin", "es5", "es6", "node", "mocha", "browser", "amd" ],
       "globals": {},
       "overwrite": false,
       "same_scope": false,

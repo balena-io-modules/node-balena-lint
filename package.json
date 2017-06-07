@@ -1,7 +1,7 @@
 {
   "name": "resin-lint",
-  "version": "1.4.0",
-  "description": "Resin.io coffeelint wrapper",
+  "version": "1.4.1",
+  "description": "Resin.io coffeelint & coffeescope2 wrapper",
   "bin": "./bin/resin-lint",
   "main": "./build/resin-lint.js",
   "homepage": "https://github.com/resin-io/node-resin-lint",

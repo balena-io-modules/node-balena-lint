@@ -1,8 +1,8 @@
 resin-lint
 ==========
 
-`resin-lint` is a linter based on the [coffeelint](https://github.com/clutchski/coffeelint) API that
-detects style errors based on Resin.io coding guidelines.
+`resin-lint` is a linter based on [coffeelint](https://github.com/clutchski/coffeelint) and
+[coffeescope2](https://github.com/za-creature/coffeescope) that detects style errors based on Resin.io coding guidelines.
 
 Overview
 --------
@@ -54,7 +54,7 @@ You can use this module as:
 Support
 -------
 
-If you're having any problem, please [raise an issue](https://github.com/resin-io/resin-lint/issues/new) on GitHub and the Resin.io team will be happy to help.
+If you're having any problem, please [raise an issue](https://github.com/resin-io/node-resin-lint/issues/new) on GitHub and the Resin.io team will be happy to help.
 
 Tests
 -----
@@ -68,8 +68,8 @@ $ npm install && npm test
 Contribute
 ----------
 
-- Issue Tracker: [github.com/resin-io/resin-lint/issues](https://github.com/resin-io/resin-lint/issues)
-- Source Code: [github.com/resin-io/resin-lint](https://github.com/resin-io/resin-lint)
+- Issue Tracker: [github.com/resin-io/node-resin-lint/issues](https://github.com/resin-io/node-resin-lint/issues)
+- Source Code: [github.com/resin-io/node-resin-lint](https://github.com/resin-io/node-resin-lint)
 
 Before submitting a PR, please make sure that you include tests, and that `npm run lint` runs without a warning.
 

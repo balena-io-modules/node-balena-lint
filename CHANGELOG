@@ -1,3 +1,7 @@
+v1.4.2
+
+* Bump coffeescope2
+
 v1.4.1
 
 * Migrate from https://github.com/resin-io/resin-lint to https://github.com/resin-io/node-resin-lint

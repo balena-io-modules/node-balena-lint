@@ -22,9 +22,11 @@
   "author": "Kostas Lekkas <kostas@resin.io",
   "license": "Apache 2.0",
   "dependencies": {
+    "bluebird": "^3.5.0",
     "coffee-script": "^1.10.0",
     "coffeelint": "^1.15.0",
     "coffeescope2": "^0.4.5",
+    "depcheck": "^0.6.7",
     "glob": "^7.0.3",
     "merge": "^1.2.0",
     "optimist": "^0.6.1"

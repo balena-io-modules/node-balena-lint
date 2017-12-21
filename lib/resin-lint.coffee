@@ -7,8 +7,19 @@ merge = require('merge')
 optimist = require('optimist')
 coffeelint = require('coffeelint')
 reporter = require('coffeelint/lib/reporters/default')
+tslint = require('tslint')
 
-CONFIG_PATH = path.join(__dirname, '../config/coffeelint.json')
+configurations =
+	coffeescript:
+		configPath: path.join(__dirname, '../config/coffeelint.json')
+		configFileName: 'coffeelint.json'
+		extensions: ['coffee']
+		lang: 'coffeescript'
+	typescript:
+		configPath: path.join(__dirname, '../config/tslint.json')
+		configFileName: 'tslint.json'
+		extensions: ['ts', 'tsx']
+		lang: 'typescript'
 
 # The linter expects the path to actual source files, for example:
 #		src/
@@ -44,29 +55,65 @@ parseJSON = (file) ->
 		console.error("Could not parse #{file}")
 		throw err
 
-findCoffeeScriptFiles = (paths = []) ->
+findFiles = (extensions, paths = []) ->
 	files = []
 	for p in paths
 		if fs.statSync(p).isDirectory()
-			files = files.concat(glob.sync("#{p}/**/*.coffee"))
+			files = files.concat(glob.sync("#{p}/**/*.@(#{extensions.join('|')})"))
 		else
 			files.push(p)
 	files.map((p) -> path.join(p))
 
-lintFiles = (files, config) ->
+lintCoffeeFiles = (files, config) ->
 	errorReport = new coffeelint.getErrorReport()
 	for file in files
 		source = read(file)
 		errorReport.lint(file, source, config)
-	return errorReport
+	errorReport
+
+	report = new reporter errorReport,
+		colorize: process.stdout.isTTY
+		quiet: false
+	report.publish()
+
+	return  errorReport.getExitCode()
+
+lintTsFiles = (files, config) ->
+	parsedConfig = tslint.Configuration.parseConfigFile(config)
+	linter = new tslint.Linter(
+		fix: false
+		formatter: 'stylish'
+	)
+	for file in files
+		source = read(file)
+		linter.lint(file, source, parsedConfig)
+
+	errorReport = linter.getResult()
+
+	console.log(linter.getResult().output)
+
+	return if errorReport.errorCount is 0 then 0 else 1
+
+runLint = (resinLintConfig, paths, config) ->
+	scripts = findFiles(resinLintConfig.extensions, paths)
+
+	if resinLintConfig.lang is 'typescript'
+		linterExitCode = lintTsFiles(scripts, config)
+
+	if resinLintConfig.lang is 'coffeescript'
+		linterExitCode = lintCoffeeFiles(scripts, config)
+
+	process.on 'exit', ->
+		process.exit(linterExitCode)
 
 module.exports = (passed_params) ->
 	try
 		options = optimist(passed_params)
 			.usage('Usage: resin-lint [options] [...]')
-			.describe('f', 'Specify a coffeelint config file to override resin-lint rules')
-			.describe('p', 'Print default resin-lint coffeelint.json')
-			.describe('i', 'Ignore coffeelint.json files in project directory and its parents')
+			.describe('f', 'Specify a linting config file to override resin-lint rules')
+			.describe('p', 'Print default resin-lint linting rules')
+			.describe('i', 'Ignore linting config files in project directory and its parents')
+			.describe('typescript', 'Lint typescript files instead of coffeescript')
 			.boolean('u', 'Run unused import check')
 
 		if options.argv._.length < 1 and not options.argv.p
@@ -95,30 +142,28 @@ module.exports = (passed_params) ->
 						console.log('No unused dependencies!')
 						console.log()
 		.then ->
+
+			resinLintConfiguration = if options.argv.typescript then configurations.typescript else configurations.coffeescript
+
 			if options.argv.p
-				console.log(fs.readFileSync(CONFIG_PATH).toString())
+				console.log(fs.readFileSync(resinLintConfiguration.configPath).toString())
 				process.exit(0)
 
-			config = parseJSON(CONFIG_PATH)
+			config = parseJSON(resinLintConfiguration.configPath)
 
 			if options.argv.f
 				configOverridePath = fs.realpathSync(options.argv.f)
 
-			configOverridePath ?= findFile('coffeelint.json') if not options.argv.i
+			if not options.argv.i
+				configOverridePath ?= findFile(resinLintConfiguration.configFileName)
 			if configOverridePath
 				# Override default config
 				configOverride = parseJSON(configOverridePath)
-				config = merge(config, configOverride)
+				config = merge.recursive(config, configOverride)
 
 			paths = options.argv._
-			scripts = findCoffeeScriptFiles(paths)
 
-			errorReport = lintFiles(scripts, config)
-			report = new reporter errorReport,
-				colorize: process.stdout.isTTY
-				quiet: false
-			report.publish()
-			process.on 'exit', ->
-				process.exit(errorReport.getExitCode())
+			runLint(resinLintConfiguration, paths, config)
+
 	catch err
 		console.log(err.stack)

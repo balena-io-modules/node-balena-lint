@@ -1,4 +1,5 @@
 #!/usr/bin/env node
 
-require('coffee-script/register')
-require('../lib/resin-lint')(process.argv.slice(2))
+require('ts-node/register')
+const { lint } = require('../lib/resin-lint')
+lint(process.argv.slice(2))

@@ -1,0 +1,31 @@
+{
+	"compilerOptions": {
+		"module": "commonjs",
+		"target": "es2015",
+		"outDir": "build",
+		"noImplicitAny": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"preserveConstEnums": true,
+		"removeComments": true,
+		"sourceMap": true,
+		"strictNullChecks": true,
+		"allowJs": true,
+		"moduleResolution": "node",
+		"baseUrl": ".",
+		"jsx": "react",
+		"paths": {
+			"~/*": [
+				"./src/*"
+			],
+			"*": [
+				"./node_modules/@types/*",
+				"*"
+			]
+		}
+	},
+	"include": [
+		"./src/**/*.ts",
+		"./src/**/*.d.ts"
+	]
+}

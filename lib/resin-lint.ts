@@ -147,7 +147,7 @@ export const lint = function(passedParams) {
 			.describe('f', 'Specify a linting config file to override resin-lint rules')
 			.describe('p', 'Print default resin-lint linting rules')
 			.describe('i', 'Ignore linting config files in project directory and its parents')
-			.describe('typescript', 'Lint typescript files instead of coffeescript')
+			.boolean('typescript', 'Lint typescript files instead of coffeescript')
 			.boolean('u', 'Run unused import check');
 
 		if ((options.argv._.length < 1) && !options.argv.p) {

@@ -1,6 +1,6 @@
 {
   "name": "resin-lint",
-  "version": "1.5.4",
+  "version": "1.5.5",
   "description": "Resin.io coffeelint & coffeescope2 wrapper",
   "bin": "./bin/resin-lint",
   "main": "./build/resin-lint.js",
@@ -10,10 +10,10 @@
     "url": "git@github.com:resin-io/node-resin-lint"
   },
   "scripts": {
-    "test": "./bin/resin-lint test/ && ./bin/resin-lint test/ --typescript",
+    "test": "npm run lint && ./bin/resin-lint test/ && ./bin/resin-lint test/ --typescript",
     "prepublish": "require-npm4-to-publish",
-    "prepublishOnly": "npm run lint lib/",
-    "lint": "./bin/resin-lint"
+    "prepublishOnly": "npm run test",
+    "lint": "tsc && ./bin/resin-lint lib/"
   },
   "keywords": [
     "resin",
@@ -23,7 +23,11 @@
   "author": "Kostas Lekkas <kostas@resin.io",
   "license": "Apache 2.0",
   "dependencies": {
+    "@types/bluebird": "^3.5.20",
+    "@types/depcheck": "^0.6.0",
+    "@types/glob": "^5.0.35",
     "@types/node": "^8.5.2",
+    "@types/optimist": "0.0.29",
     "bluebird": "^3.5.0",
     "coffee-script": "^1.10.0",
     "coffeelint": "^1.15.0",
@@ -32,11 +36,10 @@
     "glob": "^7.0.3",
     "merge": "^1.2.0",
     "optimist": "^0.6.1",
-    "ts-node": "^4.0.2",
-    "tslint": "^5.8.0",
-    "typescript": "^2.6.2"
+    "tslint": "^5.8.0"
   },
   "devDependencies": {
-    "require-npm4-to-publish": "^1.0.0"
+    "require-npm4-to-publish": "^1.0.0",
+    "typescript": "^2.6.2"
   }
 }

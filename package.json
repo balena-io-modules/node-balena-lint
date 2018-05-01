@@ -1,6 +1,6 @@
 {
   "name": "resin-lint",
-  "version": "1.5.5",
+  "version": "1.5.6",
   "description": "Resin.io coffeelint & coffeescope2 wrapper",
   "bin": "./bin/resin-lint",
   "main": "./build/resin-lint.js",
@@ -36,10 +36,10 @@
     "glob": "^7.0.3",
     "merge": "^1.2.0",
     "optimist": "^0.6.1",
-    "tslint": "^5.8.0"
+    "tslint": "^5.8.0",
+    "typescript": "^2.6.2"
   },
   "devDependencies": {
-    "require-npm4-to-publish": "^1.0.0",
-    "typescript": "^2.6.2"
+    "require-npm4-to-publish": "^1.0.0"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "resin-lint",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "description": "Resin.io coffeelint & coffeescope2 wrapper",
   "bin": "./bin/resin-lint",
   "main": "./build/resin-lint.js",

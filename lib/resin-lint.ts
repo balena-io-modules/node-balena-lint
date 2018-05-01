@@ -1,10 +1,10 @@
 import * as Promise from 'bluebird';
-import * as coffeelint from 'coffeelint';
-import * as reporter from 'coffeelint/lib/reporters/default';
+const coffeelint: any = require('coffeelint');
+const reporter: any = require('coffeelint/lib/reporters/default');
 import * as depcheck from 'depcheck';
 import * as fs from 'fs';
 import * as glob from 'glob';
-import * as merge from 'merge';
+const merge: any = require('merge');
 import * as optimist from 'optimist';
 import * as path from 'path';
 import * as tslint from 'tslint';
@@ -75,7 +75,7 @@ const parseJSON = function(file: string): string {
 };
 
 const findFiles = function(extensions: string[], paths: string[] = []): string[] {
-	let files = [];
+	let files: string[] = [];
 	for (const p of paths) {
 		if (fs.statSync(p).isDirectory()) {
 			files = files.concat(glob.sync(`${p}/**/*.@(${extensions.join('|')})`));
@@ -126,7 +126,7 @@ const lintTsFiles = function(files: string[], config: {}): number {
 };
 
 const runLint = function(resinLintConfig: ResinLintConfig, paths: string[], config: {}) {
-	let linterExitCode;
+	let linterExitCode: number | undefined;
 	const scripts = findFiles(resinLintConfig.extensions, paths);
 
 	if (resinLintConfig.lang === 'typescript') {
@@ -140,7 +140,7 @@ const runLint = function(resinLintConfig: ResinLintConfig, paths: string[], conf
 	return process.on('exit', () => process.exit(linterExitCode));
 };
 
-export const lint = function(passedParams) {
+export const lint = function(passedParams: any) {
 	try {
 		const options = optimist(passedParams)
 			.usage('Usage: resin-lint [options] [...]')
@@ -155,9 +155,9 @@ export const lint = function(passedParams) {
 			process.exit(1);
 		}
 
-		return Promise.try(function() {
+		return Promise.try<any>(function() {
 			if (options.argv.u) {
-				return Promise.map(options.argv._, function(dir) {
+				return Promise.map(options.argv._, function(dir: string) {
 					dir = getPackageJsonDir(dir);
 					return Promise.resolve(depcheck(path.resolve('./', dir), {
 						ignoreMatches: [
@@ -211,7 +211,7 @@ export const lint = function(passedParams) {
 			const paths = options.argv._;
 
 			return runLint(resinLintConfiguration, paths, config);
-		});
+		}).return();
 
 	} catch (err) {
 		return console.log(err.stack);

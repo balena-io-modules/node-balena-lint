@@ -1,1 +1,3 @@
 node_modules
+/lib/resin-lint.js
+/lib/resin-lint.js.map

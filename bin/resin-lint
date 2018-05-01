@@ -1,5 +1,4 @@
 #!/usr/bin/env node
 
-require('ts-node/register')
 const { lint } = require('../lib/resin-lint')
 lint(process.argv.slice(2))

@@ -11,7 +11,8 @@
   },
   "scripts": {
     "test": "./bin/resin-lint test/ && ./bin/resin-lint test/ --typescript",
-    "prepublish": "npm run lint lib/",
+    "prepublish": "require-npm4-to-publish",
+    "prepublishOnly": "npm run lint lib/",
     "lint": "./bin/resin-lint"
   },
   "keywords": [
@@ -35,5 +36,7 @@
     "tslint": "^5.8.0",
     "typescript": "^2.6.2"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "require-npm4-to-publish": "^1.0.0"
+  }
 }

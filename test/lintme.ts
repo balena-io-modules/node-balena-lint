@@ -5,4 +5,20 @@ const fn = () => ({
 
 const { a, b } = fn();
 
+const x = a
+	? {
+			key: 'A',
+			value: 'B',
+	  }
+	: {};
+
+interface A {
+	aProp:
+		| {
+				key: string;
+				value: string;
+		  }
+		| string;
+}
+
 console.log(a, b);

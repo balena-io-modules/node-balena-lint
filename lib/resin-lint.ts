@@ -7,6 +7,7 @@ import * as glob from 'glob';
 const merge: any = require('merge');
 import * as optimist from 'optimist';
 import * as path from 'path';
+import * as prettier from 'prettier';
 import * as tslint from 'tslint';
 
 interface ResinLintConfig {
@@ -14,6 +15,7 @@ interface ResinLintConfig {
 	configFileName: string;
 	extensions: string[];
 	lang: 'coffeescript' | 'typescript';
+	prettierCheck?: boolean,
 }
 
 const configurations: { [key: string]: ResinLintConfig } = {
@@ -30,6 +32,8 @@ const configurations: { [key: string]: ResinLintConfig } = {
 		lang: 'typescript',
 	},
 };
+
+const prettierConfigPath = path.join(__dirname, '../config/.prettierrc');
 
 /**
  * The linter expects the path to actual source files, for example:
@@ -65,7 +69,7 @@ const findFile = function(name: string, dir?: string): string | null {
 	}
 };
 
-const parseJSON = function(file: string): string {
+const parseJSON = function(file: string): {} {
 	try {
 		return JSON.parse(fs.readFileSync(file).toString());
 	} catch (err) {
@@ -105,7 +109,7 @@ const lintCoffeeFiles = function(files: string[], config: {}): number {
 	return  errorReport.getExitCode();
 };
 
-const lintTsFiles = function(files: string[], config: {}): number {
+const lintTsFiles = function(files: string[], config: {}, prettierConfig?: prettier.Options): number {
 	const parsedConfig = tslint.Configuration.parseConfigFile(config);
 	const linter = new tslint.Linter({
 		fix: false,
@@ -114,6 +118,13 @@ const lintTsFiles = function(files: string[], config: {}): number {
 
 	for (const file of files) {
 		const source = read(file);
+		if (prettierConfig) {
+			const isPrettified = prettier.check(source, prettierConfig);
+			if (!isPrettified) {
+				console.log(`Error: File ${file} hasn't been formatted with prettier`);
+				return 1;
+			}
+		}
 		linter.lint(file, source, parsedConfig);
 	}
 
@@ -130,7 +141,13 @@ const runLint = function(resinLintConfig: ResinLintConfig, paths: string[], conf
 	const scripts = findFiles(resinLintConfig.extensions, paths);
 
 	if (resinLintConfig.lang === 'typescript') {
-		linterExitCode = lintTsFiles(scripts, config);
+		let prettierConfig: prettier.Options | undefined;
+		if (resinLintConfig.prettierCheck) {
+			prettierConfig = parseJSON(prettierConfigPath) as prettier.Options;
+			prettierConfig.parser = 'typescript';
+		}
+
+		linterExitCode = lintTsFiles(scripts, config, prettierConfig);
 	}
 
 	if (resinLintConfig.lang === 'coffeescript') {
@@ -148,6 +165,7 @@ export const lint = function(passedParams: any) {
 			.describe('p', 'Print default resin-lint linting rules')
 			.describe('i', 'Ignore linting config files in project directory and its parents')
 			.boolean('typescript', 'Lint typescript files instead of coffeescript')
+			.boolean('no-prettier', 'Disables the prettier code format checks')
 			.boolean('u', 'Run unused import check');
 
 		if ((options.argv._.length < 1) && !options.argv.p) {
@@ -209,6 +227,8 @@ export const lint = function(passedParams: any) {
 			}
 
 			const paths = options.argv._;
+
+			resinLintConfiguration.prettierCheck = !options.argv['no-prettier'];
 
 			return runLint(resinLintConfiguration, paths, config);
 		}).return();

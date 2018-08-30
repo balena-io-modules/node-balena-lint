@@ -2,17 +2,27 @@ resin-lint
 ==========
 
 `resin-lint` is a linter based on [coffeelint](https://github.com/clutchski/coffeelint),
-[coffeescope2](https://github.com/za-creature/coffeescope) and [tslint](https://palantir.github.io/tslint/) that detects style errors based on Resin.io coding guidelines.
+[coffeescope2](https://github.com/za-creature/coffeescope), [tslint](https://palantir.github.io/tslint/) and [prettier](https://github.com/prettier/prettier) to detect style errors based on Resin.io coding guidelines.
 
 Overview
 --------
 
-`resin-lint` uses Resin's `coffeelint.json` and `tslint.json`. If a `coffeelint.json` or `tslint.json` is found in the to-be-linted project
+`resin-lint` uses Resin's `coffeelint.json`, `tslint.json` and `.prettierrc`.
+If a `coffeelint.json` or `tslint.json` is found in the to-be-linted project
 directory or its parents then the rules found in it will override the default `resin-lint` ones.
 Another way to to override the default resin-lint rules is by specifying a configuration
 file with the `-f` parameter.
+
+## Typescript
+
 By default, only `.coffee` files will be linted. `.ts` and `.tsx` files can be
 linted by using the `--typescript` parameter.
+
+## Prettier
+
+You can reference the prettier configuration file to your consumer project
+from `./config/.prettierrc`.
+You can disable the prettier format checks by using the `--no-prettier` parameter.
 
 Usage
 -----

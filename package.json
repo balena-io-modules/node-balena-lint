@@ -13,7 +13,8 @@
     "test": "npm run lint && ./bin/resin-lint test/ && ./bin/resin-lint test/ --typescript && ./bin/resin-lint test/ --typescript --no-prettier",
     "prepublish": "require-npm4-to-publish",
     "prepublishOnly": "npm run test",
-    "lint": "tsc && ./bin/resin-lint lib/"
+    "prettify": "prettier --config ./config/.prettierrc --write \"lib/**/*.ts\"",
+    "lint": "npm run prettify && tsc && ./bin/resin-lint lib/"
   },
   "keywords": [
     "resin",

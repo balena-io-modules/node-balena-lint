@@ -10,11 +10,15 @@
     "url": "git@github.com:resin-io/node-resin-lint"
   },
   "scripts": {
-    "test": "npm run lint && ./bin/resin-lint test/ && ./bin/resin-lint test/ --typescript && ./bin/resin-lint test/ --typescript --no-prettier",
+    "build": "npm run prettify && tsc && npm run lint",
+    "lint": "./bin/resin-lint lib/",
     "prepublish": "require-npm4-to-publish",
     "prepublishOnly": "npm run test",
     "prettify": "prettier --config ./config/.prettierrc --write \"lib/**/*.ts\"",
-    "lint": "npm run prettify && tsc && ./bin/resin-lint lib/"
+    "test": "npm run build && npm run test:coffeescript && npm run test:typescript && npm run test:typescript-no-prettier",
+    "test:coffeescript": " ./bin/resin-lint test/coffeescript",
+    "test:typescript": "./bin/resin-lint test/typescript/prettier --typescript",
+    "test:typescript-no-prettier": "./bin/resin-lint test/typescript/no-prettier --typescript --no-prettier"
   },
   "keywords": [
     "resin",

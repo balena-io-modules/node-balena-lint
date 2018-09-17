@@ -252,7 +252,8 @@ export const lint = function(passedParams: any) {
 
 				const paths = options.argv._;
 
-				resinLintConfiguration.prettierCheck = !options.argv['no-prettier'];
+				// optimist converts all --no-xyz args to a argv.xyz === false
+				resinLintConfiguration.prettierCheck = options.argv.prettier !== false;
 
 				return runLint(resinLintConfiguration, paths, config);
 			})

@@ -1,30 +1,34 @@
 {
-  "extends": [
-    "tslint:recommended",
-    "tslint-config-prettier"
-  ],
-  "rules": {
-    "jsdoc-format": true,
-    "object-literal-sort-keys": false,
-    "only-arrow-functions": [false],
-    "max-classes-per-file": [false],
-    "max-line-length": [180],
-    "member-access": false,
-    "member-ordering": [false],
-    "no-shadowed-variable": false,
-    "no-var-requires": true,
-    "no-angle-bracket-type-assertion": false,
-    "no-console": [false],
-    "no-empty-interface": false,
-    "no-string-literal": false,
-    "interface-name": [false],
-    "interface-over-type-literal": false,
-    "variable-name": [
-      true,
-      "ban-keywords",
-      "check-format",
-      "allow-leading-underscore",
-      "allow-pascal-case"
-    ]
-  }
+	"extends": "tslint:recommended",
+	"rules": {
+		"indent": [
+			true,
+			"tabs"
+		],
+		"jsdoc-format": true,
+		"whitespace": [
+			false,
+			"check-type"
+		],
+		"object-literal-sort-keys": false,
+		"only-arrow-functions": false,
+		"quotemark": [
+			true,
+			"single",
+			"avoid-escape"
+		],
+		"no-var-requires": true,
+		"arrow-parens": false,
+		"max-classes-per-file": false,
+		"no-console": false,
+		"no-string-literal": false,
+		"interface-name": false,
+		"variable-name": [
+			true,
+			"ban-keywords",
+			"check-format",
+			"allow-leading-underscore",
+			"allow-pascal-case"
+		]
+	}
 }

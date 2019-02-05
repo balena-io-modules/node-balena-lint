@@ -9,7 +9,7 @@ const x = a
 	? {
 			key: 'A',
 			value: 'B',
-	  }
+		}
 	: {};
 
 interface A {
@@ -17,7 +17,7 @@ interface A {
 		| {
 				key: string;
 				value: string;
-		  }
+			}
 		| string;
 }
 

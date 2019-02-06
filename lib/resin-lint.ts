@@ -229,6 +229,7 @@ export const lint = function(passedParams: any) {
 		})
 			.then(function() {
 				let configOverridePath;
+				// optimist converts all --no-xyz args to a argv.xyz === false
 				const prettierCheck = options.argv.prettier !== false;
 				const typescriptCheck = options.argv.typescript;
 				const resinLintConfiguration = typescriptCheck
@@ -278,7 +279,6 @@ export const lint = function(passedParams: any) {
 
 				const paths = options.argv._;
 
-				// optimist converts all --no-xyz args to a argv.xyz === false
 				resinLintConfiguration.prettierCheck = prettierCheck;
 				return runLint(resinLintConfiguration, paths, config);
 			})

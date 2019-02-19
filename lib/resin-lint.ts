@@ -9,6 +9,7 @@ import * as optimist from 'optimist';
 import * as path from 'path';
 import * as prettier from 'prettier';
 import * as tslint from 'tslint';
+import { IConfigurationFile } from 'tslint/lib/configuration';
 
 interface ResinLintConfig {
 	configPath: string;
@@ -31,6 +32,12 @@ const configurations: { [key: string]: ResinLintConfig } = {
 		extensions: ['ts', 'tsx'],
 		lang: 'typescript',
 	},
+	typescriptPrettier: {
+		configPath: path.join(__dirname, '../config/tslint-prettier.json'),
+		configFileName: 'tslint.json',
+		extensions: ['ts', 'tsx'],
+		lang: 'typescript',
+	},
 };
 
 const prettierConfigPath = path.join(__dirname, '../config/.prettierrc');
@@ -44,22 +51,22 @@ const prettierConfigPath = path.join(__dirname, '../config/.prettierrc');
  * until it contains a package.json
  */
 const getPackageJsonDir = function(dir: string): string {
-	let name = findFile('package.json', dir);
+	const name = findFile('package.json', dir);
 	if (name === null) {
 		throw new Error('Could not find package.json!');
 	}
 	return path.dirname(name);
 };
 
-const read = function(path: string): string {
-	let realPath = fs.realpathSync(path);
+const read = function(filepath: string): string {
+	const realPath = fs.realpathSync(filepath);
 	return fs.readFileSync(realPath).toString();
 };
 
 const findFile = function(name: string, dir?: string): string | null {
 	dir = dir || process.cwd();
-	let filename = path.join(dir, name);
-	let parent = path.dirname(dir);
+	const filename = path.join(dir, name);
+	const parent = path.dirname(dir);
 	if (fs.existsSync(filename)) {
 		return filename;
 	} else if (dir === parent) {
@@ -117,7 +124,6 @@ const lintTsFiles = function(
 	config: {},
 	prettierConfig?: prettier.Options,
 ): number {
-	const parsedConfig = tslint.Configuration.parseConfigFile(config);
 	const linter = new tslint.Linter({
 		fix: false,
 		formatter: 'stylish',
@@ -132,7 +138,7 @@ const lintTsFiles = function(
 				return 1;
 			}
 		}
-		linter.lint(file, source, parsedConfig);
+		linter.lint(file, source, config as IConfigurationFile);
 	}
 
 	const errorReport = linter.getResult();
@@ -174,7 +180,7 @@ export const lint = function(passedParams: any) {
 			.usage('Usage: resin-lint [options] [...]')
 			.describe(
 				'f',
-				'Specify a linting config file to override resin-lint rules',
+				'Specify a linting config file to extend and override resin-lint rules',
 			)
 			.describe('p', 'Print default resin-lint linting rules')
 			.describe(
@@ -210,7 +216,7 @@ export const lint = function(passedParams: any) {
 						.then(function(deps) {
 							if (deps.length > 0) {
 								console.log(`${deps.length} unused dependencies:`);
-								for (let dep of deps) {
+								for (const dep of deps) {
 									console.log(`\t${dep}`);
 								}
 								process.exit(1);
@@ -223,8 +229,13 @@ export const lint = function(passedParams: any) {
 		})
 			.then(function() {
 				let configOverridePath;
-				const resinLintConfiguration = options.argv.typescript
-					? configurations.typescript
+				// optimist converts all --no-xyz args to a argv.xyz === false
+				const prettierCheck = options.argv.prettier !== false;
+				const typescriptCheck = options.argv.typescript;
+				const resinLintConfiguration = typescriptCheck
+					? prettierCheck
+						? configurations.typescriptPrettier
+						: configurations.typescript
 					: configurations.coffeescript;
 
 				if (options.argv.p) {
@@ -234,7 +245,13 @@ export const lint = function(passedParams: any) {
 					process.exit(0);
 				}
 
-				let config = parseJSON(resinLintConfiguration.configPath);
+				// TSLint config needs to be loaded with `loadConfigurationFromPath`
+				// Coffeelint needs to be loaded as a plain file
+				let config: {} = typescriptCheck
+					? tslint.Configuration.loadConfigurationFromPath(
+							resinLintConfiguration.configPath,
+					  )
+					: parseJSON(resinLintConfiguration.configPath);
 
 				if (options.argv.f) {
 					configOverridePath = fs.realpathSync(options.argv.f);
@@ -245,16 +262,24 @@ export const lint = function(passedParams: any) {
 				}
 
 				if (configOverridePath) {
-					// Override default config
-					const configOverride = parseJSON(configOverridePath);
-					config = merge.recursive(config, configOverride);
+					// Extend/override default config
+					if (typescriptCheck) {
+						const configOverride = tslint.Configuration.loadConfigurationFromPath(
+							configOverridePath,
+						);
+						config = tslint.Configuration.extendConfigurationFile(
+							config as IConfigurationFile,
+							configOverride,
+						);
+					} else {
+						const configOverride = parseJSON(configOverridePath);
+						config = merge.recursive(config, configOverride);
+					}
 				}
 
 				const paths = options.argv._;
 
-				// optimist converts all --no-xyz args to a argv.xyz === false
-				resinLintConfiguration.prettierCheck = options.argv.prettier !== false;
-
+				resinLintConfiguration.prettierCheck = prettierCheck;
 				return runLint(resinLintConfiguration, paths, config);
 			})
 			.return();

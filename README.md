@@ -9,7 +9,7 @@ Overview
 
 `resin-lint` uses Resin's `coffeelint.json`, `tslint.json` and `.prettierrc`.
 If a `coffeelint.json` or `tslint.json` is found in the to-be-linted project
-directory or its parents then the rules found in it will override the default `resin-lint` ones.
+directory or its parents then the rules found in it will be merged with the default `resin-lint` ones.
 Another way to to override the default resin-lint rules is by specifying a configuration
 file with the `-f` parameter.
 
@@ -62,6 +62,46 @@ You can use this module as:
     Done!
 
   ```
+
+3. A development dependency, that will get picked up by your IDE/Editor coffeelint/tslint/prettier.
+
+Manually create these config files in your project root:
+
+`tslint.json`
+
+```json
+// if using prettier in your project
+{
+	"extends": [
+		"resin-lint/config/tslint-prettier.json"
+	]
+}
+
+// plain TypeScript
+{
+	"extends": [
+		"resin-lint/config/tslint.json"
+	]
+}
+```
+
+For coffeelint create `coffeelint.json`
+
+```json
+{
+	"extends": [
+		"resin-lint/config/coffeelint.json"
+	]
+}
+```
+
+For prettier config create `.prettierrc.js`
+
+```js
+const fs = require('fs');
+
+module.exports = JSON.parse(fs.readFileSync('./node_modules/resin-lint/config/.prettierrc', 'utf8'));
+```
 
 Support
 -------

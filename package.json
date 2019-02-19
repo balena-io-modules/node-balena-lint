@@ -16,9 +16,9 @@
     "prepublishOnly": "npm run test",
     "prettify": "prettier --config ./config/.prettierrc --write \"lib/**/*.ts\"",
     "test": "npm run build && npm run test:coffeescript && npm run test:typescript && npm run test:typescript-no-prettier",
-    "test:coffeescript": " ./bin/resin-lint test/coffeescript",
-    "test:typescript": "./bin/resin-lint test/typescript/prettier --typescript",
-    "test:typescript-no-prettier": "./bin/resin-lint test/typescript/no-prettier --typescript --no-prettier"
+    "test:coffeescript": " ./bin/resin-lint test/coffeescript -i",
+    "test:typescript": "./bin/resin-lint test/typescript/prettier --typescript -i",
+    "test:typescript-no-prettier": "./bin/resin-lint test/typescript/no-prettier --typescript -i --no-prettier"
   },
   "keywords": [
     "resin",

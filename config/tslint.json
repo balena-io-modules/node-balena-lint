@@ -13,6 +13,7 @@
 		"no-console": false,
 		"no-string-literal": false,
 		"interface-name": false,
+		"member-ordering": false,
 		"variable-name": [
 			true,
 			"ban-keywords",

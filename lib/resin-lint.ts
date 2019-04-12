@@ -174,8 +174,8 @@ const runLint = function(
 	return process.on('exit', () => process.exit(linterExitCode));
 };
 
-export const lint = function(passedParams: any) {
-	try {
+export const lint = (passedParams: any) =>
+	Promise.try(() => {
 		const options = optimist(passedParams)
 			.usage('Usage: resin-lint [options] [...]')
 			.describe(
@@ -283,7 +283,4 @@ export const lint = function(passedParams: any) {
 				return runLint(resinLintConfiguration, paths, config);
 			})
 			.return();
-	} catch (err) {
-		return console.log(err.stack);
-	}
-};
+	});

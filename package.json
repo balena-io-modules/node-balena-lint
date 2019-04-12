@@ -16,7 +16,7 @@
     "prepublishOnly": "npm run test",
     "prettify": "prettier --config ./config/.prettierrc --write \"lib/**/*.ts\"",
     "test": "npm run build && npm run test:coffeescript && npm run test:typescript && npm run test:typescript-no-prettier",
-    "test:coffeescript": " ./bin/resin-lint test/coffeescript -i",
+    "test:coffeescript": "./bin/resin-lint test/coffeescript -i",
     "test:typescript": "./bin/resin-lint test/typescript/prettier --typescript -i",
     "test:typescript-no-prettier": "./bin/resin-lint test/typescript/no-prettier --typescript -i --no-prettier"
   },
@@ -28,13 +28,13 @@
   "author": "Kostas Lekkas <kostas@resin.io",
   "license": "Apache 2.0",
   "dependencies": {
-    "@types/bluebird": "^3.5.20",
+    "@types/bluebird": "^3.5.26",
     "@types/depcheck": "^0.6.0",
     "@types/glob": "^5.0.35",
-    "@types/node": "^8.5.2",
+    "@types/node": "^8.10.45",
     "@types/optimist": "0.0.29",
-    "@types/prettier": "^1.13.2",
-    "bluebird": "^3.5.0",
+    "@types/prettier": "^1.16.1",
+    "bluebird": "^3.5.4",
     "coffee-script": "^1.10.0",
     "coffeelint": "^1.15.0",
     "coffeescope2": "^0.4.5",
@@ -42,10 +42,10 @@
     "glob": "^7.0.3",
     "merge": "^1.2.0",
     "optimist": "^0.6.1",
-    "prettier": "^1.14.2",
-    "tslint": "^5.8.0",
-    "tslint-config-prettier": "^1.15.0",
-    "typescript": "^2.6.2"
+    "prettier": "^1.16.4",
+    "tslint": "^5.15.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.4.3"
   },
   "devDependencies": {
     "require-npm4-to-publish": "^1.0.0"

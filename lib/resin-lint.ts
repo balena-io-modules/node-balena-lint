@@ -1,4 +1,4 @@
-import * as Promise from 'bluebird';
+import * as Bluebird from 'bluebird';
 const coffeelint: any = require('coffeelint');
 const reporter: any = require('coffeelint/lib/reporters/default');
 import * as depcheck from 'depcheck';
@@ -10,6 +10,7 @@ import * as path from 'path';
 import * as prettier from 'prettier';
 import * as tslint from 'tslint';
 import { IConfigurationFile } from 'tslint/lib/configuration';
+import { lintMochaTests } from './mocha-tests-lint';
 
 interface ResinLintConfig {
 	configPath: string;
@@ -17,6 +18,7 @@ interface ResinLintConfig {
 	extensions: string[];
 	lang: 'coffeescript' | 'typescript';
 	prettierCheck?: boolean;
+	testsCheck?: boolean;
 }
 
 const configurations: { [key: string]: ResinLintConfig } = {
@@ -149,7 +151,17 @@ const lintTsFiles = function(
 	return errorReport.errorCount === 0 ? 0 : 1;
 };
 
-const runLint = function(
+const lintMochaTestFiles = async function(files: string[]): Promise<number> {
+	const res = await lintMochaTests(files);
+	if (res.isError) {
+		console.error('Mocha tests check FAILED!');
+		console.error(res.message);
+		return 1;
+	}
+	return 0;
+};
+
+const runLint = async function(
 	resinLintConfig: ResinLintConfig,
 	paths: string[],
 	config: {},
@@ -171,11 +183,18 @@ const runLint = function(
 		linterExitCode = lintCoffeeFiles(scripts, config);
 	}
 
+	if (resinLintConfig.testsCheck) {
+		const testsExitCode = await lintMochaTestFiles(scripts);
+		if (linterExitCode == 0) {
+			linterExitCode = testsExitCode;
+		}
+	}
+
 	return process.on('exit', () => process.exit(linterExitCode));
 };
 
 export const lint = (passedParams: any) =>
-	Promise.try(() => {
+	Bluebird.try(() => {
 		const options = optimist(passedParams)
 			.usage('Usage: resin-lint [options] [...]')
 			.describe(
@@ -189,6 +208,10 @@ export const lint = (passedParams: any) =>
 			)
 			.boolean('typescript', 'Lint typescript files instead of coffeescript')
 			.boolean('no-prettier', 'Disables the prettier code format checks')
+			.boolean(
+				'tests',
+				'Treat input files as test sources to perform extra relevant checks',
+			)
 			.boolean('u', 'Run unused import check');
 
 		if (options.argv._.length < 1 && !options.argv.p) {
@@ -196,11 +219,11 @@ export const lint = (passedParams: any) =>
 			process.exit(1);
 		}
 
-		return Promise.try<any>(function() {
+		return Bluebird.try<any>(function() {
 			if (options.argv.u) {
-				return Promise.map(options.argv._, function(dir: string) {
+				return Bluebird.map(options.argv._, function(dir: string) {
 					dir = getPackageJsonDir(dir);
-					return Promise.resolve(
+					return Bluebird.resolve(
 						depcheck(path.resolve('./', dir), {
 							ignoreMatches: [
 								'@types/*', // ignore typescript type declarations
@@ -231,6 +254,7 @@ export const lint = (passedParams: any) =>
 				let configOverridePath;
 				// optimist converts all --no-xyz args to a argv.xyz === false
 				const prettierCheck = options.argv.prettier !== false;
+				const testsCheck = options.argv.tests === true;
 				const typescriptCheck = options.argv.typescript;
 				const resinLintConfiguration = typescriptCheck
 					? prettierCheck
@@ -280,6 +304,7 @@ export const lint = (passedParams: any) =>
 				const paths = options.argv._;
 
 				resinLintConfiguration.prettierCheck = prettierCheck;
+				resinLintConfiguration.testsCheck = testsCheck;
 				return runLint(resinLintConfiguration, paths, config);
 			})
 			.return();

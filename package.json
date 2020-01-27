@@ -10,15 +10,15 @@
     "url": "git@github.com:resin-io/node-resin-lint"
   },
   "scripts": {
-    "build": "npm run prettify && tsc && npm run lint",
-    "lint": "./bin/resin-lint lib/",
+    "build": "tsc && npm run prettify && npm run lint",
+    "lint": "node ./bin/resin-lint lib/ && node ./bin/resin-lint --typescript lib/",
     "prepublish": "require-npm4-to-publish",
     "prepublishOnly": "npm run test",
-    "prettify": "prettier --config ./config/.prettierrc --write \"lib/**/*.ts\"",
+    "prettify": "node ./bin/resin-lint --typescript --fix lib/",
     "test": "npm run build && npm run test:coffeescript && npm run test:typescript && npm run test:typescript-no-prettier",
-    "test:coffeescript": "./bin/resin-lint test/coffeescript -i",
-    "test:typescript": "./bin/resin-lint test/typescript/prettier --typescript -i",
-    "test:typescript-no-prettier": "./bin/resin-lint test/typescript/no-prettier --typescript -i --no-prettier"
+    "test:coffeescript": "node ./bin/resin-lint test/coffeescript -i",
+    "test:typescript": "node ./bin/resin-lint test/typescript/prettier --typescript -i",
+    "test:typescript-no-prettier": "node ./bin/resin-lint test/typescript/no-prettier --typescript -i --no-prettier"
   },
   "keywords": [
     "resin",
@@ -28,25 +28,26 @@
   "author": "Kostas Lekkas <kostas@resin.io",
   "license": "Apache 2.0",
   "dependencies": {
-    "@types/bluebird": "^3.5.26",
+    "@types/bluebird": "^3.5.29",
     "@types/depcheck": "^0.6.0",
     "@types/glob": "^5.0.35",
-    "@types/node": "^8.10.45",
+    "@types/lodash": "^4.14.149",
+    "@types/node": "^8.10.59",
     "@types/optimist": "0.0.29",
     "@types/prettier": "^1.18.3",
-    "bluebird": "^3.5.4",
+    "bluebird": "^3.7.2",
     "coffee-script": "^1.10.0",
     "coffeelint": "^1.15.0",
     "coffeescope2": "^0.4.5",
     "depcheck": "^0.6.7",
-    "glob": "^7.0.3",
-    "merge": "^1.2.0",
+    "glob": "^7.1.6",
+    "lodash": "^4.17.15",
     "optimist": "^0.6.1",
     "prettier": "^1.19.1",
-    "tslint": "^5.15.0",
+    "tslint": "^5.20.1",
     "tslint-config-prettier": "^1.18.0",
     "tslint-no-unused-expression-chai": "^0.1.4",
-    "typescript": "^3.4.3"
+    "typescript": "^3.7.5"
   },
   "devDependencies": {
     "require-npm4-to-publish": "^1.0.0"

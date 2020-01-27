@@ -1,10 +1,12 @@
 import * as Bluebird from 'bluebird';
+// tslint:disable-next-line:no-var-requires
 const coffeelint: any = require('coffeelint');
+// tslint:disable-next-line:no-var-requires
 const reporter: any = require('coffeelint/lib/reporters/default');
 import * as depcheck from 'depcheck';
 import * as fs from 'fs';
 import * as glob from 'glob';
-const merge: any = require('merge');
+import { merge } from 'lodash';
 import * as optimist from 'optimist';
 import * as path from 'path';
 import * as prettier from 'prettier';
@@ -124,16 +126,24 @@ const lintCoffeeFiles = function(files: string[], config: {}): number {
 const lintTsFiles = function(
 	files: string[],
 	config: {},
-	prettierConfig?: prettier.Options,
+	prettierConfig: prettier.Options | undefined,
+	autoFix: boolean,
 ): number {
 	const linter = new tslint.Linter({
-		fix: false,
+		fix: autoFix,
 		formatter: 'stylish',
 	});
 
 	for (const file of files) {
-		const source = read(file);
+		let source = read(file);
 		if (prettierConfig) {
+			if (autoFix) {
+				const newSource = prettier.format(source, prettierConfig);
+				if (source !== newSource) {
+					source = newSource;
+					fs.writeFileSync(file, source);
+				}
+			}
 			const isPrettified = prettier.check(source, prettierConfig);
 			if (!isPrettified) {
 				console.log(`Error: File ${file} hasn't been formatted with prettier`);
@@ -165,6 +175,7 @@ const runLint = async function(
 	resinLintConfig: ResinLintConfig,
 	paths: string[],
 	config: {},
+	autoFix: boolean,
 ) {
 	let linterExitCode: number | undefined;
 	const scripts = findFiles(resinLintConfig.extensions, paths);
@@ -176,7 +187,7 @@ const runLint = async function(
 			prettierConfig.parser = 'typescript';
 		}
 
-		linterExitCode = lintTsFiles(scripts, config, prettierConfig);
+		linterExitCode = lintTsFiles(scripts, config, prettierConfig, autoFix);
 	}
 
 	if (resinLintConfig.lang === 'coffeescript') {
@@ -185,7 +196,7 @@ const runLint = async function(
 
 	if (resinLintConfig.testsCheck) {
 		const testsExitCode = await lintMochaTestFiles(scripts);
-		if (linterExitCode == 0) {
+		if (linterExitCode === 0) {
 			linterExitCode = testsExitCode;
 		}
 	}
@@ -207,6 +218,7 @@ export const lint = (passedParams: any) =>
 				'Ignore linting config files in project directory and its parents',
 			)
 			.boolean('typescript', 'Lint typescript files instead of coffeescript')
+			.boolean('fix', 'Attempt to automatically fix lint errors')
 			.boolean('no-prettier', 'Disables the prettier code format checks')
 			.boolean(
 				'tests',
@@ -256,6 +268,7 @@ export const lint = (passedParams: any) =>
 				const prettierCheck = options.argv.prettier !== false;
 				const testsCheck = options.argv.tests === true;
 				const typescriptCheck = options.argv.typescript;
+				const autoFix = options.argv.fix === true;
 				const resinLintConfiguration = typescriptCheck
 					? prettierCheck
 						? configurations.typescriptPrettier
@@ -297,7 +310,7 @@ export const lint = (passedParams: any) =>
 						);
 					} else {
 						const configOverride = parseJSON(configOverridePath);
-						config = merge.recursive(config, configOverride);
+						config = merge(config, configOverride);
 					}
 				}
 
@@ -305,7 +318,7 @@ export const lint = (passedParams: any) =>
 
 				resinLintConfiguration.prettierCheck = prettierCheck;
 				resinLintConfiguration.testsCheck = testsCheck;
-				return runLint(resinLintConfiguration, paths, config);
+				return runLint(resinLintConfiguration, paths, config, autoFix);
 			})
 			.return();
 	});

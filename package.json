@@ -11,7 +11,7 @@
   },
   "scripts": {
     "build": "tsc && npm run prettify && npm run lint",
-    "lint": "node ./bin/resin-lint lib/ && node ./bin/resin-lint --typescript lib/",
+    "lint": "node ./bin/resin-lint --typescript lib/",
     "prepublish": "require-npm4-to-publish",
     "prepublishOnly": "npm run test",
     "prettify": "node ./bin/resin-lint --typescript --fix lib/",

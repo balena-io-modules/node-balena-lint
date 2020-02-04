@@ -70,14 +70,14 @@ const read = async (filepath: string): Promise<string> => {
 const findFile = async (name: string, dir?: string): Promise<string | null> => {
 	dir = dir || process.cwd();
 	const filename = path.join(dir, name);
-	const parent = path.dirname(dir);
 	if (await existsAsync(filename)) {
 		return filename;
-	} else if (dir === parent) {
-		return null;
-	} else {
-		return findFile(name, parent);
 	}
+	const parent = path.dirname(dir);
+	if (dir === parent) {
+		return null;
+	}
+	return findFile(name, parent);
 };
 
 const parseJSON = async (file: string): Promise<{}> => {
@@ -94,13 +94,15 @@ const findFiles = async (
 	paths: string[] = [],
 ): Promise<string[]> => {
 	let files: string[] = [];
-	for (const p of paths) {
-		if ((await statAsync(p)).isDirectory()) {
-			files = files.concat(glob.sync(`${p}/**/*.@(${extensions.join('|')})`));
-		} else {
-			files.push(p);
-		}
-	}
+	await Promise.all(
+		paths.map(async p => {
+			if ((await statAsync(p)).isDirectory()) {
+				files = files.concat(glob.sync(`${p}/**/*.@(${extensions.join('|')})`));
+			} else {
+				files.push(p);
+			}
+		}),
+	);
 
 	return files.map(p => path.join(p));
 };
@@ -112,10 +114,12 @@ const lintCoffeeFiles = async (
 	const coffeelint: any = require('coffeelint');
 	const errorReport = new coffeelint.getErrorReport();
 
-	for (const file of files) {
-		const source = await read(file);
-		errorReport.lint(file, source, config);
-	}
+	await Promise.all(
+		files.map(async file => {
+			const source = await read(file);
+			errorReport.lint(file, source, config);
+		}),
+	);
 
 	const reporter: any = require('coffeelint/lib/reporters/default');
 	const report = new reporter(errorReport, {
@@ -140,31 +144,33 @@ const lintTsFiles = async function(
 		formatter: 'stylish',
 	});
 
-	for (const file of files) {
-		let source = await read(file);
-		linter.lint(
-			file,
-			source,
-			config as tslint.Configuration.IConfigurationFile,
-		);
-		if (prettier) {
-			if (autoFix) {
-				const newSource = prettier.format(source, prettierConfig);
-				if (source !== newSource) {
-					source = newSource;
-					await writeFileAsync(file, source);
-				}
-			} else {
-				const isPrettified = prettier.check(source, prettierConfig);
-				if (!isPrettified) {
-					console.log(
-						`Error: File ${file} hasn't been formatted with prettier`,
-					);
-					return 1;
+	await Promise.all(
+		files.map(async file => {
+			let source = await read(file);
+			linter.lint(
+				file,
+				source,
+				config as tslint.Configuration.IConfigurationFile,
+			);
+			if (prettier) {
+				if (autoFix) {
+					const newSource = prettier.format(source, prettierConfig);
+					if (source !== newSource) {
+						source = newSource;
+						await writeFileAsync(file, source);
+					}
+				} else {
+					const isPrettified = prettier.check(source, prettierConfig);
+					if (!isPrettified) {
+						console.log(
+							`Error: File ${file} hasn't been formatted with prettier`,
+						);
+						return 1;
+					}
 				}
 			}
-		}
-	}
+		}),
+	);
 
 	const errorReport = linter.getResult();
 

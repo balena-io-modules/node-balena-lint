@@ -3,7 +3,6 @@ import { Options as PrettierOptions } from 'prettier';
 import * as Bluebird from 'bluebird';
 import * as fs from 'fs';
 import * as glob from 'glob';
-import { merge } from 'lodash';
 import * as optimist from 'optimist';
 import * as path from 'path';
 import * as tslint from 'tslint';
@@ -261,7 +260,7 @@ export const lint = (passedParams: any) =>
 				});
 			}
 		})
-			.then(function() {
+			.then(async function() {
 				let configOverridePath;
 				// optimist converts all --no-xyz args to a argv.xyz === false
 				const prettierCheck = options.argv.prettier !== false;
@@ -309,6 +308,7 @@ export const lint = (passedParams: any) =>
 						);
 					} else {
 						const configOverride = parseJSON(configOverridePath);
+						const { merge } = await import('lodash');
 						config = merge(config, configOverride);
 					}
 				}

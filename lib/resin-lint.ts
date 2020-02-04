@@ -143,11 +143,14 @@ const lintTsFiles = async function(
 					source = newSource;
 					fs.writeFileSync(file, source);
 				}
-			}
-			const isPrettified = prettier.check(source, prettierConfig);
-			if (!isPrettified) {
-				console.log(`Error: File ${file} hasn't been formatted with prettier`);
-				return 1;
+			} else {
+				const isPrettified = prettier.check(source, prettierConfig);
+				if (!isPrettified) {
+					console.log(
+						`Error: File ${file} hasn't been formatted with prettier`,
+					);
+					return 1;
+				}
 			}
 		}
 	}

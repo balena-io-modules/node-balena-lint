@@ -1,8 +1,4 @@
 import * as Bluebird from 'bluebird';
-// tslint:disable-next-line:no-var-requires
-const coffeelint: any = require('coffeelint');
-// tslint:disable-next-line:no-var-requires
-const reporter: any = require('coffeelint/lib/reporters/default');
 import * as depcheck from 'depcheck';
 import * as fs from 'fs';
 import * as glob from 'glob';
@@ -106,6 +102,7 @@ const findFiles = function(
 };
 
 const lintCoffeeFiles = function(files: string[], config: {}): number {
+	const coffeelint: any = require('coffeelint');
 	const errorReport = new coffeelint.getErrorReport();
 
 	for (const file of files) {
@@ -113,6 +110,7 @@ const lintCoffeeFiles = function(files: string[], config: {}): number {
 		errorReport.lint(file, source, config);
 	}
 
+	const reporter: any = require('coffeelint/lib/reporters/default');
 	const report = new reporter(errorReport, {
 		colorize: process.stdout.isTTY,
 		quiet: false,

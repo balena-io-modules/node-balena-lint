@@ -1,5 +1,5 @@
-import * as Bluebird from 'bluebird';
 import * as fs from 'fs';
+import { promisify } from 'util';
 
 // Mocha tests linter results.
 // When isError is set to true, the message contains details about found errors.
@@ -20,7 +20,7 @@ export async function lintMochaTests(
 	let errorsFound = false;
 	let message = '';
 
-	const readFile = Bluebird.promisify(fs.readFile);
+	const readFile = promisify(fs.readFile);
 
 	const allCheckPromises = scripts.map(async scriptPath => {
 		const content = (await readFile(scriptPath)).toString();

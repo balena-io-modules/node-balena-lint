@@ -7,7 +7,6 @@ import { merge } from 'lodash';
 import * as optimist from 'optimist';
 import * as path from 'path';
 import * as tslint from 'tslint';
-import { IConfigurationFile } from 'tslint/lib/configuration';
 import { lintMochaTests } from './mocha-tests-lint';
 
 interface ResinLintConfig {
@@ -149,7 +148,7 @@ const lintTsFiles = async function(
 				return 1;
 			}
 		}
-		linter.lint(file, source, config as IConfigurationFile);
+		linter.lint(file, source, config as tslint.Configuration.IConfigurationFile);
 	}
 
 	const errorReport = linter.getResult();
@@ -305,7 +304,7 @@ export const lint = (passedParams: any) =>
 							configOverridePath,
 						);
 						config = tslint.Configuration.extendConfigurationFile(
-							config as IConfigurationFile,
+							config as tslint.Configuration.IConfigurationFile,
 							configOverride,
 						);
 					} else {

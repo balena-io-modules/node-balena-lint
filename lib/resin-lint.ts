@@ -1,6 +1,5 @@
 import { Options as PrettierOptions } from 'prettier';
 
-import * as Bluebird from 'bluebird';
 import * as fs from 'fs';
 import * as glob from 'glob';
 import * as optimist from 'optimist';
@@ -238,28 +237,30 @@ export const lint = async (passedParams: any) => {
 
 	if (options.argv.u) {
 		const depcheck = await import('depcheck');
-		await Bluebird.map(options.argv._, async (dir: string) => {
-			dir = getPackageJsonDir(dir);
-			const { dependencies } = await depcheck(path.resolve('./', dir), {
-				ignoreMatches: [
-					'@types/*', // ignore typescript type declarations
-					'supervisor', // isn't used directly from source
-					'coffee-script', // Gives false positives
-					'coffeescript', // An alias
-					'colors', // Generally imported via colors/safe, which doesn't trigger depcheck
-					'coffeescope2',
-				],
-			});
-			if (dependencies.length > 0) {
-				console.log(`${dependencies.length} unused dependencies:`);
-				for (const dep of dependencies) {
-					console.log(`\t${dep}`);
+		await Promise.all(
+			options.argv._.map(async (dir: string) => {
+				dir = getPackageJsonDir(dir);
+				const { dependencies } = await depcheck(path.resolve('./', dir), {
+					ignoreMatches: [
+						'@types/*', // ignore typescript type declarations
+						'supervisor', // isn't used directly from source
+						'coffee-script', // Gives false positives
+						'coffeescript', // An alias
+						'colors', // Generally imported via colors/safe, which doesn't trigger depcheck
+						'coffeescope2',
+					],
+				});
+				if (dependencies.length > 0) {
+					console.log(`${dependencies.length} unused dependencies:`);
+					for (const dep of dependencies) {
+						console.log(`\t${dep}`);
+					}
+					process.exit(1);
 				}
-				process.exit(1);
-			}
-			console.log('No unused dependencies!');
-			console.log();
-		});
+				console.log('No unused dependencies!');
+				console.log();
+			}),
+		);
 	}
 
 	let configOverridePath;

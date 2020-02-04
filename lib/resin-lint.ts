@@ -7,7 +7,6 @@ import { merge } from 'lodash';
 import * as optimist from 'optimist';
 import * as path from 'path';
 import * as tslint from 'tslint';
-import { lintMochaTests } from './mocha-tests-lint';
 
 interface ResinLintConfig {
 	configPath: string;
@@ -160,6 +159,7 @@ const lintTsFiles = async function(
 };
 
 const lintMochaTestFiles = async function(files: string[]): Promise<number> {
+	const { lintMochaTests } = await import('./mocha-tests-lint');
 	const res = await lintMochaTests(files);
 	if (res.isError) {
 		console.error('Mocha tests check FAILED!');

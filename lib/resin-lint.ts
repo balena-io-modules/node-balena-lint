@@ -1,3 +1,5 @@
+import { Options as PrettierOptions } from 'prettier';
+
 import * as Bluebird from 'bluebird';
 import * as depcheck from 'depcheck';
 import * as fs from 'fs';
@@ -5,7 +7,6 @@ import * as glob from 'glob';
 import { merge } from 'lodash';
 import * as optimist from 'optimist';
 import * as path from 'path';
-import * as prettier from 'prettier';
 import * as tslint from 'tslint';
 import { IConfigurationFile } from 'tslint/lib/configuration';
 import { lintMochaTests } from './mocha-tests-lint';
@@ -121,12 +122,13 @@ const lintCoffeeFiles = function(files: string[], config: {}): number {
 	return errorReport.getExitCode();
 };
 
-const lintTsFiles = function(
+const lintTsFiles = async function(
 	files: string[],
 	config: {},
-	prettierConfig: prettier.Options | undefined,
+	prettierConfig: PrettierOptions | undefined,
 	autoFix: boolean,
-): number {
+): Promise<number> {
+	const prettier = prettierConfig ? await import('prettier') : undefined;
 	const linter = new tslint.Linter({
 		fix: autoFix,
 		formatter: 'stylish',
@@ -134,7 +136,7 @@ const lintTsFiles = function(
 
 	for (const file of files) {
 		let source = read(file);
-		if (prettierConfig) {
+		if (prettier) {
 			if (autoFix) {
 				const newSource = prettier.format(source, prettierConfig);
 				if (source !== newSource) {
@@ -179,13 +181,13 @@ const runLint = async function(
 	const scripts = findFiles(resinLintConfig.extensions, paths);
 
 	if (resinLintConfig.lang === 'typescript') {
-		let prettierConfig: prettier.Options | undefined;
+		let prettierConfig: PrettierOptions | undefined;
 		if (resinLintConfig.prettierCheck) {
-			prettierConfig = parseJSON(prettierConfigPath) as prettier.Options;
+			prettierConfig = parseJSON(prettierConfigPath) as PrettierOptions;
 			prettierConfig.parser = 'typescript';
 		}
 
-		linterExitCode = lintTsFiles(scripts, config, prettierConfig, autoFix);
+		linterExitCode = await lintTsFiles(scripts, config, prettierConfig, autoFix);
 	}
 
 	if (resinLintConfig.lang === 'coffeescript') {

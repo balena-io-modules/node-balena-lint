@@ -131,6 +131,11 @@ const lintTsFiles = async function(
 
 	for (const file of files) {
 		let source = read(file);
+		linter.lint(
+			file,
+			source,
+			config as tslint.Configuration.IConfigurationFile,
+		);
 		if (prettier) {
 			if (autoFix) {
 				const newSource = prettier.format(source, prettierConfig);
@@ -138,18 +143,16 @@ const lintTsFiles = async function(
 					source = newSource;
 					fs.writeFileSync(file, source);
 				}
-			}
-			const isPrettified = prettier.check(source, prettierConfig);
-			if (!isPrettified) {
-				console.log(`Error: File ${file} hasn't been formatted with prettier`);
-				return 1;
+			} else {
+				const isPrettified = prettier.check(source, prettierConfig);
+				if (!isPrettified) {
+					console.log(
+						`Error: File ${file} hasn't been formatted with prettier`,
+					);
+					return 1;
+				}
 			}
 		}
-		linter.lint(
-			file,
-			source,
-			config as tslint.Configuration.IConfigurationFile,
-		);
 	}
 
 	const errorReport = linter.getResult();

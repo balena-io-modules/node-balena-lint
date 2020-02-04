@@ -56,7 +56,7 @@ const getPackageJsonDir = function(dir: string): string {
 
 const read = function(filepath: string): string {
 	const realPath = fs.realpathSync(filepath);
-	return fs.readFileSync(realPath).toString();
+	return fs.readFileSync(realPath, 'utf8');
 };
 
 const findFile = function(name: string, dir?: string): string | null {
@@ -74,7 +74,7 @@ const findFile = function(name: string, dir?: string): string | null {
 
 const parseJSON = function(file: string): {} {
 	try {
-		return JSON.parse(fs.readFileSync(file).toString());
+		return JSON.parse(fs.readFileSync(file, 'utf8'));
 	} catch (err) {
 		console.error(`Could not parse ${file}`);
 		throw err;
@@ -279,7 +279,7 @@ export const lint = async (passedParams: any) => {
 		: configurations.coffeescript;
 
 	if (options.argv.p) {
-		console.log(fs.readFileSync(resinLintConfiguration.configPath).toString());
+		console.log(fs.readFileSync(resinLintConfiguration.configPath, 'utf8'));
 		process.exit(0);
 	}
 

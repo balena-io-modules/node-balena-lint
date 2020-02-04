@@ -1,7 +1,6 @@
 import { Options as PrettierOptions } from 'prettier';
 
 import * as Bluebird from 'bluebird';
-import * as depcheck from 'depcheck';
 import * as fs from 'fs';
 import * as glob from 'glob';
 import { merge } from 'lodash';
@@ -231,8 +230,9 @@ export const lint = (passedParams: any) =>
 			process.exit(1);
 		}
 
-		return Bluebird.try<any>(function() {
+		return Bluebird.try<any>(async () => {
 			if (options.argv.u) {
+				const depcheck = await import('depcheck');
 				return Bluebird.map(options.argv._, function(dir: string) {
 					dir = getPackageJsonDir(dir);
 					return Bluebird.resolve(

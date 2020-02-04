@@ -1,18 +1,11 @@
+import { Options as PrettierOptions } from 'prettier';
+
 import * as Bluebird from 'bluebird';
-// tslint:disable-next-line:no-var-requires
-const coffeelint: any = require('coffeelint');
-// tslint:disable-next-line:no-var-requires
-const reporter: any = require('coffeelint/lib/reporters/default');
-import * as depcheck from 'depcheck';
 import * as fs from 'fs';
 import * as glob from 'glob';
-import { merge } from 'lodash';
 import * as optimist from 'optimist';
 import * as path from 'path';
-import * as prettier from 'prettier';
 import * as tslint from 'tslint';
-import { IConfigurationFile } from 'tslint/lib/configuration';
-import { lintMochaTests } from './mocha-tests-lint';
 
 interface ResinLintConfig {
 	configPath: string;
@@ -106,6 +99,7 @@ const findFiles = function(
 };
 
 const lintCoffeeFiles = function(files: string[], config: {}): number {
+	const coffeelint: any = require('coffeelint');
 	const errorReport = new coffeelint.getErrorReport();
 
 	for (const file of files) {
@@ -113,6 +107,7 @@ const lintCoffeeFiles = function(files: string[], config: {}): number {
 		errorReport.lint(file, source, config);
 	}
 
+	const reporter: any = require('coffeelint/lib/reporters/default');
 	const report = new reporter(errorReport, {
 		colorize: process.stdout.isTTY,
 		quiet: false,
@@ -123,12 +118,13 @@ const lintCoffeeFiles = function(files: string[], config: {}): number {
 	return errorReport.getExitCode();
 };
 
-const lintTsFiles = function(
+const lintTsFiles = async function(
 	files: string[],
 	config: {},
-	prettierConfig: prettier.Options | undefined,
+	prettierConfig: PrettierOptions | undefined,
 	autoFix: boolean,
-): number {
+): Promise<number> {
+	const prettier = prettierConfig ? await import('prettier') : undefined;
 	const linter = new tslint.Linter({
 		fix: autoFix,
 		formatter: 'stylish',
@@ -136,7 +132,7 @@ const lintTsFiles = function(
 
 	for (const file of files) {
 		let source = read(file);
-		if (prettierConfig) {
+		if (prettier) {
 			if (autoFix) {
 				const newSource = prettier.format(source, prettierConfig);
 				if (source !== newSource) {
@@ -150,7 +146,7 @@ const lintTsFiles = function(
 				return 1;
 			}
 		}
-		linter.lint(file, source, config as IConfigurationFile);
+		linter.lint(file, source, config as tslint.Configuration.IConfigurationFile);
 	}
 
 	const errorReport = linter.getResult();
@@ -162,6 +158,7 @@ const lintTsFiles = function(
 };
 
 const lintMochaTestFiles = async function(files: string[]): Promise<number> {
+	const { lintMochaTests } = await import('./mocha-tests-lint');
 	const res = await lintMochaTests(files);
 	if (res.isError) {
 		console.error('Mocha tests check FAILED!');
@@ -181,13 +178,13 @@ const runLint = async function(
 	const scripts = findFiles(resinLintConfig.extensions, paths);
 
 	if (resinLintConfig.lang === 'typescript') {
-		let prettierConfig: prettier.Options | undefined;
+		let prettierConfig: PrettierOptions | undefined;
 		if (resinLintConfig.prettierCheck) {
-			prettierConfig = parseJSON(prettierConfigPath) as prettier.Options;
+			prettierConfig = parseJSON(prettierConfigPath) as PrettierOptions;
 			prettierConfig.parser = 'typescript';
 		}
 
-		linterExitCode = lintTsFiles(scripts, config, prettierConfig, autoFix);
+		linterExitCode = await lintTsFiles(scripts, config, prettierConfig, autoFix);
 	}
 
 	if (resinLintConfig.lang === 'coffeescript') {
@@ -231,8 +228,9 @@ export const lint = (passedParams: any) =>
 			process.exit(1);
 		}
 
-		return Bluebird.try<any>(function() {
+		return Bluebird.try<any>(async () => {
 			if (options.argv.u) {
+				const depcheck = await import('depcheck');
 				return Bluebird.map(options.argv._, function(dir: string) {
 					dir = getPackageJsonDir(dir);
 					return Bluebird.resolve(
@@ -262,7 +260,7 @@ export const lint = (passedParams: any) =>
 				});
 			}
 		})
-			.then(function() {
+			.then(async function() {
 				let configOverridePath;
 				// optimist converts all --no-xyz args to a argv.xyz === false
 				const prettierCheck = options.argv.prettier !== false;
@@ -305,11 +303,12 @@ export const lint = (passedParams: any) =>
 							configOverridePath,
 						);
 						config = tslint.Configuration.extendConfigurationFile(
-							config as IConfigurationFile,
+							config as tslint.Configuration.IConfigurationFile,
 							configOverride,
 						);
 					} else {
 						const configOverride = parseJSON(configOverridePath);
+						const { merge } = await import('lodash');
 						config = merge(config, configOverride);
 					}
 				}

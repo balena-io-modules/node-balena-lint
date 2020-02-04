@@ -29,7 +29,7 @@
   "license": "Apache 2.0",
   "dependencies": {
     "@types/depcheck": "^0.6.0",
-    "@types/glob": "^5.0.35",
+    "@types/glob": "^7.1.1",
     "@types/lodash": "^4.14.149",
     "@types/node": "^8.10.59",
     "@types/optimist": "0.0.29",

@@ -14,6 +14,8 @@ const existsAsync = promisify(fs.exists);
 const statAsync = promisify(fs.stat);
 const writeFileAsync = promisify(fs.writeFile);
 
+const globAsync = promisify(glob);
+
 interface ResinLintConfig {
 	configPath: string;
 	configFileName: string;
@@ -93,11 +95,13 @@ const findFiles = async (
 	extensions: string[],
 	paths: string[] = [],
 ): Promise<string[]> => {
-	let files: string[] = [];
+	const files: string[] = [];
 	await Promise.all(
 		paths.map(async p => {
 			if ((await statAsync(p)).isDirectory()) {
-				files = files.concat(glob.sync(`${p}/**/*.@(${extensions.join('|')})`));
+				files.push(
+					...(await globAsync(`${p}/**/*.@(${extensions.join('|')})`)),
+				);
 			} else {
 				files.push(p);
 			}

@@ -146,7 +146,11 @@ const lintTsFiles = async function(
 				return 1;
 			}
 		}
-		linter.lint(file, source, config as tslint.Configuration.IConfigurationFile);
+		linter.lint(
+			file,
+			source,
+			config as tslint.Configuration.IConfigurationFile,
+		);
 	}
 
 	const errorReport = linter.getResult();
@@ -184,7 +188,12 @@ const runLint = async function(
 			prettierConfig.parser = 'typescript';
 		}
 
-		linterExitCode = await lintTsFiles(scripts, config, prettierConfig, autoFix);
+		linterExitCode = await lintTsFiles(
+			scripts,
+			config,
+			prettierConfig,
+			autoFix,
+		);
 	}
 
 	if (resinLintConfig.lang === 'coffeescript') {
@@ -198,126 +207,114 @@ const runLint = async function(
 		}
 	}
 
-	return process.on('exit', () => process.exit(linterExitCode));
+	process.on('exit', () => process.exit(linterExitCode));
 };
 
-export const lint = (passedParams: any) =>
-	Bluebird.try(() => {
-		const options = optimist(passedParams)
-			.usage('Usage: resin-lint [options] [...]')
-			.describe(
-				'f',
-				'Specify a linting config file to extend and override resin-lint rules',
-			)
-			.describe('p', 'Print default resin-lint linting rules')
-			.describe(
-				'i',
-				'Ignore linting config files in project directory and its parents',
-			)
-			.boolean('typescript', 'Lint typescript files instead of coffeescript')
-			.boolean('fix', 'Attempt to automatically fix lint errors')
-			.boolean('no-prettier', 'Disables the prettier code format checks')
-			.boolean(
-				'tests',
-				'Treat input files as test sources to perform extra relevant checks',
-			)
-			.boolean('u', 'Run unused import check');
+export const lint = async (passedParams: any) => {
+	const options = optimist(passedParams)
+		.usage('Usage: resin-lint [options] [...]')
+		.describe(
+			'f',
+			'Specify a linting config file to extend and override resin-lint rules',
+		)
+		.describe('p', 'Print default resin-lint linting rules')
+		.describe(
+			'i',
+			'Ignore linting config files in project directory and its parents',
+		)
+		.boolean('typescript', 'Lint typescript files instead of coffeescript')
+		.boolean('fix', 'Attempt to automatically fix lint errors')
+		.boolean('no-prettier', 'Disables the prettier code format checks')
+		.boolean(
+			'tests',
+			'Treat input files as test sources to perform extra relevant checks',
+		)
+		.boolean('u', 'Run unused import check');
 
-		if (options.argv._.length < 1 && !options.argv.p) {
-			options.showHelp();
-			process.exit(1);
-		}
+	if (options.argv._.length < 1 && !options.argv.p) {
+		options.showHelp();
+		process.exit(1);
+	}
 
-		return Bluebird.try<any>(async () => {
-			if (options.argv.u) {
-				const depcheck = await import('depcheck');
-				return Bluebird.map(options.argv._, function(dir: string) {
-					dir = getPackageJsonDir(dir);
-					return Bluebird.resolve(
-						depcheck(path.resolve('./', dir), {
-							ignoreMatches: [
-								'@types/*', // ignore typescript type declarations
-								'supervisor', // isn't used directly from source
-								'coffee-script', // Gives false positives
-								'coffeescript', // An alias
-								'colors', // Generally imported via colors/safe, which doesn't trigger depcheck
-								'coffeescope2',
-							],
-						}),
-					)
-						.get('dependencies')
-						.then(function(deps) {
-							if (deps.length > 0) {
-								console.log(`${deps.length} unused dependencies:`);
-								for (const dep of deps) {
-									console.log(`\t${dep}`);
-								}
-								process.exit(1);
-							}
-							console.log('No unused dependencies!');
-							return console.log();
-						});
-				});
+	if (options.argv.u) {
+		const depcheck = await import('depcheck');
+		await Bluebird.map(options.argv._, async (dir: string) => {
+			dir = getPackageJsonDir(dir);
+			const { dependencies } = await depcheck(path.resolve('./', dir), {
+				ignoreMatches: [
+					'@types/*', // ignore typescript type declarations
+					'supervisor', // isn't used directly from source
+					'coffee-script', // Gives false positives
+					'coffeescript', // An alias
+					'colors', // Generally imported via colors/safe, which doesn't trigger depcheck
+					'coffeescope2',
+				],
+			});
+			if (dependencies.length > 0) {
+				console.log(`${dependencies.length} unused dependencies:`);
+				for (const dep of dependencies) {
+					console.log(`\t${dep}`);
+				}
+				process.exit(1);
 			}
-		})
-			.then(async function() {
-				let configOverridePath;
-				// optimist converts all --no-xyz args to a argv.xyz === false
-				const prettierCheck = options.argv.prettier !== false;
-				const testsCheck = options.argv.tests === true;
-				const typescriptCheck = options.argv.typescript;
-				const autoFix = options.argv.fix === true;
-				const resinLintConfiguration = typescriptCheck
-					? prettierCheck
-						? configurations.typescriptPrettier
-						: configurations.typescript
-					: configurations.coffeescript;
+			console.log('No unused dependencies!');
+			console.log();
+		});
+	}
 
-				if (options.argv.p) {
-					console.log(
-						fs.readFileSync(resinLintConfiguration.configPath).toString(),
-					);
-					process.exit(0);
-				}
+	let configOverridePath;
+	// optimist converts all --no-xyz args to a argv.xyz === false
+	const prettierCheck = options.argv.prettier !== false;
+	const testsCheck = options.argv.tests === true;
+	const typescriptCheck = options.argv.typescript;
+	const autoFix = options.argv.fix === true;
+	const resinLintConfiguration = typescriptCheck
+		? prettierCheck
+			? configurations.typescriptPrettier
+			: configurations.typescript
+		: configurations.coffeescript;
 
-				// TSLint config needs to be loaded with `loadConfigurationFromPath`
-				// Coffeelint needs to be loaded as a plain file
-				let config: {} = typescriptCheck
-					? tslint.Configuration.loadConfigurationFromPath(
-							resinLintConfiguration.configPath,
-					  )
-					: parseJSON(resinLintConfiguration.configPath);
+	if (options.argv.p) {
+		console.log(fs.readFileSync(resinLintConfiguration.configPath).toString());
+		process.exit(0);
+	}
 
-				if (options.argv.f) {
-					configOverridePath = fs.realpathSync(options.argv.f);
-				}
+	// TSLint config needs to be loaded with `loadConfigurationFromPath`
+	// Coffeelint needs to be loaded as a plain file
+	let config: {} = typescriptCheck
+		? tslint.Configuration.loadConfigurationFromPath(
+				resinLintConfiguration.configPath,
+		  )
+		: parseJSON(resinLintConfiguration.configPath);
 
-				if (!options.argv.i && !configOverridePath) {
-					configOverridePath = findFile(resinLintConfiguration.configFileName);
-				}
+	if (options.argv.f) {
+		configOverridePath = fs.realpathSync(options.argv.f);
+	}
 
-				if (configOverridePath) {
-					// Extend/override default config
-					if (typescriptCheck) {
-						const configOverride = tslint.Configuration.loadConfigurationFromPath(
-							configOverridePath,
-						);
-						config = tslint.Configuration.extendConfigurationFile(
-							config as tslint.Configuration.IConfigurationFile,
-							configOverride,
-						);
-					} else {
-						const configOverride = parseJSON(configOverridePath);
-						const { merge } = await import('lodash');
-						config = merge(config, configOverride);
-					}
-				}
+	if (!options.argv.i && !configOverridePath) {
+		configOverridePath = findFile(resinLintConfiguration.configFileName);
+	}
 
-				const paths = options.argv._;
+	if (configOverridePath) {
+		// Extend/override default config
+		if (typescriptCheck) {
+			const configOverride = tslint.Configuration.loadConfigurationFromPath(
+				configOverridePath,
+			);
+			config = tslint.Configuration.extendConfigurationFile(
+				config as tslint.Configuration.IConfigurationFile,
+				configOverride,
+			);
+		} else {
+			const configOverride = parseJSON(configOverridePath);
+			const { merge } = await import('lodash');
+			config = merge(config, configOverride);
+		}
+	}
 
-				resinLintConfiguration.prettierCheck = prettierCheck;
-				resinLintConfiguration.testsCheck = testsCheck;
-				return runLint(resinLintConfiguration, paths, config, autoFix);
-			})
-			.return();
-	});
+	const paths = options.argv._;
+
+	resinLintConfiguration.prettierCheck = prettierCheck;
+	resinLintConfiguration.testsCheck = testsCheck;
+	await runLint(resinLintConfiguration, paths, config, autoFix);
+};

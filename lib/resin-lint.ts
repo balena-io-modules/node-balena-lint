@@ -5,6 +5,25 @@ import * as glob from 'glob';
 import * as optimist from 'optimist';
 import * as path from 'path';
 import * as tslint from 'tslint';
+import { promisify } from 'util';
+
+// TODO: Switch to using fs.promises when dropping node 8 support
+const realpathAsync = promisify(fs.realpath);
+const readFileAsync = promisify(fs.readFile);
+const accessAsync = promisify(fs.access);
+const statAsync = promisify(fs.stat);
+const writeFileAsync = promisify(fs.writeFile);
+
+const existsAsync = async (filename: string) => {
+	try {
+		await accessAsync(filename);
+		return true;
+	} catch {
+		return false;
+	}
+};
+
+const globAsync = promisify(glob);
 
 interface ResinLintConfig {
 	configPath: string;
@@ -46,65 +65,74 @@ const prettierConfigPath = path.join(__dirname, '../config/.prettierrc');
  * package.json is). This function takes a path and propagates upwards
  * until it contains a package.json
  */
-const getPackageJsonDir = function(dir: string): string {
-	const name = findFile('package.json', dir);
+const getPackageJsonDir = async (dir: string): Promise<string> => {
+	const name = await findFile('package.json', dir);
 	if (name === null) {
 		throw new Error('Could not find package.json!');
 	}
 	return path.dirname(name);
 };
 
-const read = function(filepath: string): string {
-	const realPath = fs.realpathSync(filepath);
-	return fs.readFileSync(realPath).toString();
+const read = async (filepath: string): Promise<string> => {
+	const realPath = await realpathAsync(filepath);
+	return readFileAsync(realPath, 'utf8');
 };
 
-const findFile = function(name: string, dir?: string): string | null {
+const findFile = async (name: string, dir?: string): Promise<string | null> => {
 	dir = dir || process.cwd();
 	const filename = path.join(dir, name);
-	const parent = path.dirname(dir);
-	if (fs.existsSync(filename)) {
+	if (await existsAsync(filename)) {
 		return filename;
-	} else if (dir === parent) {
-		return null;
-	} else {
-		return findFile(name, parent);
 	}
+	const parent = path.dirname(dir);
+	if (dir === parent) {
+		return null;
+	}
+	return findFile(name, parent);
 };
 
-const parseJSON = function(file: string): {} {
+const parseJSON = async (file: string): Promise<{}> => {
 	try {
-		return JSON.parse(fs.readFileSync(file).toString());
+		return JSON.parse(await readFileAsync(file, 'utf8'));
 	} catch (err) {
 		console.error(`Could not parse ${file}`);
 		throw err;
 	}
 };
 
-const findFiles = function(
+const findFiles = async (
 	extensions: string[],
 	paths: string[] = [],
-): string[] {
-	let files: string[] = [];
-	for (const p of paths) {
-		if (fs.statSync(p).isDirectory()) {
-			files = files.concat(glob.sync(`${p}/**/*.@(${extensions.join('|')})`));
-		} else {
-			files.push(p);
-		}
-	}
+): Promise<string[]> => {
+	const files: string[] = [];
+	await Promise.all(
+		paths.map(async p => {
+			if ((await statAsync(p)).isDirectory()) {
+				files.push(
+					...(await globAsync(`${p}/**/*.@(${extensions.join('|')})`)),
+				);
+			} else {
+				files.push(p);
+			}
+		}),
+	);
 
 	return files.map(p => path.join(p));
 };
 
-const lintCoffeeFiles = function(files: string[], config: {}): number {
+const lintCoffeeFiles = async (
+	files: string[],
+	config: {},
+): Promise<number> => {
 	const coffeelint: any = require('coffeelint');
 	const errorReport = new coffeelint.getErrorReport();
 
-	for (const file of files) {
-		const source = read(file);
-		errorReport.lint(file, source, config);
-	}
+	await Promise.all(
+		files.map(async file => {
+			const source = await read(file);
+			errorReport.lint(file, source, config);
+		}),
+	);
 
 	const reporter: any = require('coffeelint/lib/reporters/default');
 	const report = new reporter(errorReport, {
@@ -129,31 +157,33 @@ const lintTsFiles = async function(
 		formatter: 'stylish',
 	});
 
-	for (const file of files) {
-		let source = read(file);
-		linter.lint(
-			file,
-			source,
-			config as tslint.Configuration.IConfigurationFile,
-		);
-		if (prettier) {
-			if (autoFix) {
-				const newSource = prettier.format(source, prettierConfig);
-				if (source !== newSource) {
-					source = newSource;
-					fs.writeFileSync(file, source);
-				}
-			} else {
-				const isPrettified = prettier.check(source, prettierConfig);
-				if (!isPrettified) {
-					console.log(
-						`Error: File ${file} hasn't been formatted with prettier`,
-					);
-					return 1;
+	await Promise.all(
+		files.map(async file => {
+			let source = await read(file);
+			linter.lint(
+				file,
+				source,
+				config as tslint.Configuration.IConfigurationFile,
+			);
+			if (prettier) {
+				if (autoFix) {
+					const newSource = prettier.format(source, prettierConfig);
+					if (source !== newSource) {
+						source = newSource;
+						await writeFileAsync(file, source);
+					}
+				} else {
+					const isPrettified = prettier.check(source, prettierConfig);
+					if (!isPrettified) {
+						console.log(
+							`Error: File ${file} hasn't been formatted with prettier`,
+						);
+						return 1;
+					}
 				}
 			}
-		}
-	}
+		}),
+	);
 
 	const errorReport = linter.getResult();
 
@@ -181,12 +211,12 @@ const runLint = async function(
 	autoFix: boolean,
 ) {
 	let linterExitCode: number | undefined;
-	const scripts = findFiles(resinLintConfig.extensions, paths);
+	const scripts = await findFiles(resinLintConfig.extensions, paths);
 
 	if (resinLintConfig.lang === 'typescript') {
 		let prettierConfig: PrettierOptions | undefined;
 		if (resinLintConfig.prettierCheck) {
-			prettierConfig = parseJSON(prettierConfigPath) as PrettierOptions;
+			prettierConfig = (await parseJSON(prettierConfigPath)) as PrettierOptions;
 			prettierConfig.parser = 'typescript';
 		}
 
@@ -199,7 +229,7 @@ const runLint = async function(
 	}
 
 	if (resinLintConfig.lang === 'coffeescript') {
-		linterExitCode = lintCoffeeFiles(scripts, config);
+		linterExitCode = await lintCoffeeFiles(scripts, config);
 	}
 
 	if (resinLintConfig.testsCheck) {
@@ -242,7 +272,7 @@ export const lint = async (passedParams: any) => {
 		const depcheck = await import('depcheck');
 		await Promise.all(
 			options.argv._.map(async (dir: string) => {
-				dir = getPackageJsonDir(dir);
+				dir = await getPackageJsonDir(dir);
 				const { dependencies } = await depcheck(path.resolve('./', dir), {
 					ignoreMatches: [
 						'@types/*', // ignore typescript type declarations
@@ -279,7 +309,7 @@ export const lint = async (passedParams: any) => {
 		: configurations.coffeescript;
 
 	if (options.argv.p) {
-		console.log(fs.readFileSync(resinLintConfiguration.configPath).toString());
+		console.log(await readFileAsync(resinLintConfiguration.configPath, 'utf8'));
 		process.exit(0);
 	}
 
@@ -289,14 +319,14 @@ export const lint = async (passedParams: any) => {
 		? tslint.Configuration.loadConfigurationFromPath(
 				resinLintConfiguration.configPath,
 		  )
-		: parseJSON(resinLintConfiguration.configPath);
+		: await parseJSON(resinLintConfiguration.configPath);
 
 	if (options.argv.f) {
-		configOverridePath = fs.realpathSync(options.argv.f);
+		configOverridePath = await realpathAsync(options.argv.f);
 	}
 
 	if (!options.argv.i && !configOverridePath) {
-		configOverridePath = findFile(resinLintConfiguration.configFileName);
+		configOverridePath = await findFile(resinLintConfiguration.configFileName);
 	}
 
 	if (configOverridePath) {
@@ -310,7 +340,7 @@ export const lint = async (passedParams: any) => {
 				configOverride,
 			);
 		} else {
-			const configOverride = parseJSON(configOverridePath);
+			const configOverride = await parseJSON(configOverridePath);
 			const { merge } = await import('lodash');
 			config = merge(config, configOverride);
 		}

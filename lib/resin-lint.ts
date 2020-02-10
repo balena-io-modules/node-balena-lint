@@ -10,9 +10,18 @@ import { promisify } from 'util';
 // TODO: Switch to using fs.promises when dropping node 8 support
 const realpathAsync = promisify(fs.realpath);
 const readFileAsync = promisify(fs.readFile);
-const existsAsync = promisify(fs.exists);
+const accessAsync = promisify(fs.access);
 const statAsync = promisify(fs.stat);
 const writeFileAsync = promisify(fs.writeFile);
+
+const existsAsync = async (filename: string) => {
+	try {
+		await accessAsync(filename);
+		return true;
+	} catch {
+		return false;
+	}
+};
 
 const globAsync = promisify(glob);
 

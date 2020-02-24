@@ -157,7 +157,7 @@ const lintTsFiles = async function(
 		formatter: 'stylish',
 	});
 
-	await Promise.all(
+	const exitCodes = await Promise.all(
 		files.map(async file => {
 			let source = await read(file);
 			linter.lint(
@@ -182,8 +182,13 @@ const lintTsFiles = async function(
 					}
 				}
 			}
+			return 0;
 		}),
 	);
+	const failureCode = exitCodes.find(exitCode => exitCode !== 0);
+	if (failureCode) {
+		return failureCode;
+	}
 
 	const errorReport = linter.getResult();
 

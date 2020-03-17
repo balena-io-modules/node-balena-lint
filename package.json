@@ -1,31 +1,31 @@
 {
-  "name": "resin-lint",
+  "name": "@balena/lint",
   "version": "3.3.1",
-  "description": "Resin.io coffeelint & coffeescope2 wrapper",
-  "bin": "./bin/resin-lint",
-  "main": "./build/resin-lint.js",
-  "homepage": "https://github.com/resin-io/node-resin-lint",
+  "description": "Balena.io tslint, coffeelint & coffeescope2 wrapper",
+  "bin": "./bin/balena-lint",
+  "main": "./build/balena-lint.js",
+  "homepage": "https://github.com/balena-io-modules/node-balena-lint",
   "repository": {
     "type": "git",
-    "url": "git@github.com:resin-io/node-resin-lint"
+    "url": "git@github.com:balena-io-modules/node-balena-lint"
   },
   "scripts": {
     "build": "tsc && npm run prettify && npm run lint",
-    "lint": "node ./bin/resin-lint --typescript lib/",
+    "lint": "node ./bin/balena-lint --typescript lib/",
     "prepublish": "require-npm4-to-publish",
     "prepublishOnly": "npm run test",
-    "prettify": "node ./bin/resin-lint --typescript --fix lib/",
+    "prettify": "node ./bin/balena-lint --typescript --fix lib/",
     "test": "npm run build && npm run test:coffeescript && npm run test:typescript && npm run test:typescript-no-prettier",
-    "test:coffeescript": "node ./bin/resin-lint test/coffeescript -i",
-    "test:typescript": "node ./bin/resin-lint test/typescript/prettier --typescript -i",
-    "test:typescript-no-prettier": "node ./bin/resin-lint test/typescript/no-prettier --typescript -i --no-prettier"
+    "test:coffeescript": "node ./bin/balena-lint test/coffeescript -i",
+    "test:typescript": "node ./bin/balena-lint test/typescript/prettier --typescript -i",
+    "test:typescript-no-prettier": "node ./bin/balena-lint test/typescript/no-prettier --typescript -i --no-prettier"
   },
   "keywords": [
-    "resin",
+    "balena",
     "coffeescript",
     "coffeelint"
   ],
-  "author": "Kostas Lekkas <kostas@resin.io",
+  "author": "Balena.io. <hello@balena.io>",
   "license": "Apache 2.0",
   "dependencies": {
     "@types/depcheck": "^0.6.0",

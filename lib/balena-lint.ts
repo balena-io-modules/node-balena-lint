@@ -25,7 +25,7 @@ const existsAsync = async (filename: string) => {
 
 const globAsync = promisify(glob);
 
-interface ResinLintConfig {
+interface LintConfig {
 	configPath: string;
 	configFileName: string;
 	extensions: string[];
@@ -34,7 +34,7 @@ interface ResinLintConfig {
 	testsCheck?: boolean;
 }
 
-const configurations: { [key: string]: ResinLintConfig } = {
+const configurations: { [key: string]: LintConfig } = {
 	coffeescript: {
 		configPath: path.join(__dirname, '../config/coffeelint.json'),
 		configFileName: 'coffeelint.json',
@@ -210,17 +210,17 @@ const lintMochaTestFiles = async function(files: string[]): Promise<number> {
 };
 
 const runLint = async function(
-	resinLintConfig: ResinLintConfig,
+	lintConfig: LintConfig,
 	paths: string[],
 	config: {},
 	autoFix: boolean,
 ) {
 	let linterExitCode: number | undefined;
-	const scripts = await findFiles(resinLintConfig.extensions, paths);
+	const scripts = await findFiles(lintConfig.extensions, paths);
 
-	if (resinLintConfig.lang === 'typescript') {
+	if (lintConfig.lang === 'typescript') {
 		let prettierConfig: PrettierOptions | undefined;
-		if (resinLintConfig.prettierCheck) {
+		if (lintConfig.prettierCheck) {
 			prettierConfig = (await parseJSON(prettierConfigPath)) as PrettierOptions;
 			prettierConfig.parser = 'typescript';
 		}
@@ -233,11 +233,11 @@ const runLint = async function(
 		);
 	}
 
-	if (resinLintConfig.lang === 'coffeescript') {
+	if (lintConfig.lang === 'coffeescript') {
 		linterExitCode = await lintCoffeeFiles(scripts, config);
 	}
 
-	if (resinLintConfig.testsCheck) {
+	if (lintConfig.testsCheck) {
 		const testsExitCode = await lintMochaTestFiles(scripts);
 		if (linterExitCode === 0) {
 			linterExitCode = testsExitCode;
@@ -249,12 +249,12 @@ const runLint = async function(
 
 export const lint = async (passedParams: any) => {
 	const options = optimist(passedParams)
-		.usage('Usage: resin-lint [options] [...]')
+		.usage('Usage: balena-lint [options] [...]')
 		.describe(
 			'f',
-			'Specify a linting config file to extend and override resin-lint rules',
+			'Specify a linting config file to extend and override balena-lint rules',
 		)
-		.describe('p', 'Print default resin-lint linting rules')
+		.describe('p', 'Print default balena-lint linting rules')
 		.describe(
 			'i',
 			'Ignore linting config files in project directory and its parents',
@@ -307,14 +307,14 @@ export const lint = async (passedParams: any) => {
 	const testsCheck = options.argv.tests === true;
 	const typescriptCheck = options.argv.typescript;
 	const autoFix = options.argv.fix === true;
-	const resinLintConfiguration = typescriptCheck
+	const lintConfiguration = typescriptCheck
 		? prettierCheck
 			? configurations.typescriptPrettier
 			: configurations.typescript
 		: configurations.coffeescript;
 
 	if (options.argv.p) {
-		console.log(await readFileAsync(resinLintConfiguration.configPath, 'utf8'));
+		console.log(await readFileAsync(lintConfiguration.configPath, 'utf8'));
 		process.exit(0);
 	}
 
@@ -322,16 +322,16 @@ export const lint = async (passedParams: any) => {
 	// Coffeelint needs to be loaded as a plain file
 	let config: {} = typescriptCheck
 		? tslint.Configuration.loadConfigurationFromPath(
-				resinLintConfiguration.configPath,
+				lintConfiguration.configPath,
 		  )
-		: await parseJSON(resinLintConfiguration.configPath);
+		: await parseJSON(lintConfiguration.configPath);
 
 	if (options.argv.f) {
 		configOverridePath = await realpathAsync(options.argv.f);
 	}
 
 	if (!options.argv.i && !configOverridePath) {
-		configOverridePath = await findFile(resinLintConfiguration.configFileName);
+		configOverridePath = await findFile(lintConfiguration.configFileName);
 	}
 
 	if (configOverridePath) {
@@ -353,7 +353,7 @@ export const lint = async (passedParams: any) => {
 
 	const paths = options.argv._;
 
-	resinLintConfiguration.prettierCheck = prettierCheck;
-	resinLintConfiguration.testsCheck = testsCheck;
-	await runLint(resinLintConfiguration, paths, config, autoFix);
+	lintConfiguration.prettierCheck = prettierCheck;
+	lintConfiguration.testsCheck = testsCheck;
+	await runLint(lintConfiguration, paths, config, autoFix);
 };

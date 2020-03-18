@@ -2,7 +2,9 @@
   "name": "@balena/lint",
   "version": "4.0.0",
   "description": "Balena.io tslint, coffeelint & coffeescope2 wrapper",
-  "bin": "./bin/balena-lint",
+  "bin": {
+    "balena-lint": "./bin/balena-lint"
+  },
   "main": "./build/balena-lint.js",
   "homepage": "https://github.com/balena-io-modules/node-balena-lint",
   "repository": {

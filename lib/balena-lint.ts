@@ -259,6 +259,7 @@ export const lint = async (passedParams: any) => {
 			'i',
 			'Ignore linting config files in project directory and its parents',
 		)
+		.describe('e', 'Override extensions to check, eg "-e js -e jsx"')
 		.boolean('typescript', 'Lint typescript files instead of coffeescript')
 		.boolean('fix', 'Attempt to automatically fix lint errors')
 		.boolean('no-prettier', 'Disables the prettier code format checks')
@@ -312,6 +313,10 @@ export const lint = async (passedParams: any) => {
 			? configurations.typescriptPrettier
 			: configurations.typescript
 		: configurations.coffeescript;
+
+	if (options.argv.e) {
+		lintConfiguration.extensions = options.argv.e;
+	}
 
 	if (options.argv.p) {
 		console.log(await readFileAsync(lintConfiguration.configPath, 'utf8'));

@@ -106,7 +106,7 @@ const findFiles = async (
 ): Promise<string[]> => {
 	const files: string[] = [];
 	await Promise.all(
-		paths.map(async p => {
+		paths.map(async (p) => {
 			if ((await statAsync(p)).isDirectory()) {
 				files.push(
 					...(await globAsync(`${p}/**/*.@(${extensions.join('|')})`)),
@@ -117,7 +117,7 @@ const findFiles = async (
 		}),
 	);
 
-	return files.map(p => path.join(p));
+	return files.map((p) => path.join(p));
 };
 
 const lintCoffeeFiles = async (
@@ -128,7 +128,7 @@ const lintCoffeeFiles = async (
 	const errorReport = new coffeelint.getErrorReport();
 
 	await Promise.all(
-		files.map(async file => {
+		files.map(async (file) => {
 			const source = await read(file);
 			errorReport.lint(file, source, config);
 		}),
@@ -145,7 +145,7 @@ const lintCoffeeFiles = async (
 	return errorReport.getExitCode();
 };
 
-const lintTsFiles = async function(
+const lintTsFiles = async function (
 	files: string[],
 	config: {},
 	prettierConfig: PrettierOptions | undefined,
@@ -158,7 +158,7 @@ const lintTsFiles = async function(
 	});
 
 	const exitCodes = await Promise.all(
-		files.map(async file => {
+		files.map(async (file) => {
 			let source = await read(file);
 			linter.lint(
 				file,
@@ -185,7 +185,7 @@ const lintTsFiles = async function(
 			return 0;
 		}),
 	);
-	const failureCode = exitCodes.find(exitCode => exitCode !== 0);
+	const failureCode = exitCodes.find((exitCode) => exitCode !== 0);
 	if (failureCode) {
 		return failureCode;
 	}
@@ -198,7 +198,7 @@ const lintTsFiles = async function(
 	return errorReport.errorCount === 0 ? 0 : 1;
 };
 
-const lintMochaTestFiles = async function(files: string[]): Promise<number> {
+const lintMochaTestFiles = async function (files: string[]): Promise<number> {
 	const { lintMochaTests } = await import('./mocha-tests-lint');
 	const res = await lintMochaTests(files);
 	if (res.isError) {
@@ -209,7 +209,7 @@ const lintMochaTestFiles = async function(files: string[]): Promise<number> {
 	return 0;
 };
 
-const runLint = async function(
+const runLint = async function (
 	lintConfig: LintConfig,
 	paths: string[],
 	config: {},

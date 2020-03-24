@@ -22,7 +22,7 @@ export async function lintMochaTests(
 
 	const readFile = promisify(fs.readFile);
 
-	const allCheckPromises = scripts.map(async scriptPath => {
+	const allCheckPromises = scripts.map(async (scriptPath) => {
 		const content = await readFile(scriptPath, 'utf8');
 		const lines = content.split('\n');
 		for (let ln = 0; ln < lines.length; ln++) {

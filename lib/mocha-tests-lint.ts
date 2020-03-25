@@ -1,5 +1,4 @@
-import * as fs from 'fs';
-import { promisify } from 'util';
+import { promises as fs } from 'fs';
 
 // Mocha tests linter results.
 // When isError is set to true, the message contains details about found errors.
@@ -20,10 +19,8 @@ export async function lintMochaTests(
 	let errorsFound = false;
 	let message = '';
 
-	const readFile = promisify(fs.readFile);
-
 	const allCheckPromises = scripts.map(async (scriptPath) => {
-		const content = await readFile(scriptPath, 'utf8');
+		const content = await fs.readFile(scriptPath, 'utf8');
 		const lines = content.split('\n');
 		for (let ln = 0; ln < lines.length; ln++) {
 			const res = checkPattern.exec(lines[ln]);

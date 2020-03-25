@@ -263,10 +263,7 @@ export const lint = async (passedParams: any) => {
 		.boolean('typescript', 'Lint typescript files instead of coffeescript')
 		.boolean('fix', 'Attempt to automatically fix lint errors')
 		.boolean('no-prettier', 'Disables the prettier code format checks')
-		.boolean(
-			'tests',
-			'Treat input files as test sources to perform extra relevant checks',
-		)
+		.boolean('notests', `Ignore test files and don't run extra checks on them`)
 		.boolean('u', 'Run unused import check');
 
 	if (options.argv._.length < 1 && !options.argv.p) {
@@ -305,7 +302,7 @@ export const lint = async (passedParams: any) => {
 	let configOverridePath;
 	// optimist converts all --no-xyz args to a argv.xyz === false
 	const prettierCheck = options.argv.prettier !== false;
-	const testsCheck = options.argv.tests === true;
+	const testsCheck = options.argv.notests !== true;
 	const typescriptCheck = options.argv.typescript;
 	const autoFix = options.argv.fix === true;
 	const lintConfiguration = typescriptCheck

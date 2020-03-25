@@ -13,10 +13,10 @@
   },
   "scripts": {
     "build": "tsc && npm run prettify && npm run lint",
-    "lint": "node ./bin/balena-lint --typescript lib/",
+    "lint": "node ./bin/balena-lint --typescript --notests lib/",
     "prepublish": "require-npm4-to-publish",
     "prepublishOnly": "npm run test",
-    "prettify": "node ./bin/balena-lint --typescript --fix lib/",
+    "prettify": "node ./bin/balena-lint --typescript --fix --notests lib/",
     "test": "npm run build && npm run test:coffeescript && npm run test:typescript && npm run test:typescript-no-prettier",
     "test:coffeescript": "node ./bin/balena-lint test/coffeescript -i",
     "test:typescript": "node ./bin/balena-lint test/typescript/prettier --typescript -i",

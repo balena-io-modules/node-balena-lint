@@ -1,22 +1,15 @@
 import { Options as PrettierOptions } from 'prettier';
 
-import * as fs from 'fs';
+import { promises as fs } from 'fs';
 import * as glob from 'glob';
 import * as optimist from 'optimist';
 import * as path from 'path';
 import * as tslint from 'tslint';
 import { promisify } from 'util';
 
-// TODO: Switch to using fs.promises when dropping node 8 support
-const realpathAsync = promisify(fs.realpath);
-const readFileAsync = promisify(fs.readFile);
-const accessAsync = promisify(fs.access);
-const statAsync = promisify(fs.stat);
-const writeFileAsync = promisify(fs.writeFile);
-
-const existsAsync = async (filename: string) => {
+const exists = async (filename: string) => {
 	try {
-		await accessAsync(filename);
+		await fs.access(filename);
 		return true;
 	} catch {
 		return false;
@@ -74,14 +67,14 @@ const getPackageJsonDir = async (dir: string): Promise<string> => {
 };
 
 const read = async (filepath: string): Promise<string> => {
-	const realPath = await realpathAsync(filepath);
-	return readFileAsync(realPath, 'utf8');
+	const realPath = await fs.realpath(filepath);
+	return fs.readFile(realPath, 'utf8');
 };
 
 const findFile = async (name: string, dir?: string): Promise<string | null> => {
 	dir = dir || process.cwd();
 	const filename = path.join(dir, name);
-	if (await existsAsync(filename)) {
+	if (await exists(filename)) {
 		return filename;
 	}
 	const parent = path.dirname(dir);
@@ -93,7 +86,7 @@ const findFile = async (name: string, dir?: string): Promise<string | null> => {
 
 const parseJSON = async (file: string): Promise<{}> => {
 	try {
-		return JSON.parse(await readFileAsync(file, 'utf8'));
+		return JSON.parse(await fs.readFile(file, 'utf8'));
 	} catch (err) {
 		console.error(`Could not parse ${file}`);
 		throw err;
@@ -107,7 +100,7 @@ const findFiles = async (
 	const files: string[] = [];
 	await Promise.all(
 		paths.map(async (p) => {
-			if ((await statAsync(p)).isDirectory()) {
+			if ((await fs.stat(p)).isDirectory()) {
 				files.push(
 					...(await globAsync(`${p}/**/*.@(${extensions.join('|')})`)),
 				);
@@ -170,7 +163,7 @@ const lintTsFiles = async function (
 					const newSource = prettier.format(source, prettierConfig);
 					if (source !== newSource) {
 						source = newSource;
-						await writeFileAsync(file, source);
+						await fs.writeFile(file, source);
 					}
 				} else {
 					const isPrettified = prettier.check(source, prettierConfig);
@@ -319,7 +312,7 @@ export const lint = async (passedParams: any) => {
 	}
 
 	if (options.argv.p) {
-		console.log(await readFileAsync(lintConfiguration.configPath, 'utf8'));
+		console.log(await fs.readFile(lintConfiguration.configPath, 'utf8'));
 		process.exit(0);
 	}
 
@@ -332,7 +325,7 @@ export const lint = async (passedParams: any) => {
 		: await parseJSON(lintConfiguration.configPath);
 
 	if (options.argv.f) {
-		configOverridePath = await realpathAsync(options.argv.f);
+		configOverridePath = await fs.realpath(options.argv.f);
 	}
 
 	if (!options.argv.i && !configOverridePath) {

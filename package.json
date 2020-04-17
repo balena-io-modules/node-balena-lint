@@ -32,9 +32,9 @@
   "dependencies": {
     "@types/glob": "^7.1.1",
     "@types/lodash": "^4.14.149",
-    "@types/node": "^10.17.17",
+    "@types/node": "^10.17.19",
     "@types/optimist": "0.0.29",
-    "@types/prettier": "^1.19.1",
+    "@types/prettier": "^2.0.0",
     "coffee-script": "^1.10.0",
     "coffeelint": "^1.15.0",
     "coffeescope2": "^0.4.5",
@@ -42,15 +42,15 @@
     "glob": "^7.1.6",
     "lodash": "^4.17.15",
     "optimist": "^0.6.1",
-    "prettier": "^2.0.2",
-    "tslint": "^6.1.0",
+    "prettier": "^2.0.4",
+    "tslint": "^6.1.1",
     "tslint-config-prettier": "^1.18.0",
     "tslint-no-unused-expression-chai": "^0.1.4",
     "typescript": "^3.8.3"
   },
   "devDependencies": {
-    "husky": "^4.2.3",
-    "lint-staged": "^10.0.9",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.1.4",
     "require-npm4-to-publish": "^1.0.0"
   },
   "husky": {

@@ -308,7 +308,9 @@ export const lint = async (passedParams: any) => {
 		: configurations.coffeescript;
 
 	if (options.argv.e) {
-		lintConfiguration.extensions = options.argv.e;
+		lintConfiguration.extensions = Array.isArray(options.argv.e)
+			? options.argv.e
+			: [options.argv.e];
 	}
 
 	if (options.argv.p) {

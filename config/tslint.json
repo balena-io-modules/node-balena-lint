@@ -24,7 +24,8 @@
 			"allow-leading-underscore",
 			"allow-pascal-case"
 		],
-		"array-type": [true, "array-simple"]
+		"array-type": [true, "array-simple"],
+		"curly": true
 	},
 	"jsRules": true
 }

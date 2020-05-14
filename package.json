@@ -1,6 +1,6 @@
 {
   "name": "@balena/lint",
-  "version": "5.0.6",
+  "version": "5.1.0",
   "description": "Balena.io tslint, coffeelint & coffeescope2 wrapper",
   "bin": {
     "balena-lint": "./bin/balena-lint"

@@ -153,12 +153,19 @@ const lintTsFiles = async function (
 	const exitCodes = await Promise.all(
 		files.map(async (file) => {
 			let source = await read(file);
+			const previousFixCount = linter.getResult().fixes?.length ?? 0;
 			linter.lint(
 				file,
 				source,
 				config as tslint.Configuration.IConfigurationFile,
 			);
 			if (prettier) {
+				const afterFixCount = linter.getResult().fixes?.length ?? 0;
+				if (previousFixCount !== afterFixCount) {
+					// If fixes were applied they were written directly to the file and we need to read it again
+					source = await read(file);
+				}
+
 				if (autoFix) {
 					const newSource = prettier.format(source, prettierConfig);
 					if (source !== newSource) {

@@ -193,7 +193,12 @@ const lintTsFiles = async function (
 	const errorReport = linter.getResult();
 
 	// Print the linter results
-	console.log(linter.getResult().output);
+	if (/\S/.test(errorReport.output)) {
+		console.log(errorReport.output);
+	}
+	console.log(
+		`${errorReport.errorCount} errors and ${errorReport.warningCount} warnings in ${exitCodes.length} files`,
+	);
 
 	return errorReport.errorCount === 0 ? 0 : 1;
 };

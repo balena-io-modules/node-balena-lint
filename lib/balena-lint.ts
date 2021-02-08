@@ -2,7 +2,7 @@ import { Options as PrettierOptions } from 'prettier';
 
 import { promises as fs } from 'fs';
 import * as glob from 'glob';
-import * as optimist from 'optimist';
+import yargs from 'yargs';
 import * as path from 'path';
 import * as tslint from 'tslint';
 import { promisify } from 'util';
@@ -253,26 +253,47 @@ const runLint = async function (
 };
 
 export const lint = async (passedParams: any) => {
-	const options = optimist(passedParams)
+	const options = yargs(passedParams)
 		.usage('Usage: balena-lint [options] [...]')
-		.describe(
-			'f',
-			'Specify a linting config file to extend and override balena-lint rules',
-		)
-		.describe('p', 'Print default balena-lint linting rules')
-		.describe(
-			'i',
-			'Ignore linting config files in project directory and its parents',
-		)
-		.describe('e', 'Override extensions to check, eg "-e js -e jsx"')
-		.boolean('typescript', 'Lint typescript files instead of coffeescript')
-		.boolean('fix', 'Attempt to automatically fix lint errors')
-		.boolean('no-prettier', 'Disables the prettier code format checks')
-		.boolean(
-			'tests',
-			'Treat input files as test sources to perform extra relevant checks',
-		)
-		.boolean('u', 'Run unused import check');
+		.option('f', {
+			describe:
+				'Specify a linting config file to extend and override balena-lint rules',
+			type: 'string',
+		})
+		.option('p', {
+			describe: 'Print default balena-lint linting rules',
+			type: 'boolean',
+		})
+		.option('i', {
+			describe:
+				'Ignore linting config files in project directory and its parents',
+			type: 'boolean',
+		})
+		.option('e', {
+			describe: 'Override extensions to check, eg "-e js -e jsx"',
+			type: 'string',
+		})
+		.option('typescript', {
+			describe: 'Lint typescript files instead of coffeescript',
+			type: 'boolean',
+		})
+		.option('fix', {
+			describe: 'Attempt to automatically fix lint errors',
+			type: 'boolean',
+		})
+		.option('no-prettier', {
+			describe: 'Disables the prettier code format checks',
+			type: 'boolean',
+		})
+		.option('tests', {
+			describe:
+				'Treat input files as test sources to perform extra relevant checks',
+			type: 'boolean',
+		})
+		.options('u', {
+			describe: 'Run unused import check',
+			type: 'boolean',
+		});
 
 	if (options.argv._.length < 1 && !options.argv.p) {
 		options.showHelp();
@@ -308,10 +329,9 @@ export const lint = async (passedParams: any) => {
 	}
 
 	let configOverridePath;
-	// optimist converts all --no-xyz args to a argv.xyz === false
-	const prettierCheck = options.argv.prettier !== false;
-	const testsCheck = options.argv.tests === true;
-	const typescriptCheck = options.argv.typescript;
+	const prettierCheck = options.argv.prettier === false ? false : true;
+	const testsCheck = options.argv.tests ? true : false;
+	const typescriptCheck = options.argv.typescript ? true : false;
 	const autoFix = options.argv.fix === true;
 	const lintConfiguration = typescriptCheck
 		? prettierCheck
@@ -363,7 +383,9 @@ export const lint = async (passedParams: any) => {
 		}
 	}
 
-	const paths = options.argv._;
+	const paths: string[] = options.argv._.map((element: any) => {
+		return element.toString();
+	});
 
 	lintConfiguration.prettierCheck = prettierCheck;
 	lintConfiguration.testsCheck = testsCheck;

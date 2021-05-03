@@ -100,7 +100,7 @@ For prettier config create `.prettierrc.js`
 ```js
 const fs = require('fs');
 
-module.exports = JSON.parse(fs.readFileSync('./node_modules/balena-lint/config/.prettierrc', 'utf8'));
+module.exports = JSON.parse(fs.readFileSync('./node_modules/@balena/lint/config/.prettierrc', 'utf8'));
 ```
 
 Support

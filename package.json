@@ -1,7 +1,7 @@
 {
   "name": "@balena/lint",
   "version": "5.4.2",
-  "description": "Balena.io tslint, coffeelint & coffeescope2 wrapper",
+  "description": "Balena.io tslint & prettier wrapper",
   "bin": {
     "balena-lint": "./bin/balena-lint"
   },
@@ -18,19 +18,19 @@
   ],
   "scripts": {
     "build": "tsc && npm run prettify && npm run lint",
-    "lint": "node ./bin/balena-lint --typescript lib/",
+    "lint": "node ./bin/balena-lint lib/",
     "prepublish": "require-npm4-to-publish",
     "prepublishOnly": "npm run test",
-    "prettify": "node ./bin/balena-lint --typescript --fix lib/",
-    "test": "npm run build && npm run test:coffeescript && npm run test:typescript && npm run test:typescript-no-prettier",
-    "test:coffeescript": "node ./bin/balena-lint test/coffeescript -i",
-    "test:typescript": "node ./bin/balena-lint test/typescript/prettier --typescript -i",
-    "test:typescript-no-prettier": "node ./bin/balena-lint test/typescript/no-prettier --typescript -i --no-prettier"
+    "prettify": "node ./bin/balena-lint --fix lib/",
+    "test": "npm run build && npm run test:typescript && npm run test:typescript-no-prettier",
+    "test:typescript": "node ./bin/balena-lint test/typescript/prettier -i",
+    "test:typescript-no-prettier": "node ./bin/balena-lint test/typescript/no-prettier -i --no-prettier"
   },
   "keywords": [
     "balena",
-    "coffeescript",
-    "coffeelint"
+    "lint",
+    "typescript",
+    "prettier"
   ],
   "author": "Balena.io. <hello@balena.io>",
   "license": "Apache 2.0",

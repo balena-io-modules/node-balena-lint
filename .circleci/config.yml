@@ -10,10 +10,6 @@ buildSteps: &buildSteps
       command: npm test --loglevel warn
 
 jobs:
-  node-10:
-    docker:
-      - image: circleci/node:10
-    steps: *buildSteps
 
   node-12:
     docker:
@@ -24,5 +20,4 @@ workflows:
   version: 2
   build:
     jobs:
-      - node-10
       - node-12

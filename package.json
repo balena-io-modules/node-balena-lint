@@ -5,12 +5,17 @@
   "bin": {
     "balena-lint": "./bin/balena-lint"
   },
-  "main": "./lib/balena-lint.js",
+  "main": "./build/balena-lint.js",
   "homepage": "https://github.com/balena-io-modules/node-balena-lint",
   "repository": {
     "type": "git",
     "url": "git@github.com:balena-io-modules/node-balena-lint"
   },
+  "files": [
+    "bin/",
+    "build/",
+    "config/"
+  ],
   "scripts": {
     "build": "tsc && npm run prettify && npm run lint",
     "lint": "node ./bin/balena-lint --typescript lib/",

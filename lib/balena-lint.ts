@@ -22,29 +22,20 @@ interface LintConfig {
 	configPath: string;
 	configFileName: string;
 	extensions: string[];
-	lang: 'coffeescript' | 'typescript';
 	prettierCheck?: boolean;
 	testsCheck?: boolean;
 }
 
 const configurations: { [key: string]: LintConfig } = {
-	coffeescript: {
-		configPath: path.join(__dirname, '../config/coffeelint.json'),
-		configFileName: 'coffeelint.json',
-		extensions: ['coffee'],
-		lang: 'coffeescript',
-	},
 	typescript: {
 		configPath: path.join(__dirname, '../config/tslint.json'),
 		configFileName: 'tslint.json',
 		extensions: ['ts', 'tsx'],
-		lang: 'typescript',
 	},
 	typescriptPrettier: {
 		configPath: path.join(__dirname, '../config/tslint-prettier.json'),
 		configFileName: 'tslint.json',
 		extensions: ['ts', 'tsx'],
-		lang: 'typescript',
 	},
 };
 
@@ -111,31 +102,6 @@ const findFiles = async (
 	);
 
 	return files.map((p) => path.join(p));
-};
-
-const lintCoffeeFiles = async (
-	files: string[],
-	config: {},
-): Promise<number> => {
-	const coffeelint: any = require('coffeelint');
-	const errorReport = new coffeelint.getErrorReport();
-
-	await Promise.all(
-		files.map(async (file) => {
-			const source = await read(file);
-			errorReport.lint(file, source, config);
-		}),
-	);
-
-	const reporter: any = require('coffeelint/lib/reporters/default');
-	const report = new reporter(errorReport, {
-		colorize: process.stdout.isTTY,
-		quiet: false,
-	});
-
-	report.publish();
-
-	return errorReport.getExitCode();
 };
 
 const lintTsFiles = async function (
@@ -223,24 +189,13 @@ const runLint = async function (
 	let linterExitCode: number | undefined;
 	const scripts = await findFiles(lintConfig.extensions, paths);
 
-	if (lintConfig.lang === 'typescript') {
-		let prettierConfig: PrettierOptions | undefined;
-		if (lintConfig.prettierCheck) {
-			prettierConfig = (await parseJSON(prettierConfigPath)) as PrettierOptions;
-			prettierConfig.parser = 'typescript';
-		}
-
-		linterExitCode = await lintTsFiles(
-			scripts,
-			config,
-			prettierConfig,
-			autoFix,
-		);
+	let prettierConfig: PrettierOptions | undefined;
+	if (lintConfig.prettierCheck) {
+		prettierConfig = (await parseJSON(prettierConfigPath)) as PrettierOptions;
+		prettierConfig.parser = 'typescript';
 	}
 
-	if (lintConfig.lang === 'coffeescript') {
-		linterExitCode = await lintCoffeeFiles(scripts, config);
-	}
+	linterExitCode = await lintTsFiles(scripts, config, prettierConfig, autoFix);
 
 	if (lintConfig.testsCheck) {
 		const testsExitCode = await lintMochaTestFiles(scripts);
@@ -272,10 +227,6 @@ export const lint = async (passedParams: any) => {
 		.option('e', {
 			describe: 'Override extensions to check, eg "-e js -e jsx"',
 			type: 'string',
-		})
-		.option('typescript', {
-			describe: 'Lint typescript files instead of coffeescript',
-			type: 'boolean',
 		})
 		.option('fix', {
 			describe: 'Attempt to automatically fix lint errors',
@@ -309,10 +260,7 @@ export const lint = async (passedParams: any) => {
 					ignoreMatches: [
 						'@types/*', // ignore typescript type declarations
 						'supervisor', // isn't used directly from source
-						'coffee-script', // Gives false positives
-						'coffeescript', // An alias
 						'colors', // Generally imported via colors/safe, which doesn't trigger depcheck
-						'coffeescope2',
 					],
 				});
 				if (dependencies.length > 0) {
@@ -331,13 +279,10 @@ export const lint = async (passedParams: any) => {
 	let configOverridePath;
 	const prettierCheck = options.argv.prettier === false ? false : true;
 	const testsCheck = options.argv.tests ? true : false;
-	const typescriptCheck = options.argv.typescript ? true : false;
 	const autoFix = options.argv.fix === true;
-	const lintConfiguration = typescriptCheck
-		? prettierCheck
-			? configurations.typescriptPrettier
-			: configurations.typescript
-		: configurations.coffeescript;
+	const lintConfiguration = prettierCheck
+		? configurations.typescriptPrettier
+		: configurations.typescript;
 
 	if (options.argv.e) {
 		lintConfiguration.extensions = Array.isArray(options.argv.e)
@@ -351,12 +296,9 @@ export const lint = async (passedParams: any) => {
 	}
 
 	// TSLint config needs to be loaded with `loadConfigurationFromPath`
-	// Coffeelint needs to be loaded as a plain file
-	let config: {} = typescriptCheck
-		? tslint.Configuration.loadConfigurationFromPath(
-				lintConfiguration.configPath,
-		  )
-		: await parseJSON(lintConfiguration.configPath);
+	let config: {} = tslint.Configuration.loadConfigurationFromPath(
+		lintConfiguration.configPath,
+	);
 
 	if (options.argv.f) {
 		configOverridePath = await fs.realpath(options.argv.f);
@@ -368,19 +310,12 @@ export const lint = async (passedParams: any) => {
 
 	if (configOverridePath) {
 		// Extend/override default config
-		if (typescriptCheck) {
-			const configOverride = tslint.Configuration.loadConfigurationFromPath(
-				configOverridePath,
-			);
-			config = tslint.Configuration.extendConfigurationFile(
-				config as tslint.Configuration.IConfigurationFile,
-				configOverride,
-			);
-		} else {
-			const configOverride = await parseJSON(configOverridePath);
-			const { merge } = await import('lodash');
-			config = merge(config, configOverride);
-		}
+		const configOverride =
+			tslint.Configuration.loadConfigurationFromPath(configOverridePath);
+		config = tslint.Configuration.extendConfigurationFile(
+			config as tslint.Configuration.IConfigurationFile,
+			configOverride,
+		);
 	}
 
 	const paths: string[] = options.argv._.map((element: any) => {

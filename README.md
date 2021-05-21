@@ -1,22 +1,21 @@
 @balena/lint
 ==========
 
-`@balena/lint` is a linter based on [coffeelint](https://github.com/clutchski/coffeelint),
-[coffeescope2](https://github.com/za-creature/coffeescope), [tslint](https://palantir.github.io/tslint/) and [prettier](https://github.com/prettier/prettier) to detect style errors based on balena.io coding guidelines.
+`@balena/lint` is a linter & formatter based on [tslint](https://palantir.github.io/tslint/) and [prettier](https://github.com/prettier/prettier) to detect style errors based on balena.io coding guidelines.
 
 Overview
 --------
 
-`@balena/lint` uses balena's `coffeelint.json`, `tslint.json` and `.prettierrc`.
-If a `coffeelint.json` or `tslint.json` is found in the to-be-linted project
+`@balena/lint` uses balena's `tslint.json` and `.prettierrc`.
+If a `tslint.json` is found in the to-be-linted project
 directory or its parents then the rules found in it will be merged with the default `@balena/lint` ones.
 Another way to to override the default balena lint rules is by specifying a configuration
 file with the `-f` parameter.
 
-## Typescript
+## Files checked
 
-By default, only `.coffee` files will be linted. `.ts` and `.tsx` files can be
-linted by using the `--typescript` parameter.
+By default`.ts` and `.tsx` files are linted. You can also specify additional file extensions to be parse by using the -e option.
+Eg: "-e js -e jsx"
 
 ## Prettier
 
@@ -33,7 +32,7 @@ You can use this module as:
 
   ```
   kostas@macbook:~/balena/test$ balena-lint src/
-    ✓ src/test.coffee
+    ✓ src/test.ts
 
     ✓ Ok! » 0 errors and 0 warnings in 1 file
   ```
@@ -55,7 +54,7 @@ You can use this module as:
   > test@1.0.0 lint /Users/kostas/balena/test
   > balena-lint src/ && echo "Done!"
 
-    ✓ src/test.coffee
+    ✓ src/test.ts
 
     ✓ Ok! » 0 errors and 0 warnings in 1 file
 
@@ -63,7 +62,7 @@ You can use this module as:
 
   ```
 
-3. A development dependency, that will get picked up by your IDE/Editor coffeelint/tslint/prettier.
+3. A development dependency, that will get picked up by your IDE/Editor tslint/prettier.
 
 Manually create these config files in your project root:
 
@@ -81,16 +80,6 @@ Manually create these config files in your project root:
 {
 	"extends": [
 		"balena-lint/config/tslint.json"
-	]
-}
-```
-
-For coffeelint create `coffeelint.json`
-
-```json
-{
-	"extends": [
-		"balena-lint/config/coffeelint.json"
 	]
 }
 ```

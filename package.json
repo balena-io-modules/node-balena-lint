@@ -1,6 +1,6 @@
 {
   "name": "@balena/lint",
-  "version": "6.1.0",
+  "version": "6.2.0",
   "description": "Balena.io tslint & prettier wrapper",
   "bin": {
     "balena-lint": "./bin/balena-lint"

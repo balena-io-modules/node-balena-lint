@@ -12,6 +12,7 @@
     "url": "git@github.com:balena-io-modules/node-balena-lint"
   },
   "files": [
+    "tsconfig.json",
     "bin/",
     "build/",
     "config/"

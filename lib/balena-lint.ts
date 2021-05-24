@@ -254,8 +254,8 @@ export const lint = async (passedParams: any) => {
 	if (options.argv.u) {
 		const depcheck = await import('depcheck');
 		await Promise.all(
-			options.argv._.map(async (dir: string) => {
-				dir = await getPackageJsonDir(dir);
+			options.argv._.map(async (dir) => {
+				dir = await getPackageJsonDir(`${dir}`);
 				const { dependencies } = await depcheck(path.resolve('./', dir), {
 					ignoreMatches: [
 						'@types/*', // ignore typescript type declarations

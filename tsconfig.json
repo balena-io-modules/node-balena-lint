@@ -1,16 +1,14 @@
 {
 	"compilerOptions": {
 		"module": "commonjs",
-		"target": "es2017",
+		"target": "es2019",
 		"outDir": "build",
-		"noImplicitAny": true,
+		"strict": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"preserveConstEnums": true,
 		"removeComments": true,
 		"sourceMap": true,
-		"strictNullChecks": true,
-		"allowJs": true,
 		"moduleResolution": "node",
 		"baseUrl": ".",
 	},

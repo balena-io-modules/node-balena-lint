@@ -37,12 +37,10 @@
   "license": "Apache 2.0",
   "dependencies": {
     "@types/glob": "^7.1.3",
-    "@types/lodash": "^4.14.169",
     "@types/node": "^12.20.13",
     "@types/prettier": "^2.2.3",
-    "depcheck": "^1.3.1",
-    "glob": "^7.1.6",
-    "lodash": "^4.17.21",
+    "depcheck": "^1.4.1",
+    "glob": "^7.1.7",
     "prettier": "^2.3.0",
     "tslint": "^6.1.3",
     "tslint-config-prettier": "^1.18.0",
@@ -51,9 +49,9 @@
     "yargs": "^16.2.0"
   },
   "devDependencies": {
-    "@types/yargs": "^16.0.0",
-    "husky": "^4.3.7",
-    "lint-staged": "^10.5.3",
+    "@types/yargs": "^16.0.3",
+    "husky": "^4.3.8",
+    "lint-staged": "^11.0.0",
     "require-npm4-to-publish": "^1.0.0"
   },
   "husky": {

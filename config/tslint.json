@@ -4,20 +4,21 @@
 		"tslint-no-unused-expression-chai"
 	],
 	"rules": {
+		"array-type": [true, "array-simple"],
+		"arrow-parens": false,
+		"ban-ts-ignore": true,
+		"curly": true,
 		"indent": [true, "tabs"],
+		"interface-name": false,
 		"jsdoc-format": true,
-		"whitespace": [false, "check-type"],
+		"max-classes-per-file": false,
+		"member-ordering": false,
+		"no-console": false,
+		"no-string-literal": false,
+		"no-var-requires": true,
 		"object-literal-sort-keys": false,
 		"only-arrow-functions": false,
 		"quotemark": [true, "single", "avoid-escape"],
-		"no-var-requires": true,
-		"arrow-parens": false,
-		"max-classes-per-file": false,
-		"ban-ts-ignore": true,
-		"no-console": false,
-		"no-string-literal": false,
-		"interface-name": false,
-		"member-ordering": false,
 		"variable-name": [
 			true,
 			"ban-keywords",
@@ -25,8 +26,7 @@
 			"allow-leading-underscore",
 			"allow-pascal-case"
 		],
-		"array-type": [true, "array-simple"],
-		"curly": true
+		"whitespace": [false, "check-type"]
 	},
 	"jsRules": true
 }

@@ -1,8 +1,8 @@
 {
 	"*.ts": [
-		"balena-lint --fix"
+		"node bin/balena-lint --fix"
 	],
 	"test/**/*.ts": [
-		"balena-lint --tests"
+		"node bin/balena-lint --tests"
 	]
 }

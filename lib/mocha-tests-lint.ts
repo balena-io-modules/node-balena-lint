@@ -34,7 +34,7 @@ export async function lintMochaTests(
 	try {
 		await Promise.all(allCheckPromises);
 		return new MochaListResult(errorsFound ? message : 'OK', errorsFound);
-	} catch (e) {
+	} catch (e: any) {
 		console.error(e);
 		return new MochaListResult(`Error reading input files: ${e.message}`, true);
 	}

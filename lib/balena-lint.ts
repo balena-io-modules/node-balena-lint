@@ -108,13 +108,19 @@ const lintTsFiles = async function (
 	files: string[],
 	config: {},
 	prettierConfig: PrettierOptions | undefined,
-	autoFix: boolean,
+	{ autoFix, tsconfig }: { autoFix: boolean; tsconfig?: string },
 ): Promise<number> {
 	const prettier = prettierConfig ? await import('prettier') : undefined;
-	const linter = new tslint.Linter({
-		fix: autoFix,
-		formatter: 'stylish',
-	});
+	const tsProgram = tsconfig
+		? tslint.Linter.createProgram(tsconfig)
+		: undefined;
+	const linter = new tslint.Linter(
+		{
+			fix: autoFix,
+			formatter: 'stylish',
+		},
+		tsProgram,
+	);
 
 	const exitCodes = await Promise.all(
 		files.map(async (file) => {
@@ -184,7 +190,7 @@ const runLint = async function (
 	lintConfig: LintConfig,
 	paths: string[],
 	config: {},
-	autoFix: boolean,
+	opts: { autoFix: boolean; tsconfig?: string },
 ) {
 	let linterExitCode: number | undefined;
 	const scripts = await findFiles(lintConfig.extensions, paths);
@@ -195,7 +201,7 @@ const runLint = async function (
 		prettierConfig.parser = 'typescript';
 	}
 
-	linterExitCode = await lintTsFiles(scripts, config, prettierConfig, autoFix);
+	linterExitCode = await lintTsFiles(scripts, config, prettierConfig, opts);
 
 	if (lintConfig.testsCheck) {
 		const testsExitCode = await lintMochaTestFiles(scripts);
@@ -241,6 +247,11 @@ export const lint = async (passedParams: any) => {
 				'Treat input files as test sources to perform extra relevant checks',
 			type: 'boolean',
 		})
+		.option('t', {
+			describe:
+				'Path to a tsconfig.json file to enable lint rules that rely on type information',
+			type: 'string',
+		})
 		.options('u', {
 			describe: 'Run unused import check',
 			type: 'boolean',
@@ -279,7 +290,6 @@ export const lint = async (passedParams: any) => {
 	let configOverridePath;
 	const prettierCheck = options.argv.prettier === false ? false : true;
 	const testsCheck = options.argv.tests ? true : false;
-	const autoFix = options.argv.fix === true;
 	const lintConfiguration = prettierCheck
 		? configurations.typescriptPrettier
 		: configurations.typescript;
@@ -324,5 +334,8 @@ export const lint = async (passedParams: any) => {
 
 	lintConfiguration.prettierCheck = prettierCheck;
 	lintConfiguration.testsCheck = testsCheck;
-	await runLint(lintConfiguration, paths, config, autoFix);
+	await runLint(lintConfiguration, paths, config, {
+		autoFix: options.argv.fix === true,
+		tsconfig: options.argv.t,
+	});
 };

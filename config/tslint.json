@@ -14,6 +14,7 @@
 		"max-classes-per-file": false,
 		"member-ordering": false,
 		"no-console": false,
+		"no-floating-promises": true,
 		"no-string-literal": false,
 		"no-var-requires": true,
 		"object-literal-sort-keys": false,

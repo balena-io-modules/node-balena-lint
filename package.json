@@ -19,10 +19,10 @@
   ],
   "scripts": {
     "build": "tsc && npm run prettify && npm run lint",
-    "lint": "node ./bin/balena-lint lib/",
+    "lint": "node ./bin/balena-lint -t tsconfig.json lib/",
     "prepublish": "require-npm4-to-publish",
     "prepublishOnly": "npm run test",
-    "prettify": "node ./bin/balena-lint --fix lib/",
+    "prettify": "node ./bin/balena-lint -t tsconfig.json --fix lib/",
     "test": "npm run build && npm run test:typescript && npm run test:typescript-no-prettier",
     "test:typescript": "node ./bin/balena-lint test/typescript/prettier -i",
     "test:typescript-no-prettier": "node ./bin/balena-lint test/typescript/no-prettier -i --no-prettier"

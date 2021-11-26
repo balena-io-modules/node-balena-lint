@@ -71,16 +71,16 @@ Manually create these config files in your project root:
 ```json
 // if using prettier in your project
 {
-	"extends": [
-		"balena-lint/config/tslint-prettier.json"
-	]
+  "extends": [
+    "./node_modules/@balena/lint/config/tslint-prettier.json"
+  ]
 }
 
 // plain TypeScript
 {
-	"extends": [
-		"balena-lint/config/tslint.json"
-	]
+  "extends": [
+    "./node_modules/@balena/lint/config/tslint.json"
+  ]
 }
 ```
 
@@ -90,6 +90,26 @@ For prettier config create `.prettierrc.js`
 const fs = require('fs');
 
 module.exports = JSON.parse(fs.readFileSync('./node_modules/@balena/lint/config/.prettierrc', 'utf8'));
+```
+
+Rules that require type information
+-----------------------------------
+
+Some linting rules such as `no-floating-promises` require Typescript type information.
+To enable these rules, use the `-t` option to point to your project's `tsconfig.json`
+file, if any. Without the `-t` option, those rules will be disabled but may still print
+a warning message such as:  
+`Warning: The 'no-floating-promises' rule requires type information.`  
+To prevent this warning message from being printed, override the rules by creating a
+`tslint.json` file as described in the previous sections. For example:
+
+```json
+{
+    "extends": "./node_modules/@balena/lint/config/tslint-prettier.json",
+    "rules": {
+        "no-floating-promises": false
+    }
+}
 ```
 
 Support

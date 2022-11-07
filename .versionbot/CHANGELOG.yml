@@ -1,0 +1,1072 @@
+- commits:
+    - subject: Switch to flowzone
+      hash: a0631bf59b6b8dda70fe2aed92f468817fbea476
+      body: |
+        Explicit mark node version >= 12.0.0
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: fisehara <harald@balena.io>
+        signed-off-by: fisehara <harald@balena.io>
+      author: fisehara
+  version: 6.2.1
+  title: ""
+  date: 2022-11-07T14:48:16.352Z
+- version: 6.2.0
+  date: 2021-11-26T15:42:29Z
+  commits:
+    - hash: 91630228a4c4eb944acc59cbc3ca3af48abb91c5
+      author: Paulo Castro
+      footers:
+        change-type: patch
+      subject: Reorder lint rules alphabetically in config/tslint.json
+      body: null
+    - hash: 4c09f69df2ff0339be0d97ea8d6bd231a90bf26f
+      author: Paulo Castro
+      footers:
+        change-type: minor
+      subject: Add '-t tsconfig.json' flag and 'no-floating-promises' rule
+      body: null
+- version: 6.1.1
+- date: 2021-05-24T11:17:37Z
+- commits:
+    - hash: 628bbf537f490065a552f4cd49ec75ae29f217ee
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Remove unused lodash dependency
+- commits:
+    - body: null
+- commits:
+    - hash: aa49bc22422593ee6fd13fcf144ef5ee9fedbd3a
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Enable typescript strict mdoe
+- commits:
+    - body: null
+- commits:
+    - hash: f6ab8bb1ae563ef53dcf1b4ae1023c1cfa4fc154
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Update target to es2019 to match nodejs 12 support
+- commits:
+    - body: null
+- version: 6.1.0
+- date: 2021-05-24T08:42:43Z
+- commits:
+    - hash: b57dd26f1b60027bd17d0cfb400c34a0a1336f5b
+- commits:
+    - author: Graham McCulloch
+- commits:
+    - footers:
+        change-type: minor
+- commits:
+    - footers:
+        signed-off-by: Graham McCulloch <graham@balena.io>
+- commits:
+    - subject: Include tsconfig settings in published package
+- commits:
+    - body: These tsconfig should form the base settings from which other repo's
+        tsconfig files extend.
+- version: 6.0.0
+- date: 2021-05-21T17:39:11Z
+- commits:
+    - hash: fc1e3fd1c269b581fd849f7caf17e42b6666b71a
+- commits:
+    - author: Thodoris Greasidis
+- commits:
+    - footers:
+        change-type: major
+- commits:
+    - footers:
+        see: https://www.flowdock.com/app/rulemotion/resin-tech/threads/gVhp-OIhg1-KB56GDTMTFrvMMAD
+- commits:
+    - footers:
+        signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+- commits:
+    - subject: Ban ts-ignore in favor or ts-expect-error
+- commits:
+    - body: Major since this requires TS 3.9.
+- commits:
+    - hash: 52dd1a5c6d50bdba91b8f9dc24fe19600fbfe02b
+- commits:
+    - author: Thodoris Greasidis
+- commits:
+    - footers:
+        change-type: major
+- commits:
+    - subject: Stop actively supporting EOL node v10
+- commits:
+    - body: null
+- commits:
+    - hash: f8d4cdd2c8b92a798c9a05f218b015986715f48b
+- commits:
+    - author: Thodoris Greasidis
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Build into a build/ folder and limit published files
+- commits:
+    - body: null
+- commits:
+    - hash: 506bace06604b95f24a2264ad56e94723c749c18
+- commits:
+    - author: Thodoris Greasidis
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Update dependencies
+- commits:
+    - body: null
+- commits:
+    - hash: 5f05694c84a74eb10abb93033f8d51e56b9cacfd
+- commits:
+    - author: Thodoris Greasidis
+- commits:
+    - footers:
+        change-type: major
+- commits:
+    - subject: Drop coffeescript support making TS the default
+- commits:
+    - body: null
+- commits:
+    - hash: 8b79eaab2ca60545781ed7a9511804e166038f7a
+- commits:
+    - author: Thodoris Greasidis
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+- commits:
+    - subject: Drop circle-ci test configs in favor of balena-ci
+- commits:
+    - body: null
+- version: 5.4.2
+- date: 2021-05-03T09:28:11Z
+- commits:
+    - hash: af61f99c3b8233cf476b84d011196b521e35d283
+- commits:
+    - author: Vipul Gupta
+- commits:
+    - subject: "patch: Change `.prettierrc` path to use scoped package structure"
+- commits:
+    - body: Since balena-lint is and should be installed as a scoped package. The path
+        to the `prettierrc` file needed to be used also needs to change to
+        represent the changes.
+- version: 5.4.1
+- date: 2021-02-08T12:49:38Z
+- commits:
+    - hash: 86e3aeb46deabd936ed3977783cfb28c81696729
+- commits:
+    - author: Josh Bowling
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Josh Bowling <josh@balena.io>
+- commits:
+    - subject: Replace deprecated optimist with yargs
+- commits:
+    - body: null
+- version: 5.4.0
+- date: 2021-01-18T13:02:13Z
+- commits:
+    - hash: 373b5b695fb3ad16ff075bdc9da2105db3771b4c
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: minor
+- commits:
+    - subject: Add a summary report for typescript linting
+- commits:
+    - body: null
+- version: 5.3.0
+- date: 2020-11-20T12:49:14Z
+- commits:
+    - hash: 15e8957e364f23196305a499f1fbd391d4947a1e
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: minor
+- commits:
+    - subject: Update dependencies, guaranteeing support for typescript 4.1
+- commits:
+    - body: null
+- version: 5.2.1
+- date: 2020-10-07T17:01:37Z
+- commits:
+    - hash: 86caacd4d5473c918bc64419232da1a8607417b3
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Update deps and fix main entry
+- commits:
+    - body: null
+- version: 5.2.0
+- date: 2020-08-24T12:00:10Z
+- commits:
+    - hash: 646861c0905efe19a9fd0a8e40d60444b9d1d1b2
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: minor
+- commits:
+    - subject: Update dependencies, ensuring typescript 4.0 support
+- commits:
+    - body: null
+- version: 5.1.0
+- date: 2020-05-14T21:09:34Z
+- commits:
+    - hash: 29a4f137c5f1e2beb50b31252b9f80db03516712
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: minor
+- commits:
+    - subject: Enforce curly braces for if statements
+- commits:
+    - body: null
+- version: 5.0.6
+- date: 2020-05-14T19:53:37Z
+- commits:
+    - hash: 64b0014957c8cc3657f79e3790b95f5326fa18d6
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Fix overwriting tslint fixes when also applying prettier fixes
+- commits:
+    - body: null
+- version: 5.0.5
+- date: 2020-05-14T16:23:59Z
+- commits:
+    - hash: a4c3e68bc266e3ca57e76da6bcdd75a692cd136e
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Update dependencies
+- commits:
+    - body: null
+- version: 5.0.4
+- date: 2020-04-20T15:05:53Z
+- commits:
+    - hash: f85acea5696dc29aa3b9667ec5632564032b85ed
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Fix error when only one extension argument is provided
+- commits:
+    - body: null
+- version: 5.0.3
+- date: 2020-04-17T16:12:10Z
+- commits:
+    - hash: cb7616afa56f2eb58da39b3f3544bbe47b6ef8cf
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Update dependencies
+- commits:
+    - body: null
+- version: 5.0.2
+- date: 2020-03-25T16:30:26Z
+- commits:
+    - hash: 03bdbaa34d11587c0ef3634efe046adec676c023
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Remove @types/depcheck stub types
+- commits:
+    - body: null
+- commits:
+    - hash: 1cf325d3cc76467920a9e35e24ddacf70535c9db
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Switch to fs.promises since we've dropped node 8 support
+- commits:
+    - body: null
+- version: 5.0.1
+- date: 2020-03-25T15:50:13Z
+- commits:
+    - hash: 6cace8d16f30436f580063b8fa5a692b648d1ec3
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Revert unintended change to `array-type` linting
+- commits:
+    - body: null
+- version: 5.0.0
+- date: 2020-03-24T19:13:51Z
+- commits:
+    - hash: 752d96229cd75b54ebd4db7da8f379bb5f9d3c87
+- commits:
+    - author: Will Boyce
+- commits:
+    - footers:
+        change-type: major
+- commits:
+    - footers:
+        signed-off-by: Will Boyce <will@balena.io>
+- commits:
+    - subject: "prettier: update to 2.0"
+- commits:
+    - body: null
+- version: 4.1.1
+- date: 2020-03-24T17:07:12Z
+- commits:
+    - hash: a18d4a961ccac4c9407d9f5278c5ce850b6e1fa9
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Remove circleci publishing in favour of balenaCI
+- commits:
+    - body: null
+- version: 4.1.0
+- date: 2020-03-23T17:13:55Z
+- commits:
+    - hash: d50b43070f85f05930ffd2cc6587c1518d09940f
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: minor
+- commits:
+    - subject: Add support for linting javascript by specifying extensions
+- commits:
+    - body: null
+- version: 4.0.1
+- date: 2020-03-18T11:12:42Z
+- commits:
+    - hash: f3e09971ce17cfa44b469a54c8be2a2a1f38e063
+- commits:
+    - author: Lucian Buzzo
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Lucian Buzzo <lucian.buzzo@gmail.com>
+- commits:
+    - subject: Fix balena-lint bin command
+- commits:
+    - body: null
+- version: 4.0.0
+- date: 2020-03-17T19:26:20Z
+- commits:
+    - hash: a23dbc7164deff649668a521dcb3da137dac5a3b
+- commits:
+    - author: Lucian Buzzo
+- commits:
+    - footers:
+        change-type: major
+- commits:
+    - footers:
+        signed-off-by: Lucian Buzzo <lucian.buzzo@gmail.com>
+- commits:
+    - subject: Rename to balena-lint
+- commits:
+    - body: null
+- version: 3.3.1
+- date: 2020-02-24T19:47:32Z
+- commits:
+    - hash: 3eb7285b26fa44522a7e698eb166b495ee9bf990
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Fix exit code for non-prettified files
+- commits:
+    - body: null
+- version: 3.3.0
+- date: 2020-02-10T16:40:26Z
+- commits:
+    - hash: cdaffb5d305641e950514c107b83eca6501db90e
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Avoid unnecessary toString calls from fs operations
+- commits:
+    - body: null
+- commits:
+    - hash: c426c10b02eb7434f391de463a57376cf3c26b9f
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Switch to async fs calls
+- commits:
+    - body: null
+- commits:
+    - hash: 1297fe493f581a699e649cf570e4176ee7ec47a6
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: minor
+- commits:
+    - subject: Parallelize file reading/linting where possible
+- commits:
+    - body: null
+- commits:
+    - hash: cd25f1571c5dc567f6388d5affe167d2cb6bff60
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: minor
+- commits:
+    - subject: Allow globbing in parallel
+- commits:
+    - body: null
+- commits:
+    - hash: 58e393d92c2b6dbb7155e0b112f11278fe7bde88
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Use fs.access instead of the deprecated fs.exists
+- commits:
+    - body: null
+- version: 3.2.4
+- date: 2020-02-05T15:00:02Z
+- commits:
+    - hash: de71741db788eca077fd3c7fb261c757679e259e
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Add node 12 to the test matrix
+- commits:
+    - body: null
+- commits:
+    - hash: 176fb61a475a041d14f6cec047012d94f5e904cb
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Ignore all js/map files in lib
+- commits:
+    - body: null
+- commits:
+    - hash: c203fad69054ba95be78a62b56addaa26e60896b
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Remove unnecessary coffeescript linting of lib
+- commits:
+    - body: null
+- commits:
+    - hash: 9f4234103d33a6e6dadb7dda194dfac8ea7624a6
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Use an npmrc to disable package lock creation
+- commits:
+    - body: null
+- commits:
+    - hash: 83fe9841b20818c23c902535f333a2e3a4f2a0c7
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Add automatic linting on commit
+- commits:
+    - body: null
+- commits:
+    - hash: b75af2c073ec38996b2731bb295f054821b25d92
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Remove node 6 from the test matrix
+- commits:
+    - body: null
+- version: 3.2.3
+- date: 2020-02-04T17:03:45Z
+- commits:
+    - hash: 989b6768e67b1e42427de4eb2faa69048e3151a2
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Run prettier after tslint so that we can also prettify any autofixes
+- commits:
+    - body: null
+- commits:
+    - hash: aef84301f71d0861ea3289a467d9ac04e40e5415
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Only run the prettier check if we did not automatically prettify it
+- commits:
+    - body: null
+- version: 3.2.2
+- date: 2020-02-04T16:32:28Z
+- commits:
+    - hash: db295c7f188b7a0a7157bfa0c4bb5224b85140bc
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Convert to async/await
+- commits:
+    - body: null
+- commits:
+    - hash: 36e13b0e820e016833beb613a8c5866515781da4
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Remove bluebird dependency
+- commits:
+    - body: null
+- version: 3.2.1
+- date: 2020-02-04T13:34:56Z
+- commits:
+    - hash: 67462fed9b84e652e8d1bc7a0716cc883b71c82c
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Lazy load coffeelint
+- commits:
+    - body: null
+- commits:
+    - hash: ac3b07f4f9325df10e67a30f21c599f0e1688780
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Lazy load prettier
+- commits:
+    - body: null
+- commits:
+    - hash: 43b1d719cef84eec9549ce5ba900a4da46e6b4d7
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Lazy load depcheck
+- commits:
+    - body: null
+- commits:
+    - hash: bc481980a26c2da00ec5a6d225d3422cef554daf
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - subject: Avoid importing tslint type via nested path
+- commits:
+    - body: null
+- commits:
+    - hash: d60800b08f3ca8a4d61a7bd4d97af9561e7570c0
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Lazy load mocha-tests-lint
+- commits:
+    - body: null
+- commits:
+    - hash: 3f2d8de105e6f08a8b568cee7b8bcec75dbba99d
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Lazy load lodash
+- commits:
+    - body: null
+- version: 3.2.0
+- date: 2020-01-27T15:26:33Z
+- commits:
+    - hash: 8abb8e4315931d9b3729e49a544abc9114607762
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: minor
+- commits:
+    - subject: Add support for automatically fixing linting errors with `--fix`
+- commits:
+    - body: null
+- version: 3.1.1
+- date: 2019-11-10T19:11:46Z
+- commits:
+    - hash: 2f949860f3c86b4be1959100a430ad641525c3b7
+- commits:
+    - author: Theodor Gherzan
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Theodor Gherzan <theodor@balena.io>
+- commits:
+    - subject: Upgrade prettier to support typescript 3.7 syntax
+- commits:
+    - body: null
+- version: 3.1.0
+- date: 2019-07-08T15:18:06Z
+- commits:
+    - hash: e85abc4409c642cf73c6c3e2a0df48efea75f08d
+- commits:
+    - author: Roman Mazur
+- commits:
+    - footers:
+        change-type: minor
+- commits:
+    - footers:
+        signed-off-by: Roman Mazur <roman@balena.io>
+- commits:
+    - subject: Add mocha tests linting
+- commits:
+    - body: null
+- version: 3.0.4
+- date: 2019-05-13T18:12:02Z
+- commits:
+    - hash: 90c5dbc0afec7bf632078e765332781117f2b15e
+- commits:
+    - author: dt-rush
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Nick Payne <nickp@balena.io>
+- commits:
+    - subject: moved chai exception from last release into proper tslint.json
+- commits:
+    - body: null
+- version: 3.0.3
+- date: 2019-05-13T13:59:31Z
+- commits:
+    - hash: 4d25520faf9429a6252e2dd11897ff27ace8ec00
+- commits:
+    - author: dt-rush
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Nick Payne <nickp@balena.io>
+- commits:
+    - subject: add exception for 'no unused expression' for chai test syntax
+- commits:
+    - body: null
+- version: 3.0.2
+- date: 2019-04-12T14:34:02Z
+- commits:
+    - hash: 5a4fc1b938d33c10e1c4e891ed14b5341238cdb6
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Handle failures more gracefully than an `UnhandledPromiseRejection`
+- commits:
+    - body: null
+- version: 3.0.1
+- date: 2019-02-27T13:01:13Z
+- commits:
+    - hash: 5e637bcf2e12efb5e3f44fbda1d3fddcaa02b4fd
+- commits:
+    - author: Cameron Diver
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Cameron Diver <cameron@balena.io>
+- commits:
+    - subject: Remove member-ordering flag
+- commits:
+    - body: |-
+        This requires private methods to be at the top of the file, which makes
+        no sense when somebody might be looking at the code. They're going to
+        want to see the public methods in most cases so it makes sense to have
+        those at the top.
+- version: 3.0.0
+- date: 2019-02-19T11:52:35Z
+- commits:
+    - hash: 79a4f5e196df1169352d56678447b4bbe4f86fb7
+- commits:
+    - author: Jakub Mikulas
+- commits:
+    - footers:
+        change-type: major
+- commits:
+    - footers:
+        signed-off-by: Jakub Mikulas <jakub@balena.io>
+- commits:
+    - subject: "feat: sync tslint with balena/process"
+- commits:
+    - body: null
+- commits:
+    - hash: c51e0dd98199bf8f695c12e7db19681557e5676c
+- commits:
+    - author: Jakub Mikulas
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Jakub Mikulas <jakub@balena.io>
+- commits:
+    - subject: "feat: add linting rules for the library"
+- commits:
+    - body: null
+- commits:
+    - hash: 5a5fabe1fb009fcbdb09486bfa602d86670a8c17
+- commits:
+    - author: Jakub Mikulas
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Jakub Mikulas <jakub@balena.io>
+- commits:
+    - subject: "fix: tslint extending"
+- commits:
+    - body: null
+- commits:
+    - hash: b2bbdf74f81ab8704dc037634ff10b1eb27217a6
+- commits:
+    - author: Jakub Mikulas
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Jakub Mikulas <jakub@balena.io>
+- commits:
+    - subject: "style: formatting"
+- commits:
+    - body: null
+- commits:
+    - hash: 717412e74ceaaee783f862986106b9eeb37249d2
+- commits:
+    - author: Jakub Mikulas
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Jakub Mikulas <jakub@balena.io>
+- commits:
+    - subject: "docs: update usage readme"
+- commits:
+    - body: null
+- commits:
+    - hash: a076946180985689333e3f3925d618a7dfdbd654
+- commits:
+    - author: Jakub Mikulas
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Jakub Mikulas <jakub@balena.io>
+- commits:
+    - subject: "chore: remove node-4 CI tests"
+- commits:
+    - body: null
+- version: 2.0.1
+- date: 2018-09-17T06:17:25Z
+- commits:
+    - hash: 7c85adb654570a9da16221cfdcc61f53dfcaa160
+- commits:
+    - author: Thodoris Greasidis
+- commits:
+    - footers:
+        resolves: "#28"
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Thodoris Greasidis <thodoris@resin.io>
+- commits:
+    - subject: Fix --no-prettier arg
+- commits:
+    - body: null
+- version: 2.0.0
+- date: 2018-08-31T10:49:48Z
+- commits:
+    - hash: ac145a4476c37487e3a4179f563edf4e4fc19504
+- commits:
+    - author: Thodoris Greasidis
+- commits:
+    - footers:
+        connects-to: "#25"
+- commits:
+    - footers:
+        change-type: major
+- commits:
+    - footers:
+        signed-off-by: Thodoris Greasidis <thodoris@resin.io>
+- commits:
+    - subject: Add support for prettier code format checks
+- commits:
+    - body: |-
+        Adds tslint-config-prettier to the tslint rules so that resin-lint
+        can be used along with prettier.
+        Removes the tslint rules that tslint-config-prettier takes care of.
+        Adds prettier format check along with the TS linting step.
+- commits:
+    - hash: b76d80e37fed173da2bc9e2fe17c6eab59fbb469
+- commits:
+    - author: Thodoris Greasidis
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - footers:
+        signed-off-by: Thodoris Greasidis <thodoris@resin.io>
+- commits:
+    - subject: Run prettier on the repo source as part of the lint step
+- commits:
+    - body: null
+- version: 1.5.7
+- date: 2018-05-01T19:12:18Z
+- commits:
+    - hash: 3b67d3dda5fb73277566f768202507e345370633
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Readd node 4 compatibility
+- commits:
+    - body: null
+- version: 1.5.6
+- date: 2018-05-01T18:58:17Z
+- commits:
+    - hash: fa377555d90b763a5fe61ba9c98cb7a5c263a957
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Move typescript to dependencies as tslint requires it but does not
+        install itself
+- commits:
+    - body: null
+- version: 1.5.5
+- date: 2018-05-01T18:52:38Z
+- commits:
+    - hash: fa2dbf63c4b33ce470b0ca7a39ba232ed710ea03
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Fix typescript types and compile on publish rather than at runtime.
+- commits:
+    - body: null
+- version: 1.5.4
+- date: 2018-05-01T17:29:40Z
+- commits:
+    - hash: 24ebcbfd73d0894b934eb1bb3477d44b2d5ccd09
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Restore compatibility with previously support node versions.
+- commits:
+    - body: null
+- version: 1.5.3
+- date: 2018-05-01T17:20:28Z
+- commits:
+    - hash: ac8db58ddc3416b999ee25d0f119ec8b3ae19ab1
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Add circleci tests and auto-publishing
+- commits:
+    - body: null
+- version: 1.5.2
+- date: 2018-02-17T01:39:41Z
+- commits:
+    - hash: 373a7181e99d7d59524f494ae8ee5a227c288e2d
+- commits:
+    - author: Pagan Gazzard
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Fix the `--typescript` option swallowing the first input after it
+- commits:
+    - body: Previously `resin-lint --typescript src test` would only recognise `test`
+        as a target directory
+- version: 1.5.1
+- date: 2018-01-05T11:33:50Z
+- commits:
+    - hash: 44d0e69ee60625c49899290ef0b72725568352be
+- commits:
+    - author: Lucian Buzzo
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Convert project to TypeScript
+- commits:
+    - body: "Connects to #14"
+- version: 1.5.0
+- date: 2017-12-22T14:31:39Z
+- commits:
+    - hash: f60a58d5a017ac0d56dca1a71e4c1a82556f4597
+- commits:
+    - author: Lucian Buzzo
+- commits:
+    - subject: Prepping repo for VersionBot
+- commits:
+    - body: null
+- commits:
+    - hash: faa74068c54d4563248d019665ad7566c88f2ebd
+- commits:
+    - author: Lucian Buzzo
+- commits:
+    - footers:
+        change-type: minor
+- commits:
+    - subject: Add support for linting .ts and .tsx files
+- commits:
+    - body: "Connects to #3"
+- commits:
+    - hash: a473abad8b737e6d6dc4d971726975eb26e19d70
+- commits:
+    - author: Cameron Diver
+- commits:
+    - footers:
+        change-type: minor
+- commits:
+    - footers:
+        signed-off-by: Cameron Diver <cameron@resin.io>
+- commits:
+    - subject: Add depcheck to find unused dependencies at lint-time
+- commits:
+    - body: null
+- version: 1.4.2
+- date: 2017-06-08T08:08:18Z
+- commits:
+    - hash: a1cf71fc36f51e6d41bc6a696fa93e7d4747b90a
+- commits:
+    - author: Kostas Lekkas
+- commits:
+    - subject: Bump coffeescope2
+- commits:
+    - body: >-
+        Due to a coffeescope2 regression in 1.11 some scoping errors might not
+        have been
+
+        caught
+- version: 1.4.1
+- date: 2017-06-07T07:51:22Z
+- commits:
+    - hash: 4f17f59dc846854bb48e30096f4ad3e902dc9477
+- commits:
+    - author: Kostas Lekkas
+- commits:
+    - footers:
+        change-type: patch
+- commits:
+    - subject: Migrate project to node-resin-lint repo
+- commits:
+    - body: null

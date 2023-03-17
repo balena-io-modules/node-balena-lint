@@ -1,4 +1,15 @@
 - commits:
+    - subject: Update TypeScript to 5.0.2
+      hash: 88f9cbb440873c9245d3aee077575ba871c29d48
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Thodoris Greasidis
+  version: 6.2.2
+  title: ""
+  date: 2023-03-17T10:21:45.162Z
+- commits:
     - subject: Switch to flowzone
       hash: a0631bf59b6b8dda70fe2aed92f468817fbea476
       body: |

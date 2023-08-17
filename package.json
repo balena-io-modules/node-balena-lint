@@ -23,9 +23,8 @@
     "prepublish": "require-npm4-to-publish",
     "prepublishOnly": "npm run test",
     "prettify": "node ./bin/balena-lint -t tsconfig.json --fix lib/",
-    "test": "npm run build && npm run test:typescript && npm run test:typescript-no-prettier",
-    "test:typescript": "node ./bin/balena-lint -t tsconfig.test.json test/typescript/prettier -i",
-    "test:typescript-no-prettier": "node ./bin/balena-lint -t tsconfig.test.json test/typescript/no-prettier -i --no-prettier"
+    "test": "npm run build && npm run test:typescript",
+    "test:typescript": "node ./bin/balena-lint -t tsconfig.test.json test/typescript/prettier -i"
   },
   "keywords": [
     "balena",

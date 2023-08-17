@@ -1,5 +1,4 @@
-import { Options as PrettierOptions } from 'prettier';
-
+import * as prettier from 'prettier';
 import { promises as fs } from 'fs';
 import * as glob from 'glob';
 import yargs from 'yargs';
@@ -22,21 +21,13 @@ interface LintConfig {
 	configPath: string;
 	configFileName: string;
 	extensions: string[];
-	prettierCheck?: boolean;
 	testsCheck?: boolean;
 }
 
-const configurations: { [key: string]: LintConfig } = {
-	typescript: {
-		configPath: path.join(__dirname, '../config/.eslintrc.js'),
-		configFileName: '.eslintrc.js',
-		extensions: ['ts', 'tsx'],
-	},
-	typescriptPrettier: {
-		configPath: path.join(__dirname, '../config/.eslintrc-prettier.js'),
-		configFileName: '.eslintrc.js',
-		extensions: ['ts', 'tsx'],
-	},
+const lintConfiguration: LintConfig = {
+	configPath: path.join(__dirname, '../config/.eslintrc.js'),
+	configFileName: '.eslintrc.js',
+	extensions: ['ts', 'tsx'],
 };
 
 const prettierConfigPath = path.join(__dirname, '../config/.prettierrc');
@@ -113,7 +104,6 @@ const lintTsFiles = async function (
 	config: LintTsFilesOptions,
 	prettierConfig: prettier.Options | undefined,
 ): Promise<number> {
-	const prettier = prettierConfig ? await import('prettier') : undefined;
 	const linter = new ESLint(config);
 
 	const totalResults: ESLint.LintResult[] = [];
@@ -135,26 +125,23 @@ const lintTsFiles = async function (
 			};
 
 			const source = await read(file);
-			if (prettier != null) {
-				if (config.fix) {
-					const newSource = await prettier.format(source, prettierConfigWithPath);
-					if (source !== newSource) {
-						await fs.writeFile(file, newSource);
-					}
-				} else {
-					const isPrettified = await prettier.check(
-						source,
-						prettierConfigWithPath,
-					);
-					if (!isPrettified) {
-						unformattedFiles.push(file);
-						console.log(
-							`Error: File ${file} hasn't been formatted with prettier`,
-						);
-						return 1;
-					}
+			if (config.fix) {
+				const newSource = await prettier.format(source, prettierConfigWithPath);
+				if (source !== newSource) {
+					await fs.writeFile(file, newSource);
 				}
-				return 0;
+			} else {
+				const isPrettified = await prettier.check(
+					source,
+					prettierConfigWithPath,
+				);
+				if (!isPrettified) {
+					unformattedFiles.push(file);
+					console.log(
+						`Error: File ${file} hasn't been formatted with prettier`,
+					);
+					return 1;
+				}
 			}
 			return 0;
 		}),
@@ -189,11 +176,10 @@ const runLint = async function (
 	let linterExitCode: number | undefined;
 	const scripts = await findFiles(lintConfig.extensions, paths);
 
-	let prettierConfig: PrettierOptions | undefined;
-	if (lintConfig.prettierCheck) {
-		prettierConfig = (await parseJSON(prettierConfigPath)) as PrettierOptions;
-		prettierConfig.parser = 'typescript';
-	}
+	const prettierConfig = (await parseJSON(
+		prettierConfigPath,
+	)) as prettier.Options;
+	prettierConfig.parser = 'typescript';
 
 	linterExitCode = await lintTsFiles(scripts, config, prettierConfig);
 
@@ -230,10 +216,6 @@ export const lint = async (passedParams: any) => {
 		})
 		.option('fix', {
 			describe: 'Attempt to automatically fix lint errors',
-			type: 'boolean',
-		})
-		.option('no-prettier', {
-			describe: 'Disables the prettier code format checks',
 			type: 'boolean',
 		})
 		.option('tests', {
@@ -281,11 +263,7 @@ export const lint = async (passedParams: any) => {
 		);
 	}
 
-	const prettierCheck = options.argv.prettier === false ? false : true;
 	lintConfiguration.testsCheck = !!options.argv.tests;
-	const lintConfiguration = prettierCheck
-		? configurations.typescriptPrettier
-		: configurations.typescript;
 
 	if (options.argv.e) {
 		lintConfiguration.extensions = Array.isArray(options.argv.e)
@@ -327,6 +305,5 @@ export const lint = async (passedParams: any) => {
 		return element.toString();
 	});
 
-	lintConfiguration.prettierCheck = prettierCheck;
 	await runLint(lintConfiguration, paths, lintOptions);
 };

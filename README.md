@@ -21,7 +21,6 @@ Eg: "-e js -e jsx"
 
 You can reference the prettier configuration file to your consumer project
 from `./config/.prettierrc`.
-You can disable the prettier format checks by using the `--no-prettier` parameter.
 
 Usage
 -----
@@ -69,14 +68,6 @@ Manually create these config files in your project root:
 `.eslintrc.js`
 
 ```js
-// if using prettier in your project
-{
-  "extends": [
-    "./node_modules/@balena/lint/config/.eslintrc-prettier.js"
-  ]
-}
-
-// plain TypeScript
 {
   "extends": [
     "./node_modules/@balena/lint/config/.eslintrc.js"

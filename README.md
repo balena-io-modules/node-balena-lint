@@ -1,13 +1,13 @@
 @balena/lint
 ==========
 
-`@balena/lint` is a linter & formatter based on [tslint](https://palantir.github.io/tslint/) and [prettier](https://github.com/prettier/prettier) to detect style errors based on balena.io coding guidelines.
+`@balena/lint` is a linter & formatter based on [eslint](https://eslint.org/) and [prettier](https://github.com/prettier/prettier) to detect style errors based on balena.io coding guidelines.
 
 Overview
 --------
 
-`@balena/lint` uses balena's `tslint.json` and `.prettierrc`.
-If a `tslint.json` is found in the to-be-linted project
+`@balena/lint` uses balena's `.eslintrc.js` and `.prettierrc`.
+If a `.eslintrc.js` is found in the to-be-linted project
 directory or its parents then the rules found in it will be merged with the default `@balena/lint` ones.
 Another way to to override the default balena lint rules is by specifying a configuration
 file with the `-f` parameter.
@@ -62,24 +62,24 @@ You can use this module as:
 
   ```
 
-3. A development dependency, that will get picked up by your IDE/Editor tslint/prettier.
+3. A development dependency, that will get picked up by your IDE/Editor eslint/prettier.
 
 Manually create these config files in your project root:
 
-`tslint.json`
+`.eslintrc.js`
 
-```json
+```js
 // if using prettier in your project
 {
   "extends": [
-    "./node_modules/@balena/lint/config/tslint-prettier.json"
+    "./node_modules/@balena/lint/config/.eslintrc-prettier.js"
   ]
 }
 
 // plain TypeScript
 {
   "extends": [
-    "./node_modules/@balena/lint/config/tslint.json"
+    "./node_modules/@balena/lint/config/.eslintrc.js"
   ]
 }
 ```
@@ -101,11 +101,11 @@ file, if any. Without the `-t` option, those rules will be disabled but may stil
 a warning message such as:  
 `Warning: The 'no-floating-promises' rule requires type information.`  
 To prevent this warning message from being printed, override the rules by creating a
-`tslint.json` file as described in the previous sections. For example:
+`.eslintrc.js` file as described in the previous sections. For example:
 
 ```json
 {
-    "extends": "./node_modules/@balena/lint/config/tslint-prettier.json",
+    "extends": "./node_modules/@balena/lint/config/.eslintrc.js",
     "rules": {
         "no-floating-promises": false
     }

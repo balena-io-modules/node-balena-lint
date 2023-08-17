@@ -1,7 +1,7 @@
 {
 	"compilerOptions": {
 		"module": "commonjs",
-		"target": "es2019",
+		"target": "es2021",
 		"outDir": "build",
 		"strict": true,
 		"noUnusedLocals": true,

@@ -9,71 +9,113 @@ module.exports = {
 		"project": "tsconfig.json",
 		"sourceType": "module"
 	},
+	"plugins": [
+		"eslint-plugin-jsdoc",
+		"eslint-plugin-react",
+		"@typescript-eslint",
+		"chai-friendly"
+	],
 	"extends": [
-		"./.eslintrc.js",
+		"eslint:recommended",
+		"plugin:@typescript-eslint/recommended",
+		"plugin:chai-friendly/recommended",
 		"prettier"
 	],
 	"rules": {
-		"@typescript-eslint/indent": "off",
-		"@typescript-eslint/member-delimiter-style": [
-			"off",
+		"@typescript-eslint/adjacent-overload-signatures": "error",
+		"@typescript-eslint/array-type": [
+			"error",
 			{
-				"multiline": {
-					"delimiter": "none",
-					"requireLast": true
-				},
-				"singleline": {
-					"delimiter": "semi",
-					"requireLast": false
-				}
+				"default": "array-simple"
 			}
 		],
-		"@typescript-eslint/no-unused-expressions": "error",
-		"@typescript-eslint/quotes": "off",
-		"@typescript-eslint/semi": [
-			"off",
-			null
-		],
-		"@typescript-eslint/type-annotation-spacing": "off",
-		"brace-style": [
-			"off",
-			"off"
-		],
-		"comma-dangle": "off",
-		"eol-last": "off",
-		"linebreak-style": "off",
-		"max-len": "off",
-		"new-parens": "off",
-		"newline-per-chained-call": "off",
-		"no-extra-semi": "off",
-		"no-irregular-whitespace": "off",
-		"no-multiple-empty-lines": "off",
-		"no-trailing-spaces": "off",
-		"padded-blocks": [
-			"off",
+		"@typescript-eslint/ban-ts-comment": "error",
+		"@typescript-eslint/consistent-type-assertions": "error",
+		"@typescript-eslint/naming-convention": [
+			"error",
 			{
-				"blocks": "never"
-			},
-			{
-				"allowSingleLineBlocks": true
+				"selector": "variable",
+				"format": [
+					"camelCase",
+					"UPPER_CASE",
+					"PascalCase"
+				],
+				"leadingUnderscore": "allow",
+				"trailingUnderscore": "forbid"
 			}
 		],
-		"quote-props": "off",
-		"react/jsx-curly-spacing": "off",
-		"react/jsx-equals-spacing": "off",
-		"react/jsx-tag-spacing": [
-			"off",
+		"@typescript-eslint/no-empty-function": "error",
+		"@typescript-eslint/no-empty-interface": "error",
+		"@typescript-eslint/no-explicit-any": "off",
+		"@typescript-eslint/no-floating-promises": "error",
+		"@typescript-eslint/no-shadow": [
+			"error",
 			{
-				"afterOpening": "allow",
-				"closingSlash": "allow"
+				"hoist": "all"
 			}
 		],
-		"react/jsx-wrap-multilines": "off",
-		"semi": "off",
-		"space-before-function-paren": "off",
-		"space-in-parens": [
-			"off",
+		"@typescript-eslint/prefer-for-of": "error",
+		"@typescript-eslint/prefer-function-type": "error",
+		"@typescript-eslint/prefer-namespace-keyword": "error",
+		"@typescript-eslint/triple-slash-reference": [
+			"error",
+			{
+				"path": "always",
+				"types": "prefer-import",
+				"lib": "always"
+			}
+		],
+		"@typescript-eslint/unified-signatures": "error",
+		"constructor-super": "error",
+		"curly": "error",
+		"eqeqeq": [
+			"error",
+			"smart"
+		],
+		"guard-for-in": "error",
+		"id-denylist": [
+			"error",
+			"any",
+			"Number",
+			"number",
+			"String",
+			"string",
+			"Boolean",
+			"boolean",
+			"Undefined",
+			"undefined"
+		],
+		"id-match": "error",
+		"indent": "off",
+		"jsdoc/check-alignment": "error",
+		"new-parens": "error",
+		"no-bitwise": "error",
+		"no-caller": "error",
+		"no-cond-assign": "error",
+		"no-debugger": "error",
+		"no-empty": "error",
+		"no-empty-function": "off",
+		"no-eval": "error",
+		"no-fallthrough": "off",
+		"no-new-wrappers": "error",
+		"no-shadow": "off",
+		"no-throw-literal": "error",
+		"no-unused-expressions": "off",
+		"no-var": "error",
+		"one-var": [
+			"error",
 			"never"
+		],
+		"prefer-const": "error",
+		"radix": "error",
+		"spaced-comment": [
+			"error",
+			"always",
+			{
+				"markers": [
+					"/"
+				]
+			}
 		]
 	}
 };

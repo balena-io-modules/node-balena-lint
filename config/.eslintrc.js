@@ -29,7 +29,12 @@ module.exports = {
 				"default": "array-simple"
 			}
 		],
-		"@typescript-eslint/ban-ts-comment": "error",
+		"@typescript-eslint/ban-ts-comment": [
+			"error",
+			{
+				"ts-expect-error": "allow-with-description"
+			}
+		],
 		"@typescript-eslint/consistent-type-assertions": "error",
 		"@typescript-eslint/naming-convention": [
 			"error",
@@ -42,6 +47,11 @@ module.exports = {
 				],
 				"leadingUnderscore": "allow",
 				"trailingUnderscore": "forbid"
+			},
+			{
+				"selector": "variable",
+				"modifiers": ["destructured"],
+				"format": null
 			}
 		],
 		"@typescript-eslint/no-empty-function": "error",
@@ -54,6 +64,11 @@ module.exports = {
 				"hoist": "all"
 			}
 		],
+		"@typescript-eslint/no-this-alias": "off",
+		"@typescript-eslint/no-unused-vars": [
+			"error",
+			{ "ignoreRestSiblings": true },
+		],
 		"@typescript-eslint/prefer-for-of": "error",
 		"@typescript-eslint/prefer-function-type": "error",
 		"@typescript-eslint/prefer-namespace-keyword": "error",
@@ -65,13 +80,9 @@ module.exports = {
 				"lib": "always"
 			}
 		],
-		"@typescript-eslint/unified-signatures": "error",
 		"constructor-super": "error",
 		"curly": "error",
-		"eqeqeq": [
-			"error",
-			"smart"
-		],
+		"eqeqeq": ["error", "always", {"null": "ignore"}],
 		"guard-for-in": "error",
 		"id-denylist": [
 			"error",
@@ -96,7 +107,13 @@ module.exports = {
 		"no-empty": "error",
 		"no-empty-function": "off",
 		"no-eval": "error",
-		"no-fallthrough": "off",
+		"no-fallthrough": [
+			"error",
+			{
+				"allowEmptyCase": true,
+				"commentPattern": "break[\\s\\w]*omitted"
+			}
+		],
 		"no-new-wrappers": "error",
 		"no-shadow": "off",
 		"no-throw-literal": "error",

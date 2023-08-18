@@ -111,7 +111,7 @@ type LintTsFilesOptions = {
 const lintTsFiles = async function (
 	files: string[],
 	config: LintTsFilesOptions,
-	prettierConfig: PrettierOptions | undefined,
+	prettierConfig: prettier.Options | undefined,
 ): Promise<number> {
 	const prettier = prettierConfig ? await import('prettier') : undefined;
 	const linter = new ESLint(config);
@@ -127,15 +127,25 @@ const lintTsFiles = async function (
 			}
 			totalResults.push(...results);
 
+			const prettierConfigWithPath: prettier.Options = {
+				...prettierConfig,
+				// That's needed so that prettier can use the correct rules
+				// based on the file extension.
+				filepath: file,
+			};
+
 			const source = await read(file);
 			if (prettier != null) {
 				if (config.fix) {
-					const newSource = prettier.format(source, prettierConfig);
+					const newSource = await prettier.format(source, prettierConfigWithPath);
 					if (source !== newSource) {
 						await fs.writeFile(file, newSource);
 					}
 				} else {
-					const isPrettified = prettier.check(source, prettierConfig);
+					const isPrettified = await prettier.check(
+						source,
+						prettierConfigWithPath,
+					);
 					if (!isPrettified) {
 						unformattedFiles.push(file);
 						console.log(

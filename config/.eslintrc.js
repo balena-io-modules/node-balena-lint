@@ -123,7 +123,7 @@ module.exports = {
 			"error",
 			"never"
 		],
-		"prefer-const": "error",
+		"prefer-const": ["error", {"destructuring": "all"}],
 		"radix": "error",
 		"spaced-comment": [
 			"error",

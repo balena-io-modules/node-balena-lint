@@ -6,13 +6,10 @@
 		"strict": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
-		"preserveConstEnums": true,
-		"removeComments": true,
-		"sourceMap": true,
 		"moduleResolution": "node",
 		"baseUrl": ".",
 	},
 	"include": [
-		"./lib/**/*.ts"
+		"./test/**/*.ts"
 	]
 }

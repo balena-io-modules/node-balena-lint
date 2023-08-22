@@ -5,14 +5,17 @@ const fn = () => ({
 
 const { a, b } = fn();
 
-const x = a
+export const x = a
 	? {
 			key: 'A',
 			value: 'B',
 	  }
 	: {};
 
-interface A {
+// @ts-expect-error b/c reasons
+export const xx: number = 'asdf';
+
+export interface A {
 	aProp:
 		| {
 				key: string;

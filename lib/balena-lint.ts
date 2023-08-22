@@ -1,10 +1,9 @@
-import { Options as PrettierOptions } from 'prettier';
-
+import * as prettier from 'prettier';
 import { promises as fs } from 'fs';
 import * as glob from 'glob';
 import yargs from 'yargs';
 import * as path from 'path';
-import * as tslint from 'tslint';
+import { ESLint, Linter } from 'eslint';
 import { promisify } from 'util';
 
 const exists = async (filename: string) => {
@@ -22,21 +21,13 @@ interface LintConfig {
 	configPath: string;
 	configFileName: string;
 	extensions: string[];
-	prettierCheck?: boolean;
 	testsCheck?: boolean;
 }
 
-const configurations: { [key: string]: LintConfig } = {
-	typescript: {
-		configPath: path.join(__dirname, '../config/tslint.json'),
-		configFileName: 'tslint.json',
-		extensions: ['ts', 'tsx'],
-	},
-	typescriptPrettier: {
-		configPath: path.join(__dirname, '../config/tslint-prettier.json'),
-		configFileName: 'tslint.json',
-		extensions: ['ts', 'tsx'],
-	},
+const lintConfiguration: LintConfig = {
+	configPath: path.join(__dirname, '../config/.eslintrc.js'),
+	configFileName: '.eslintrc.js',
+	extensions: ['ts', 'tsx'],
 };
 
 const prettierConfigPath = path.join(__dirname, '../config/.prettierrc');
@@ -75,7 +66,7 @@ const findFile = async (name: string, dir?: string): Promise<string | null> => {
 	return findFile(name, parent);
 };
 
-const parseJSON = async (file: string): Promise<{}> => {
+const parseJSON = async (file: string): Promise<object> => {
 	try {
 		return JSON.parse(await fs.readFile(file, 'utf8'));
 	} catch (err) {
@@ -104,75 +95,66 @@ const findFiles = async (
 	return files.map((p) => path.join(p));
 };
 
+type LintTsFilesOptions = {
+	baseConfig: Linter.Config;
+} & Pick<ESLint.Options, 'overrideConfig' | 'overrideConfigFile' | 'fix'>;
+
 const lintTsFiles = async function (
 	files: string[],
-	config: {},
-	prettierConfig: PrettierOptions | undefined,
-	{ autoFix, tsconfig }: { autoFix: boolean; tsconfig?: string },
+	config: LintTsFilesOptions,
+	prettierConfig: prettier.Options | undefined,
 ): Promise<number> {
-	const prettier = prettierConfig ? await import('prettier') : undefined;
-	const tsProgram = tsconfig
-		? tslint.Linter.createProgram(tsconfig)
-		: undefined;
-	const linter = new tslint.Linter(
-		{
-			fix: autoFix,
-			formatter: 'stylish',
-		},
-		tsProgram,
-	);
+	const linter = new ESLint(config);
 
-	const exitCodes = await Promise.all(
+	const totalResults: ESLint.LintResult[] = [];
+	const unformattedFiles: string[] = [];
+
+	await Promise.all(
 		files.map(async (file) => {
-			let source = await read(file);
-			const previousFixCount = linter.getResult().fixes?.length ?? 0;
-			linter.lint(
-				file,
-				source,
-				config as tslint.Configuration.IConfigurationFile,
-			);
-			if (prettier) {
-				const afterFixCount = linter.getResult().fixes?.length ?? 0;
-				if (previousFixCount !== afterFixCount) {
-					// If fixes were applied they were written directly to the file and we need to read it again
-					source = await read(file);
-				}
+			const results = await linter.lintFiles(file);
+			if (config.fix) {
+				await ESLint.outputFixes(results);
+			}
+			totalResults.push(...results);
 
-				if (autoFix) {
-					const newSource = prettier.format(source, prettierConfig);
-					if (source !== newSource) {
-						source = newSource;
-						await fs.writeFile(file, source);
-					}
-				} else {
-					const isPrettified = prettier.check(source, prettierConfig);
-					if (!isPrettified) {
-						console.log(
-							`Error: File ${file} hasn't been formatted with prettier`,
-						);
-						return 1;
-					}
+			const prettierConfigWithPath: prettier.Options = {
+				...prettierConfig,
+				// That's needed so that prettier can use the correct rules
+				// based on the file extension.
+				filepath: file,
+			};
+
+			const source = await read(file);
+			if (config.fix) {
+				const newSource = await prettier.format(source, prettierConfigWithPath);
+				if (source !== newSource) {
+					await fs.writeFile(file, newSource);
+				}
+			} else {
+				const isPrettified = await prettier.check(
+					source,
+					prettierConfigWithPath,
+				);
+				if (!isPrettified) {
+					unformattedFiles.push(file);
+					console.log(
+						`Error: File ${file} hasn't been formatted with prettier`,
+					);
+					return 1;
 				}
 			}
 			return 0;
 		}),
 	);
-	const failureCode = exitCodes.find((exitCode) => exitCode !== 0);
-	if (failureCode) {
-		return failureCode;
+	if (totalResults.length > 0) {
+		const formatter = await linter.loadFormatter('stylish');
+		console.log(await formatter.format(totalResults));
 	}
 
-	const errorReport = linter.getResult();
-
-	// Print the linter results
-	if (/\S/.test(errorReport.output)) {
-		console.log(errorReport.output);
-	}
-	console.log(
-		`${errorReport.errorCount} errors and ${errorReport.warningCount} warnings in ${exitCodes.length} files`,
-	);
-
-	return errorReport.errorCount === 0 ? 0 : 1;
+	return totalResults.some((l) => l.errorCount > 0 || l.fatalErrorCount > 0) ||
+		unformattedFiles.length > 0
+		? 1
+		: 0;
 };
 
 const lintMochaTestFiles = async function (files: string[]): Promise<number> {
@@ -189,19 +171,17 @@ const lintMochaTestFiles = async function (files: string[]): Promise<number> {
 const runLint = async function (
 	lintConfig: LintConfig,
 	paths: string[],
-	config: {},
-	opts: { autoFix: boolean; tsconfig?: string },
+	config: LintTsFilesOptions,
 ) {
 	let linterExitCode: number | undefined;
 	const scripts = await findFiles(lintConfig.extensions, paths);
 
-	let prettierConfig: PrettierOptions | undefined;
-	if (lintConfig.prettierCheck) {
-		prettierConfig = (await parseJSON(prettierConfigPath)) as PrettierOptions;
-		prettierConfig.parser = 'typescript';
-	}
+	const prettierConfig = (await parseJSON(
+		prettierConfigPath,
+	)) as prettier.Options;
+	prettierConfig.parser = 'typescript';
 
-	linterExitCode = await lintTsFiles(scripts, config, prettierConfig, opts);
+	linterExitCode = await lintTsFiles(scripts, config, prettierConfig);
 
 	if (lintConfig.testsCheck) {
 		const testsExitCode = await lintMochaTestFiles(scripts);
@@ -236,10 +216,6 @@ export const lint = async (passedParams: any) => {
 		})
 		.option('fix', {
 			describe: 'Attempt to automatically fix lint errors',
-			type: 'boolean',
-		})
-		.option('no-prettier', {
-			describe: 'Disables the prettier code format checks',
 			type: 'boolean',
 		})
 		.option('tests', {
@@ -287,12 +263,7 @@ export const lint = async (passedParams: any) => {
 		);
 	}
 
-	let configOverridePath;
-	const prettierCheck = options.argv.prettier === false ? false : true;
-	const testsCheck = options.argv.tests ? true : false;
-	const lintConfiguration = prettierCheck
-		? configurations.typescriptPrettier
-		: configurations.typescript;
+	lintConfiguration.testsCheck = !!options.argv.tests;
 
 	if (options.argv.e) {
 		lintConfiguration.extensions = Array.isArray(options.argv.e)
@@ -305,37 +276,34 @@ export const lint = async (passedParams: any) => {
 		process.exit(0);
 	}
 
-	// TSLint config needs to be loaded with `loadConfigurationFromPath`
-	let config: {} = tslint.Configuration.loadConfigurationFromPath(
-		lintConfiguration.configPath,
+	const baseConfig: ESLint.ConfigData = await import(
+		lintConfiguration.configPath
 	);
 
+	const lintOptions: LintTsFilesOptions = {
+		baseConfig,
+		fix: options.argv.fix === true,
+	};
 	if (options.argv.f) {
-		configOverridePath = await fs.realpath(options.argv.f);
+		lintOptions.overrideConfigFile = await fs.realpath(options.argv.f);
 	}
 
-	if (!options.argv.i && !configOverridePath) {
-		configOverridePath = await findFile(lintConfiguration.configFileName);
+	if (!options.argv.i && !lintOptions.overrideConfigFile) {
+		lintOptions.overrideConfigFile =
+			(await findFile(lintConfiguration.configFileName)) ?? undefined;
 	}
 
-	if (configOverridePath) {
-		// Extend/override default config
-		const configOverride =
-			tslint.Configuration.loadConfigurationFromPath(configOverridePath);
-		config = tslint.Configuration.extendConfigurationFile(
-			config as tslint.Configuration.IConfigurationFile,
-			configOverride,
-		);
+	if (options.argv.t) {
+		lintOptions.overrideConfig = {
+			parserOptions: {
+				project: options.argv.t,
+			},
+		};
 	}
 
 	const paths: string[] = options.argv._.map((element: any) => {
 		return element.toString();
 	});
 
-	lintConfiguration.prettierCheck = prettierCheck;
-	lintConfiguration.testsCheck = testsCheck;
-	await runLint(lintConfiguration, paths, config, {
-		autoFix: options.argv.fix === true,
-		tsconfig: options.argv.t,
-	});
+	await runLint(lintConfiguration, paths, lintOptions);
 };

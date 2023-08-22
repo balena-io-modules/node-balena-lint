@@ -1,4 +1,15 @@
 - commits:
+    - subject: Relax the prefer-const rule in destructuring expressions
+      hash: 7fa67cf4950bb401eb272bf8d341b717115cb1a3
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Thodoris Greasidis
+  version: 7.0.1
+  title: ""
+  date: 2023-08-22T19:29:52.968Z
+- commits:
     - subject: ".eslintrc.js: Update rules to make the migration easier"
       hash: 2b3e6588142dd727e1a1bd3fd0ff83573884563f
       body: ""

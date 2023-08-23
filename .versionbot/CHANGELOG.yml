@@ -1,4 +1,15 @@
 - commits:
+    - subject: "no-unused-vars: Allow _ prefixed unused vars in destructured arrays"
+      hash: b92f72908dc0e285b46e978990b4948b2e461b48
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Thodoris Greasidis
+  version: 7.0.2
+  title: ""
+  date: 2023-08-23T13:45:52.965Z
+- commits:
     - subject: Relax the prefer-const rule in destructuring expressions
       hash: 7fa67cf4950bb401eb272bf8d341b717115cb1a3
       body: ""

@@ -67,7 +67,12 @@ module.exports = {
 		"@typescript-eslint/no-this-alias": "off",
 		"@typescript-eslint/no-unused-vars": [
 			"error",
-			{ "ignoreRestSiblings": true },
+			{
+				// Ideally we would want to block trailing unused destructured vars
+				// similarly to how `"args": "after-used"` works, but this isn't supported at.
+				"destructuredArrayIgnorePattern": "^_",
+				"ignoreRestSiblings": true
+			},
 		],
 		"@typescript-eslint/prefer-for-of": "error",
 		"@typescript-eslint/prefer-function-type": "error",

@@ -1,4 +1,15 @@
 - commits:
+    - subject: Error when detecting unused eslint disable directives
+      hash: 618b7837115cb9e9a20c69f8917a6ace432bb50b
+      body: ""
+      footer:
+        Change-type: minor
+        change-type: minor
+      author: Thodoris Greasidis
+  version: 7.1.0
+  title: ""
+  date: 2023-08-29T15:28:55.899Z
+- commits:
     - subject: "no-unused-vars: Allow _ prefixed unused vars in destructured arrays"
       hash: b92f72908dc0e285b46e978990b4948b2e461b48
       body: ""

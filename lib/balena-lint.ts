@@ -95,13 +95,13 @@ const findFiles = async (
 	return files.map((p) => path.join(p));
 };
 
-type LintTsFilesOptions = {
+type ESLintOptions = ESLint.Options & {
 	baseConfig: Linter.Config;
-} & Pick<ESLint.Options, 'overrideConfig' | 'overrideConfigFile' | 'fix'>;
+};
 
 const lintTsFiles = async function (
 	files: string[],
-	config: LintTsFilesOptions,
+	config: ESLintOptions,
 	prettierConfig: prettier.Options | undefined,
 ): Promise<number> {
 	const linter = new ESLint(config);
@@ -171,7 +171,7 @@ const lintMochaTestFiles = async function (files: string[]): Promise<number> {
 const runLint = async function (
 	lintConfig: LintConfig,
 	paths: string[],
-	config: LintTsFilesOptions,
+	config: ESLintOptions,
 ) {
 	let linterExitCode: number | undefined;
 	const scripts = await findFiles(lintConfig.extensions, paths);
@@ -280,9 +280,10 @@ export const lint = async (passedParams: any) => {
 		lintConfiguration.configPath
 	);
 
-	const lintOptions: LintTsFilesOptions = {
+	const lintOptions: ESLintOptions = {
 		baseConfig,
 		fix: options.argv.fix === true,
+		reportUnusedDisableDirectives: 'error',
 	};
 	if (options.argv.f) {
 		lintOptions.overrideConfigFile = await fs.realpath(options.argv.f);

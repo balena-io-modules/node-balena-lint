@@ -1,4 +1,17 @@
 - commits:
+    - subject: Allow using void as a way to silence floating promise errors
+      hash: b78066f18ec34254ef66e988095e81dc6c6c8330
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        See: https://github.com/typescript-eslint/typescript-eslint/issues/2569#issuecomment-692971631
+        see: https://github.com/typescript-eslint/typescript-eslint/issues/2569#issuecomment-692971631
+      author: Thodoris Greasidis
+  version: 7.1.1
+  title: ""
+  date: 2023-08-29T15:39:49.364Z
+- commits:
     - subject: Error when detecting unused eslint disable directives
       hash: 618b7837115cb9e9a20c69f8917a6ace432bb50b
       body: ""

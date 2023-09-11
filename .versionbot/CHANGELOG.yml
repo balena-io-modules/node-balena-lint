@@ -1,4 +1,15 @@
 - commits:
+    - subject: Update @typescript-eslint packages to 6.6.0 to properly support TS 5.2
+      hash: 570e5ddcb6ba519b86a7f797003e655568d3083b
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Thodoris Greasidis
+  version: 7.1.2
+  title: ""
+  date: 2023-09-11T15:34:06.960Z
+- commits:
     - subject: Allow using void as a way to silence floating promise errors
       hash: b78066f18ec34254ef66e988095e81dc6c6c8330
       body: ""

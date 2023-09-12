@@ -21,7 +21,6 @@ interface LintConfig {
 	configPath: string;
 	configFileName: string;
 	extensions: string[];
-	testsCheck?: boolean;
 }
 
 const lintConfiguration: LintConfig = {
@@ -157,23 +156,11 @@ const lintTsFiles = async function (
 		: 0;
 };
 
-const lintMochaTestFiles = async function (files: string[]): Promise<number> {
-	const { lintMochaTests } = await import('./mocha-tests-lint');
-	const res = await lintMochaTests(files);
-	if (res.isError) {
-		console.error('Mocha tests check FAILED!');
-		console.error(res.message);
-		return 1;
-	}
-	return 0;
-};
-
 const runLint = async function (
 	lintConfig: LintConfig,
 	paths: string[],
 	config: ESLintOptions,
 ) {
-	let linterExitCode: number | undefined;
 	const scripts = await findFiles(lintConfig.extensions, paths);
 
 	const prettierConfig = (await parseJSON(
@@ -181,14 +168,7 @@ const runLint = async function (
 	)) as prettier.Options;
 	prettierConfig.parser = 'typescript';
 
-	linterExitCode = await lintTsFiles(scripts, config, prettierConfig);
-
-	if (lintConfig.testsCheck) {
-		const testsExitCode = await lintMochaTestFiles(scripts);
-		if (linterExitCode === 0) {
-			linterExitCode = testsExitCode;
-		}
-	}
+	const linterExitCode = await lintTsFiles(scripts, config, prettierConfig);
 
 	process.on('exit', () => process.exit(linterExitCode));
 };
@@ -220,7 +200,7 @@ export const lint = async (passedParams: any) => {
 		})
 		.option('tests', {
 			describe:
-				'Treat input files as test sources to perform extra relevant checks',
+				'[Deprecated no-op] Treat input files as test sources to perform extra relevant checks',
 			type: 'boolean',
 		})
 		.option('t', {
@@ -262,8 +242,6 @@ export const lint = async (passedParams: any) => {
 			}),
 		);
 	}
-
-	lintConfiguration.testsCheck = !!options.argv.tests;
 
 	if (options.argv.e) {
 		lintConfiguration.extensions = Array.isArray(options.argv.e)

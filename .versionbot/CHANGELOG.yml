@@ -1,4 +1,22 @@
 - commits:
+    - subject: Add a deprecation notice for the --tests flag
+      hash: a7e4ffcea5887561f42654db3658db0933b362c0
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Thodoris Greasidis
+    - subject: Block .only in tests by default using eslint-plugin-no-only-tests
+      hash: ccc7f4efc1a07c9bb8a74d445920755234b66cda
+      body: ""
+      footer:
+        Change-type: minor
+        change-type: minor
+      author: Thodoris Greasidis
+  version: 7.2.0
+  title: ""
+  date: 2023-09-12T19:29:50.461Z
+- commits:
     - subject: Update @typescript-eslint packages to 6.6.0 to properly support TS 5.2
       hash: 570e5ddcb6ba519b86a7f797003e655568d3083b
       body: ""

@@ -198,6 +198,7 @@ export const lint = async (passedParams: any) => {
 			describe: 'Attempt to automatically fix lint errors',
 			type: 'boolean',
 		})
+		// TODO: Drop me in the next major
 		.option('tests', {
 			describe:
 				'[Deprecated no-op] Treat input files as test sources to perform extra relevant checks',
@@ -240,6 +241,13 @@ export const lint = async (passedParams: any) => {
 				console.log('No unused dependencies!');
 				console.log();
 			}),
+		);
+	}
+
+	// TODO: Drop me in the next major
+	if (options.argv.tests) {
+		console.log(
+			'[@balena/lint] The --tests flag is deprecated and test file linting rules are now enabled by default.',
 		);
 	}
 

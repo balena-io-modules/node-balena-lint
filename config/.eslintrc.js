@@ -13,6 +13,7 @@ module.exports = {
 		"eslint-plugin-jsdoc",
 		"eslint-plugin-react",
 		"@typescript-eslint",
+		"no-only-tests",
 		"chai-friendly"
 	],
 	"extends": [
@@ -123,6 +124,7 @@ module.exports = {
 			}
 		],
 		"no-new-wrappers": "error",
+		"no-only-tests/no-only-tests": "error",
 		"no-shadow": "off",
 		"no-throw-literal": "error",
 		"no-unused-expressions": "off",

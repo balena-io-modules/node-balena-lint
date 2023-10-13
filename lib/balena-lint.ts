@@ -83,7 +83,12 @@ const findFiles = async (
 		paths.map(async (p) => {
 			if ((await fs.stat(p)).isDirectory()) {
 				files.push(
-					...(await globAsync(`${p}/**/*.@(${extensions.join('|')})`)),
+					...(await globAsync(`${p}/**/*.@(${extensions.join('|')})`, {
+						// Ignore unusual errors while reading directories.
+						// Avoids EPERM scandir errors in Windows.
+						// See: https://github.com/isaacs/node-glob/issues/284
+						strict: false,
+					})),
 				);
 			} else {
 				files.push(p);

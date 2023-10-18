@@ -1,10 +1,9 @@
 import * as prettier from 'prettier';
 import { promises as fs } from 'fs';
-import * as glob from 'glob';
+import { glob } from 'glob';
 import yargs from 'yargs';
 import * as path from 'path';
 import { ESLint, Linter } from 'eslint';
-import { promisify } from 'util';
 
 const exists = async (filename: string) => {
 	try {
@@ -14,8 +13,6 @@ const exists = async (filename: string) => {
 		return false;
 	}
 };
-
-const globAsync = promisify(glob);
 
 interface LintConfig {
 	configPath: string;
@@ -82,9 +79,7 @@ const findFiles = async (
 	await Promise.all(
 		paths.map(async (p) => {
 			if ((await fs.stat(p)).isDirectory()) {
-				files.push(
-					...(await globAsync(`${p}/**/*.@(${extensions.join('|')})`)),
-				);
+				files.push(...(await glob(`${p}/**/*.@(${extensions.join('|')})`)));
 			} else {
 				files.push(p);
 			}

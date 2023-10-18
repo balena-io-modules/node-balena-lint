@@ -1,4 +1,15 @@
 - commits:
+    - subject: Update blob from 7.1.7 to 10.3.10
+      hash: 5f7c9e8d654110bf8d072590e400ed609595f602
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Otávio Jacobi
+  version: 7.2.1
+  title: ""
+  date: 2023-10-18T12:55:45.657Z
+- commits:
     - subject: Add a deprecation notice for the --tests flag
       hash: a7e4ffcea5887561f42654db3658db0933b362c0
       body: ""

@@ -209,15 +209,17 @@ export const lint = async (passedParams: any) => {
 			type: 'boolean',
 		});
 
-	if (options.argv._.length < 1 && !options.argv.p) {
+	const argv = await options.argv;
+
+	if (argv._.length < 1 && !argv.p) {
 		options.showHelp();
 		process.exit(1);
 	}
 
-	if (options.argv.u) {
+	if (argv.u) {
 		const depcheck = await import('depcheck');
 		await Promise.all(
-			options.argv._.map(async (dir) => {
+			argv._.map(async (dir) => {
 				dir = await getPackageJsonDir(`${dir}`);
 				const { dependencies } = await depcheck(path.resolve('./', dir), {
 					ignoreMatches: [
@@ -240,19 +242,17 @@ export const lint = async (passedParams: any) => {
 	}
 
 	// TODO: Drop me in the next major
-	if (options.argv.tests) {
+	if (argv.tests) {
 		console.log(
 			'[@balena/lint] The --tests flag is deprecated and test file linting rules are now enabled by default.',
 		);
 	}
 
-	if (options.argv.e) {
-		lintConfiguration.extensions = Array.isArray(options.argv.e)
-			? options.argv.e
-			: [options.argv.e];
+	if (argv.e) {
+		lintConfiguration.extensions = Array.isArray(argv.e) ? argv.e : [argv.e];
 	}
 
-	if (options.argv.p) {
+	if (argv.p) {
 		console.log(await fs.readFile(lintConfiguration.configPath, 'utf8'));
 		process.exit(0);
 	}
@@ -263,27 +263,27 @@ export const lint = async (passedParams: any) => {
 
 	const lintOptions: ESLintOptions = {
 		baseConfig,
-		fix: options.argv.fix === true,
+		fix: argv.fix === true,
 		reportUnusedDisableDirectives: 'error',
 	};
-	if (options.argv.f) {
-		lintOptions.overrideConfigFile = await fs.realpath(options.argv.f);
+	if (argv.f) {
+		lintOptions.overrideConfigFile = await fs.realpath(argv.f);
 	}
 
-	if (!options.argv.i && !lintOptions.overrideConfigFile) {
+	if (!argv.i && !lintOptions.overrideConfigFile) {
 		lintOptions.overrideConfigFile =
 			(await findFile(lintConfiguration.configFileName)) ?? undefined;
 	}
 
-	if (options.argv.t) {
+	if (argv.t) {
 		lintOptions.overrideConfig = {
 			parserOptions: {
-				project: options.argv.t,
+				project: argv.t,
 			},
 		};
 	}
 
-	const paths: string[] = options.argv._.map((element: any) => {
+	const paths: string[] = argv._.map((element: any) => {
 		return element.toString();
 	});
 

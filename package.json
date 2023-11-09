@@ -24,7 +24,8 @@
     "prepublishOnly": "npm run test",
     "prettify": "node ./bin/balena-lint -t tsconfig.json --fix lib/",
     "test": "npm run build && npm run test:typescript",
-    "test:typescript": "node ./bin/balena-lint -t tsconfig.test.json test/typescript/prettier -i"
+    "test:typescript": "node ./bin/balena-lint -t tsconfig.test.json test/typescript/prettier -i",
+    "prepare": "node -e \"try { require('husky').install() } catch (e) {if (e.code !== 'MODULE_NOT_FOUND') throw e}\""
   },
   "keywords": [
     "balena",
@@ -47,20 +48,15 @@
     "glob": "^10.3.10",
     "prettier": "^3.0.3",
     "typescript": "^5.2.2",
-    "yargs": "^16.2.0"
+    "yargs": "^17.7.2"
   },
   "devDependencies": {
-    "@types/yargs": "^16.0.8",
     "@types/eslint": "^8.44.7",
     "@types/node": "^16.18.61",
-    "husky": "^4.3.8",
-    "lint-staged": "^11.2.6",
+    "@types/yargs": "^17.0.31",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.0.2",
     "require-npm4-to-publish": "^1.0.0"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
   },
   "versionist": {
     "publishedAt": "2023-11-09T16:41:55.544Z"

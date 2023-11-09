@@ -1,4 +1,15 @@
 - commits:
+    - subject: Update yargs to 17.x
+      hash: 8a69443045687bd01136362cb25c25a50b0e8d7a
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Pagan Gazzard
+  version: 7.2.3
+  title: ""
+  date: 2023-11-09T16:59:33.262Z
+- commits:
     - subject: Add `no-constant-binary-expression` to list of rules
       hash: 711428767ee784d94e9b1d55e61019c1ba2ddbc0
       body: ""

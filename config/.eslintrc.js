@@ -112,6 +112,7 @@ module.exports = {
 		"no-bitwise": "error",
 		"no-caller": "error",
 		"no-cond-assign": "error",
+		"no-constant-binary-expression": "error",
 		"no-debugger": "error",
 		"no-empty": "error",
 		"no-empty-function": "off",

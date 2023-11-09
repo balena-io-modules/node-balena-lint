@@ -1,4 +1,15 @@
 - commits:
+    - subject: Add `no-constant-binary-expression` to list of rules
+      hash: 711428767ee784d94e9b1d55e61019c1ba2ddbc0
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Pagan Gazzard
+  version: 7.2.2
+  title: ""
+  date: 2023-11-09T16:41:55.378Z
+- commits:
     - subject: Update blob from 7.1.7 to 10.3.10
       hash: 5f7c9e8d654110bf8d072590e400ed609595f602
       body: ""

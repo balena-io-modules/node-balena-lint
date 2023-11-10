@@ -1,4 +1,15 @@
 - commits:
+    - subject: Add missing .husky/pre-commit file
+      hash: 49f879cf83f41491e16ae939df4d2c16b3b62bac
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Pagan Gazzard
+  version: 7.2.4
+  title: ""
+  date: 2023-11-10T13:16:11.884Z
+- commits:
     - subject: Update yargs to 17.x
       hash: 8a69443045687bd01136362cb25c25a50b0e8d7a
       body: ""

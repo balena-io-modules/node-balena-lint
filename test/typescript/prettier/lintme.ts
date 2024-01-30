@@ -9,7 +9,7 @@ export const x = a
 	? {
 			key: 'A',
 			value: 'B',
-	  }
+		}
 	: {};
 
 // @ts-expect-error b/c reasons

@@ -1,4 +1,15 @@
 - commits:
+    - subject: Lint config/.eslintrc.js
+      hash: b6a9a2448b627a9937e5c30bd2d9640c27ce1993
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Pagan Gazzard
+  version: 7.2.6
+  title: ""
+  date: 2024-01-30T14:48:38.989Z
+- commits:
     - subject: Update dependencies
       hash: d58ac5c4c1fad3fca19ec72c8f9d0ac2c54683af
       body: ""

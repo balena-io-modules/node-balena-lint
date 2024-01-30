@@ -37,6 +37,12 @@ module.exports = {
 			},
 		],
 		'@typescript-eslint/consistent-type-assertions': 'error',
+		'@typescript-eslint/consistent-type-imports': [
+			'error',
+			{
+				disallowTypeAnnotations: false,
+			},
+		],
 		'@typescript-eslint/naming-convention': [
 			'error',
 			{

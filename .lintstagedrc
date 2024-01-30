@@ -2,6 +2,9 @@
 	"lib/*.ts": [
 		"node bin/balena-lint --fix"
 	],
+	"config/*.js": [
+		"node bin/balena-lint --fix"
+	],
 	"test/**/*.ts": [
 		"node bin/balena-lint --fix --tests -t tsconfig.test.json"
 	]

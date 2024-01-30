@@ -10,9 +10,10 @@
 		"removeComments": true,
 		"sourceMap": true,
 		"moduleResolution": "node",
-		"baseUrl": ".",
+		"baseUrl": "."
 	},
 	"include": [
-		"./lib/**/*.ts"
+		"./lib/**/*",
+		"./config/.eslintrc.js"
 	]
 }

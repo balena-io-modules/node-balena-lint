@@ -1,4 +1,15 @@
 - commits:
+    - subject: Update dependencies
+      hash: d58ac5c4c1fad3fca19ec72c8f9d0ac2c54683af
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Pagan Gazzard
+  version: 7.2.5
+  title: ""
+  date: 2024-01-30T14:39:58.860Z
+- commits:
     - subject: Add missing .husky/pre-commit file
       hash: 49f879cf83f41491e16ae939df4d2c16b3b62bac
       body: ""

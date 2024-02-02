@@ -3,7 +3,8 @@ import { promises as fs } from 'fs';
 import { glob } from 'glob';
 import yargs from 'yargs';
 import * as path from 'path';
-import { ESLint, Linter } from 'eslint';
+import type { Linter } from 'eslint';
+import { ESLint } from 'eslint';
 
 const exists = async (filename: string) => {
 	try {

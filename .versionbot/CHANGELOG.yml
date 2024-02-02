@@ -1,4 +1,15 @@
 - commits:
+    - subject: Enable @typescript-eslint/consistent-type-imports
+      hash: d1a5a6c4d5da9599aabf51e447ce8c6f3ec18aca
+      body: ""
+      footer:
+        Change-type: minor
+        change-type: minor
+      author: Pagan Gazzard
+  version: 7.3.0
+  title: ""
+  date: 2024-02-02T14:02:51.891Z
+- commits:
     - subject: Lint config/.eslintrc.js
       hash: b6a9a2448b627a9937e5c30bd2d9640c27ce1993
       body: ""

@@ -1,4 +1,30 @@
 - commits:
+    - subject: Bump @typescript-eslint/eslint-plugin and @typescript-eslint/parser
+      hash: 3fd67ddf753ef4fde631570dc3e8d13e9be92596
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: myarmolinsky
+    - subject: Raise the minimum required node version to 18.18.0 and npm version to
+        9.8.1
+      hash: 360b43a271345877084876410c418cf087358efa
+      body: ""
+      footer:
+        Change-type: major
+        change-type: major
+      author: myarmolinsky
+    - subject: Bump typescript to 5.4.2
+      hash: d4cd67b38edaed5b26a72b57a2cb56324960fa3e
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: myarmolinsky
+  version: 8.0.0
+  title: ""
+  date: 2024-03-13T15:45:35.568Z
+- commits:
     - subject: Enable @typescript-eslint/consistent-type-imports
       hash: d1a5a6c4d5da9599aabf51e447ce8c6f3ec18aca
       body: ""

@@ -1,6 +1,6 @@
 {
   "name": "@balena/lint",
-  "version": "7.3.0",
+  "version": "8.0.0",
   "description": "Balena.io eslint & prettier wrapper",
   "bin": {
     "balena-lint": "./bin/balena-lint"
@@ -59,7 +59,7 @@
     "require-npm4-to-publish": "^1.0.0"
   },
   "versionist": {
-    "publishedAt": "2024-02-02T14:02:52.046Z"
+    "publishedAt": "2024-03-13T15:45:35.725Z"
   },
   "engines": {
     "node": ">=18.18.0",

@@ -25,7 +25,7 @@
     "prettify": "node ./bin/balena-lint -t tsconfig.json --fix -e ts -e js -t tsconfig.json lib/ config/.eslintrc.js",
     "test": "npm run build && npm run test:typescript",
     "test:typescript": "node ./bin/balena-lint -t tsconfig.test.json test/typescript/prettier -i",
-    "prepare": "node -e \"try { require('husky').install() } catch (e) {if (e.code !== 'MODULE_NOT_FOUND') throw e}\""
+    "prepare": "node -e \"try { (await import('husky')).default() } catch (e) { if (e.code !== 'ERR_MODULE_NOT_FOUND') throw e }\" --input-type module"
   },
   "keywords": [
     "balena",
@@ -54,7 +54,7 @@
     "@types/eslint": "^8.56.2",
     "@types/node": "^16.18.76",
     "@types/yargs": "^17.0.32",
-    "husky": "^8.0.3",
+    "husky": "^9.0.0",
     "lint-staged": "^15.2.0",
     "require-npm4-to-publish": "^1.0.0"
   },

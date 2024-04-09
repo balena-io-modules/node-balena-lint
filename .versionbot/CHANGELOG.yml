@@ -1,4 +1,15 @@
 - commits:
+    - subject: Update husky to v9
+      hash: 8eef193974da691877e9a0ba68bdacc7a7e8fb46
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Josh Bowling
+  version: 8.0.1
+  title: ""
+  date: 2024-04-09T02:00:07.938Z
+- commits:
     - subject: Bump @typescript-eslint/eslint-plugin and @typescript-eslint/parser
       hash: 3fd67ddf753ef4fde631570dc3e8d13e9be92596
       body: ""

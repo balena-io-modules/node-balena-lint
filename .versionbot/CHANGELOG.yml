@@ -1,4 +1,15 @@
 - commits:
+    - subject: Update dependencies
+      hash: 416a4f3b420891bed8ca6378faf752f62f75b282
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Pagan Gazzard
+  version: 8.0.2
+  title: ""
+  date: 2024-04-19T13:40:59.941Z
+- commits:
     - subject: Update husky to v9
       hash: 8eef193974da691877e9a0ba68bdacc7a7e8fb46
       body: ""

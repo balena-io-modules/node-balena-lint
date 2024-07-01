@@ -1,4 +1,15 @@
 - commits:
+    - subject: Update dependencies to ensure typescript 5.5 support
+      hash: 3b0118341b7d503e7dccbe463441d20be5509782
+      body: ""
+      footer:
+        Change-type: minor
+        change-type: minor
+      author: Pagan Gazzard
+  version: 8.1.0
+  title: ""
+  date: 2024-07-01T11:52:43.303Z
+- commits:
     - subject: Update dependencies
       hash: 416a4f3b420891bed8ca6378faf752f62f75b282
       body: ""

@@ -1,4 +1,15 @@
 - commits:
+    - subject: Remove `@typescript-eslint/no-non-null-assertion` from warnings
+      hash: ceba479d759aed9076e68a83e654874276cda965
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Pagan Gazzard
+  version: 8.2.2
+  title: ""
+  date: 2024-07-09T16:47:18.032Z
+- commits:
     - subject: Remove `@typescript-eslint/no-unnecessary-condition` from warnings
       hash: f3e4106ffed88dbb115bc335ad5dd4b90a8a9d0b
       body: |

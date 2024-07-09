@@ -167,7 +167,6 @@ module.exports = {
 		'@typescript-eslint/prefer-reduce-type-parameter': 'warn',
 		'@typescript-eslint/prefer-return-this-type': 'warn',
 		'@typescript-eslint/no-confusing-void-expression': 'warn',
-		'@typescript-eslint/no-unnecessary-condition': 'warn',
 		'@typescript-eslint/restrict-plus-operands': 'warn',
 
 		'@typescript-eslint/consistent-generic-constructors': 'warn',

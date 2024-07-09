@@ -1,4 +1,15 @@
 - commits:
+    - subject: Add warnings for rules that will be enabled in next major
+      hash: 5316bf505aba0f0adbe459d84f6e8a25e8158c9a
+      body: ""
+      footer:
+        Change-type: minor
+        change-type: minor
+      author: Pagan Gazzard
+  version: 8.2.0
+  title: ""
+  date: 2024-07-09T15:07:32.955Z
+- commits:
     - subject: Update dependencies to ensure typescript 5.5 support
       hash: 3b0118341b7d503e7dccbe463441d20be5509782
       body: ""

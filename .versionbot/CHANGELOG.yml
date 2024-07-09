@@ -1,4 +1,18 @@
 - commits:
+    - subject: Remove `@typescript-eslint/no-unnecessary-condition` from warnings
+      hash: f3e4106ffed88dbb115bc335ad5dd4b90a8a9d0b
+      body: |
+        It causes too many issues due to the pattern of `arr[n] == null` where
+        it's assumed that indexing into an array will not give undefined but it
+        potentially can
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Pagan Gazzard
+  version: 8.2.1
+  title: ""
+  date: 2024-07-09T16:00:55.582Z
+- commits:
     - subject: Add warnings for rules that will be enabled in next major
       hash: 5316bf505aba0f0adbe459d84f6e8a25e8158c9a
       body: ""

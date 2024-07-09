@@ -144,7 +144,6 @@ module.exports = {
 		'@typescript-eslint/no-extraneous-class': 'warn',
 		'@typescript-eslint/no-useless-constructor': 'warn',
 		'@typescript-eslint/prefer-literal-enum-member': 'warn',
-		'@typescript-eslint/no-non-null-assertion': 'warn',
 		'@typescript-eslint/no-invalid-void-type': 'warn',
 
 		'@typescript-eslint/no-duplicate-type-constituents': 'warn',

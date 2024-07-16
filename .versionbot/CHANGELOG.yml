@@ -1,4 +1,15 @@
 - commits:
+    - subject: Fix lint warning
+      hash: 553c08c93497ba6cc4674244e7c255df09dd8b7b
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Pagan Gazzard
+  version: 8.2.3
+  title: ""
+  date: 2024-07-16T14:49:54.399Z
+- commits:
     - subject: Remove `@typescript-eslint/no-non-null-assertion` from warnings
       hash: ceba479d759aed9076e68a83e654874276cda965
       body: ""

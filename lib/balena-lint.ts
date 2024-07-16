@@ -50,8 +50,10 @@ const read = async (filepath: string): Promise<string> => {
 	return fs.readFile(realPath, 'utf8');
 };
 
-const findFile = async (name: string, dir?: string): Promise<string | null> => {
-	dir = dir || process.cwd();
+const findFile = async (
+	name: string,
+	dir: string = process.cwd(),
+): Promise<string | null> => {
 	const filename = path.join(dir, name);
 	if (await exists(filename)) {
 		return filename;

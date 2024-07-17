@@ -2,7 +2,6 @@
 	"compilerOptions": {
 		"module": "commonjs",
 		"target": "es2021",
-		"outDir": "build",
 		"strict": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
@@ -10,10 +9,12 @@
 		"removeComments": true,
 		"sourceMap": true,
 		"moduleResolution": "node",
-		"baseUrl": "."
+		"baseUrl": ".",
+		"allowJs": true
 	},
 	"include": [
 		"./lib/**/*",
-		"./config/.eslintrc.js"
+		"./config/.eslintrc.js",
+		"./test/**/*.ts"
 	]
 }

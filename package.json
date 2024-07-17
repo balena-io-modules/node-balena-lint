@@ -18,13 +18,13 @@
     "config/"
   ],
   "scripts": {
-    "build": "tsc && npm run lint-fix && npm run lint",
+    "build": "tsc -P tsconfig.build.json && npm run lint-fix && npm run lint",
     "lint": "node ./bin/balena-lint -t tsconfig.json lib/ config/.eslintrc.js",
     "prepublish": "require-npm4-to-publish",
     "prepublishOnly": "npm run test",
     "lint-fix": "node ./bin/balena-lint -t tsconfig.json --fix -e ts -e js -t tsconfig.json lib/ config/.eslintrc.js",
     "test": "npm run build && npm run test:typescript",
-    "test:typescript": "node ./bin/balena-lint -t tsconfig.test.json test/typescript/prettier -i",
+    "test:typescript": "node ./bin/balena-lint -t tsconfig.json test/typescript/prettier -i",
     "prepare": "node -e \"try { (await import('husky')).default() } catch (e) { if (e.code !== 'ERR_MODULE_NOT_FOUND') throw e }\" --input-type module"
   },
   "keywords": [

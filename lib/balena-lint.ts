@@ -1,3 +1,6 @@
+// Tell typescript-eslint that this is a single run
+process.env.TSESTREE_SINGLE_RUN = 'true';
+
 import * as prettier from 'prettier';
 import { promises as fs } from 'fs';
 import { glob } from 'glob';

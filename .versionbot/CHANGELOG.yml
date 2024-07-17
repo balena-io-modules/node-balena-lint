@@ -1,4 +1,17 @@
 - commits:
+    - subject: Tell typescript-eslint that we use single runs
+      hash: 6f13c13d0bb552baa6c6f93897ded4082a42c365
+      body: |
+        This will allow typescript-eslint to do whatever makes more sense in
+        the context of being a single run invocation
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Pagan Gazzard
+  version: 8.2.6
+  title: ""
+  date: 2024-07-17T14:04:56.922Z
+- commits:
     - subject: Output linting failures as soon as they're available
       hash: 25af4f385fcaeb9176c5298fec26c044e0961dc8
       body: ""

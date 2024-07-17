@@ -1,4 +1,15 @@
 - commits:
+    - subject: Output linting failures as soon as they're available
+      hash: 25af4f385fcaeb9176c5298fec26c044e0961dc8
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Pagan Gazzard
+  version: 8.2.5
+  title: ""
+  date: 2024-07-17T13:48:12.401Z
+- commits:
     - subject: Run eslint on all input files in a single call
       hash: 201023fe8f049824bf44df64d22e8feff1add35a
       body: ""

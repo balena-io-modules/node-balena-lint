@@ -104,11 +104,15 @@ const lintTsFiles = async function (
 	const linter = new ESLint(config);
 
 	const totalResults: ESLint.LintResult[] = await linter.lintFiles(files);
-	const unformattedFiles: string[] = [];
 	if (config.fix) {
 		await ESLint.outputFixes(totalResults);
 	}
+	if (totalResults.length > 0) {
+		const formatter = await linter.loadFormatter('stylish');
+		console.log(await formatter.format(totalResults));
+	}
 
+	const unformattedFiles: string[] = [];
 	await Promise.all(
 		files.map(async (file) => {
 			const prettierConfigWithPath: prettier.Options = {
@@ -138,10 +142,6 @@ const lintTsFiles = async function (
 			}
 		}),
 	);
-	if (totalResults.length > 0) {
-		const formatter = await linter.loadFormatter('stylish');
-		console.log(await formatter.format(totalResults));
-	}
 
 	return totalResults.some((l) => l.errorCount > 0 || l.fatalErrorCount > 0) ||
 		unformattedFiles.length > 0

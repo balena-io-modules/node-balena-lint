@@ -1,4 +1,15 @@
 - commits:
+    - subject: Run eslint on all input files in a single call
+      hash: 201023fe8f049824bf44df64d22e8feff1add35a
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Pagan Gazzard
+  version: 8.2.4
+  title: ""
+  date: 2024-07-17T01:19:22.859Z
+- commits:
     - subject: Fix lint warning
       hash: 553c08c93497ba6cc4674244e7c255df09dd8b7b
       body: ""

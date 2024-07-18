@@ -149,7 +149,6 @@ module.exports = {
 		'@typescript-eslint/no-duplicate-type-constituents': 'warn',
 		'@typescript-eslint/no-for-in-array': 'warn',
 		'@typescript-eslint/no-implied-eval': 'warn',
-		'@typescript-eslint/no-unsafe-enum-comparison': 'warn',
 		'@typescript-eslint/require-await': 'warn',
 		'@typescript-eslint/await-thenable': 'warn',
 		'@typescript-eslint/no-unnecessary-type-assertion': 'warn',

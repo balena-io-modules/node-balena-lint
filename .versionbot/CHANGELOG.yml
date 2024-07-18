@@ -1,4 +1,15 @@
 - commits:
+    - subject: Remove `@typescript-eslint/no-unsafe-enum-comparison` from warnings
+      hash: 91d4304a6be7b03eb0777a6bad6c0cc05b898d41
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Pagan Gazzard
+  version: 8.2.7
+  title: ""
+  date: 2024-07-18T11:45:41.815Z
+- commits:
     - subject: Tell typescript-eslint that we use single runs
       hash: 6f13c13d0bb552baa6c6f93897ded4082a42c365
       body: |

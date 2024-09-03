@@ -8,10 +8,15 @@ module.exports = {
 	parserOptions: {
 		project: 'tsconfig.json',
 		sourceType: 'module',
+		ecmaFeatures: {
+			jsx: true,
+		},
 	},
 	plugins: [
 		'eslint-plugin-jsdoc',
+		'react',
 		'eslint-plugin-react',
+		'eslint-plugin-react-hooks',
 		'@typescript-eslint',
 		'no-only-tests',
 		'chai-friendly',
@@ -19,9 +24,16 @@ module.exports = {
 	extends: [
 		'eslint:recommended',
 		'plugin:@typescript-eslint/recommended',
+		'plugin:react/recommended',
+		'plugin:react-hooks/recommended',
 		'plugin:chai-friendly/recommended',
 		'prettier',
 	],
+	settings: {
+		react: {
+			version: 'detect',
+		},
+	},
 	rules: {
 		'@typescript-eslint/adjacent-overload-signatures': 'error',
 		'@typescript-eslint/array-type': [

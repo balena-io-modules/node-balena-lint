@@ -194,12 +194,6 @@ export const lint = async (passedParams: any) => {
 			describe: 'Attempt to automatically fix lint errors',
 			type: 'boolean',
 		})
-		// TODO: Drop me in the next major
-		.option('tests', {
-			describe:
-				'[Deprecated no-op] Treat input files as test sources to perform extra relevant checks',
-			type: 'boolean',
-		})
 		.option('t', {
 			describe:
 				'Path to a tsconfig.json file to enable lint rules that rely on type information',
@@ -239,13 +233,6 @@ export const lint = async (passedParams: any) => {
 				console.log('No unused dependencies!');
 				console.log();
 			}),
-		);
-	}
-
-	// TODO: Drop me in the next major
-	if (argv.tests) {
-		console.log(
-			'[@balena/lint] The --tests flag is deprecated and test file linting rules are now enabled by default.',
 		);
 	}
 

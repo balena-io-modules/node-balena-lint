@@ -1,4 +1,36 @@
 - commits:
+    - subject: Drop the no-op `--tests` flag
+      hash: 0396c161790459d0da25800d700d48280d1c0146
+      body: ""
+      footer:
+        Change-type: major
+        change-type: major
+      author: Pagan Gazzard
+    - subject: Convert warning rules to errors
+      hash: 474c0cb59df033bac15548abad36fa3ff496a5f8
+      body: ""
+      footer:
+        Change-type: major
+        change-type: major
+      author: Pagan Gazzard
+    - subject: Update to eslint 9 with flat config
+      hash: 894090f9afeab3aee2eb418acc4cbcbfef1a56fa
+      body: ""
+      footer:
+        Change-type: major
+        change-type: major
+      author: Pagan Gazzard
+    - subject: Update minimum supported nodejs to 20.x
+      hash: 44d7e86e7cb39b62718288a5e0ac7533de7994d6
+      body: ""
+      footer:
+        Change-type: major
+        change-type: major
+      author: Pagan Gazzard
+  version: 9.0.0
+  title: ""
+  date: 2024-09-10T14:38:45.123Z
+- commits:
     - subject: Update dependencies
       hash: 5dfa4f91b55bbde3295c058ef6bcb0e0992807f6
       body: ""

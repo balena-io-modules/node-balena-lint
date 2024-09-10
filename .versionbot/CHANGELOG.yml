@@ -1,4 +1,15 @@
 - commits:
+    - subject: Update dependencies
+      hash: 5dfa4f91b55bbde3295c058ef6bcb0e0992807f6
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Pagan Gazzard
+  version: 8.2.8
+  title: ""
+  date: 2024-09-10T14:25:55.526Z
+- commits:
     - subject: Remove `@typescript-eslint/no-unsafe-enum-comparison` from warnings
       hash: 91d4304a6be7b03eb0777a6bad6c0cc05b898d41
       body: ""

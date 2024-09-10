@@ -1,4 +1,15 @@
 - commits:
+    - subject: Fix accidentally commented rules
+      hash: 49f75dc10f2ce6627fe810fba1e563efa184bc49
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Pagan Gazzard
+  version: 9.0.1
+  title: ""
+  date: 2024-09-10T14:47:23.906Z
+- commits:
     - subject: Drop the no-op `--tests` flag
       hash: 0396c161790459d0da25800d700d48280d1c0146
       body: ""

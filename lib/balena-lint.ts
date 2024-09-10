@@ -25,8 +25,8 @@ interface LintConfig {
 }
 
 const lintConfiguration: LintConfig = {
-	configPath: path.join(__dirname, '../config/.eslintrc.js'),
-	configFileName: '.eslintrc.js',
+	configPath: path.join(__dirname, '../config/eslint.config.js'),
+	configFileName: 'eslint.config.js',
 	extensions: ['ts', 'tsx'],
 };
 
@@ -258,14 +258,18 @@ export const lint = async (passedParams: any) => {
 		process.exit(0);
 	}
 
-	const baseConfig: ESLint.ConfigData = await import(
+	const baseConfig: Linter.Config | Linter.Config[] = await import(
 		lintConfiguration.configPath
 	);
 
 	const lintOptions: ESLintOptions = {
 		baseConfig,
 		fix: argv.fix === true,
-		reportUnusedDisableDirectives: 'error',
+		overrideConfig: {
+			linterOptions: {
+				reportUnusedDisableDirectives: 'error',
+			},
+		},
 	};
 	if (argv.f) {
 		lintOptions.overrideConfigFile = await fs.realpath(argv.f);
@@ -273,13 +277,15 @@ export const lint = async (passedParams: any) => {
 
 	if (!argv.i && !lintOptions.overrideConfigFile) {
 		lintOptions.overrideConfigFile =
-			(await findFile(lintConfiguration.configFileName)) ?? undefined;
+			(await findFile(lintConfiguration.configFileName)) ?? true;
 	}
 
 	if (argv.t) {
 		lintOptions.overrideConfig = {
-			parserOptions: {
-				project: argv.t,
+			languageOptions: {
+				parserOptions: {
+					project: argv.t,
+				},
 			},
 		};
 	}

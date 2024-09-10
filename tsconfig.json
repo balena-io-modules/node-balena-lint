@@ -15,7 +15,8 @@
 	},
 	"include": [
 		"./lib/**/*",
-		"./config/.eslintrc.js",
-		"./test/**/*.ts"
+		"config/eslint.config.js",
+		"./test/**/*.ts",
+		"eslint.config.js"
 	]
 }

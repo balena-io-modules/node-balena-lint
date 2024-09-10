@@ -1,7 +1,7 @@
 {
 	"compilerOptions": {
 		"module": "commonjs",
-		"target": "es2021",
+		"target": "es2023",
 		"strict": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
@@ -15,7 +15,8 @@
 	},
 	"include": [
 		"./lib/**/*",
-		"./config/.eslintrc.js",
-		"./test/**/*.ts"
+		"config/eslint.config.js",
+		"./test/**/*.ts",
+		"eslint.config.js"
 	]
 }

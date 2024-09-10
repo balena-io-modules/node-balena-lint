@@ -25,8 +25,8 @@ interface LintConfig {
 }
 
 const lintConfiguration: LintConfig = {
-	configPath: path.join(__dirname, '../config/.eslintrc.js'),
-	configFileName: '.eslintrc.js',
+	configPath: path.join(__dirname, '../config/eslint.config.js'),
+	configFileName: 'eslint.config.js',
 	extensions: ['ts', 'tsx'],
 };
 
@@ -194,12 +194,6 @@ export const lint = async (passedParams: any) => {
 			describe: 'Attempt to automatically fix lint errors',
 			type: 'boolean',
 		})
-		// TODO: Drop me in the next major
-		.option('tests', {
-			describe:
-				'[Deprecated no-op] Treat input files as test sources to perform extra relevant checks',
-			type: 'boolean',
-		})
 		.option('t', {
 			describe:
 				'Path to a tsconfig.json file to enable lint rules that rely on type information',
@@ -242,13 +236,6 @@ export const lint = async (passedParams: any) => {
 		);
 	}
 
-	// TODO: Drop me in the next major
-	if (argv.tests) {
-		console.log(
-			'[@balena/lint] The --tests flag is deprecated and test file linting rules are now enabled by default.',
-		);
-	}
-
 	if (argv.e) {
 		lintConfiguration.extensions = Array.isArray(argv.e) ? argv.e : [argv.e];
 	}
@@ -258,14 +245,18 @@ export const lint = async (passedParams: any) => {
 		process.exit(0);
 	}
 
-	const baseConfig: ESLint.ConfigData = await import(
+	const baseConfig: Linter.Config | Linter.Config[] = await import(
 		lintConfiguration.configPath
 	);
 
 	const lintOptions: ESLintOptions = {
 		baseConfig,
 		fix: argv.fix === true,
-		reportUnusedDisableDirectives: 'error',
+		overrideConfig: {
+			linterOptions: {
+				reportUnusedDisableDirectives: 'error',
+			},
+		},
 	};
 	if (argv.f) {
 		lintOptions.overrideConfigFile = await fs.realpath(argv.f);
@@ -273,13 +264,15 @@ export const lint = async (passedParams: any) => {
 
 	if (!argv.i && !lintOptions.overrideConfigFile) {
 		lintOptions.overrideConfigFile =
-			(await findFile(lintConfiguration.configFileName)) ?? undefined;
+			(await findFile(lintConfiguration.configFileName)) ?? true;
 	}
 
 	if (argv.t) {
 		lintOptions.overrideConfig = {
-			parserOptions: {
-				project: argv.t,
+			languageOptions: {
+				parserOptions: {
+					project: argv.t,
+				},
 			},
 		};
 	}

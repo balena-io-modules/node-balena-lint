@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 const jsdoc = require('eslint-plugin-jsdoc');
 const react = require('eslint-plugin-react');
+const reactHooks = require('eslint-plugin-react-hooks');
 const typescriptEslint = require('@typescript-eslint/eslint-plugin');
 const noOnlyTests = require('eslint-plugin-no-only-tests');
 const chaiFriendly = require('eslint-plugin-chai-friendly');
@@ -14,14 +15,15 @@ module.exports = tseslint.config(
 	js.configs.recommended,
 	...tseslint.configs.recommended,
 	chaiFriendly.configs.recommendedFlat,
+	react.configs.flat.recommended,
 	prettier,
 	{
 		plugins: {
 			jsdoc,
-			react,
 			typescriptEslint,
 			'no-only-tests': noOnlyTests,
 			chaiFriendly,
+			'react-hooks': reactHooks,
 		},
 		languageOptions: {
 			globals: {
@@ -35,9 +37,18 @@ module.exports = tseslint.config(
 
 			parserOptions: {
 				project: 'tsconfig.json',
+				ecmaFeatures: {
+					jsx: true,
+				},
+			},
+		},
+		settings: {
+			react: {
+				version: 'detect',
 			},
 		},
 		rules: {
+			...reactHooks.configs.recommended.rules,
 			'@typescript-eslint/adjacent-overload-signatures': 'error',
 			'@typescript-eslint/array-type': [
 				'error',

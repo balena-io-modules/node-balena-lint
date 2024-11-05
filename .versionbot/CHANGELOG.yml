@@ -1,4 +1,22 @@
 - commits:
+    - subject: Add `eslint-plugin-react-hooks` to eslint.config
+      hash: cab7162b1fadca1411d0d9cf1e5890e00c9445ac
+      body: ""
+      footer:
+        Change-type: minor
+        change-type: minor
+      author: myarmolinsky
+    - subject: Add `eslint-plugin-react-hooks` dependency
+      hash: 4368f4a3f980ae522c4035d8dcd8c3f6af68f1f5
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: myarmolinsky
+  version: 9.1.0
+  title: ""
+  date: 2024-11-05T15:49:18.433Z
+- commits:
     - subject: Fix accidentally commented rules
       hash: 49f75dc10f2ce6627fe810fba1e563efa184bc49
       body: ""

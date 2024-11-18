@@ -1,4 +1,22 @@
 - commits:
+    - subject: Update eslint to ~9.14.0 to avoid regression in typescript-eslint
+      hash: efada903d6c47e74ca682da024615ec62ac90cc9
+      body: |
+        A fix is already merged in typescript-eslint
+        and available on the `canary` version,
+        but until it gets released we need this to
+        unblock master on packages that do not have
+        a package-lock (eg balena-sdk).
+      footer:
+        Change-type: patch
+        change-type: patch
+        See: https://github.com/typescript-eslint/typescript-eslint/issues/10338
+        see: https://github.com/typescript-eslint/typescript-eslint/issues/10338
+      author: Thodoris Greasidis
+  version: 9.1.1
+  title: ""
+  date: 2024-11-18T14:05:20.316Z
+- commits:
     - subject: Add `eslint-plugin-react-hooks` to eslint.config
       hash: cab7162b1fadca1411d0d9cf1e5890e00c9445ac
       body: ""

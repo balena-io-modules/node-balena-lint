@@ -1,4 +1,29 @@
 - commits:
+    - subject: Update eslint to 9.21.0 along with its related packages
+      hash: 60fa3bb815e8a741b7483229076d99a5a43fcf3a
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Thodoris Greasidis
+    - subject: Update prettier to 3.5.3
+      hash: 58f2b474273b4cb78e9e8a60ee6cdcf2e76170d0
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Thodoris Greasidis
+    - subject: Update TypeScript to 5.8.2
+      hash: af81f00578a3809726fdea5b59e8e616d90e83af
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Thodoris Greasidis
+  version: 9.1.4
+  title: ""
+  date: 2025-03-05T12:16:16.631Z
+- commits:
     - subject: Update typescript-eslint to ^8.16.0
       hash: 088d824478cfb01d24e2e50097b703ce75b9f31d
       body: ""

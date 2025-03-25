@@ -68,7 +68,7 @@ Manually create these config files in your project root:
 `.eslintrc.js`
 
 ```js
-{
+module.exports = {
   "extends": [
     "./node_modules/@balena/lint/config/.eslintrc.js"
   ]

@@ -41,7 +41,7 @@
     "@typescript-eslint/parser": "^8.26.0",
     "depcheck": "^1.4.7",
     "eslint": "^9.21.0",
-    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-prettier": "^10.0.0",
     "eslint-plugin-chai-friendly": "^1.0.1",
     "eslint-plugin-jsdoc": "^50.6.3",
     "eslint-plugin-no-only-tests": "^3.3.0",

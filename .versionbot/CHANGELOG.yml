@@ -1,4 +1,16 @@
 - commits:
+    - subject: Update dependency globals to v16
+      hash: 0a213f8b7c9484655fa31f497050514b629d4519
+      body: |
+        Update globals from 15.15.0 to 16.0.0
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+  version: 9.1.6
+  title: ""
+  date: 2025-03-25T18:15:52.214Z
+- commits:
     - subject: Update dependency eslint-config-prettier to v10
       hash: f8b53ebd26227ee618bbef6b7bca4c6770ce7a02
       body: |

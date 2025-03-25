@@ -1,4 +1,16 @@
 - commits:
+    - subject: Update dependency eslint-config-prettier to v10
+      hash: f8b53ebd26227ee618bbef6b7bca4c6770ce7a02
+      body: |
+        Update eslint-config-prettier from 9.1.0 to 10.1.1
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+  version: 9.1.5
+  title: ""
+  date: 2025-03-25T17:19:31.429Z
+- commits:
     - subject: Update eslint to 9.21.0 along with its related packages
       hash: 60fa3bb815e8a741b7483229076d99a5a43fcf3a
       body: ""

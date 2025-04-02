@@ -196,6 +196,13 @@ module.exports = tseslint.config(
 			'@typescript-eslint/no-array-delete': 'error',
 			'@typescript-eslint/no-meaningless-void-operator': 'error',
 			'@typescript-eslint/no-mixed-enums': 'error',
+			'@typescript-eslint/no-unnecessary-condition': [
+				// TODO: Consider changing to an error in the next major
+				'warn',
+				{
+					allowConstantLoopConditions: 'only-allowed-literals',
+				},
+			],
 			'@typescript-eslint/no-unnecessary-template-expression': 'error',
 			'@typescript-eslint/no-unnecessary-type-arguments': 'error',
 			'@typescript-eslint/only-throw-error': 'error',

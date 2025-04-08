@@ -1,4 +1,15 @@
 - commits:
+    - subject: Add react-query linting warnings
+      hash: 674e1c8e97dfad0479b100705943b43db2db8b06
+      body: ""
+      footer:
+        Change-type: minor
+        change-type: minor
+      author: Thodoris Greasidis
+  version: 9.2.0
+  title: ""
+  date: 2025-04-08T17:18:10.316Z
+- commits:
     - subject: Update dependency globals to v16
       hash: 0a213f8b7c9484655fa31f497050514b629d4519
       body: |

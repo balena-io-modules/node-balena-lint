@@ -49,6 +49,8 @@ module.exports = tseslint.config(
 		},
 		rules: {
 			...reactHooks.configs.recommended.rules,
+			// TODO-next-major: Elevate exhaustive-deps v as an error
+			// 'react-hooks/exhaustive-deps': 'error',
 			'@typescript-eslint/adjacent-overload-signatures': 'error',
 			'@typescript-eslint/array-type': [
 				'error',

@@ -55,6 +55,7 @@
     "yargs": "^17.7.2"
   },
   "devDependencies": {
+    "@tanstack/eslint-plugin-query": "^5.72.1",
     "@types/eslint": "^9.6.1",
     "@types/node": "^20.16.5",
     "@types/yargs": "^17.0.33",

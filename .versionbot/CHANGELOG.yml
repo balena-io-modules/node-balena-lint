@@ -1,4 +1,15 @@
 - commits:
+    - subject: Move @tanstack/eslint-plugin-query to a prod dependency
+      hash: f9ec159f2e3fedca8d8eafa8a17483336fb894b3
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Thodoris Greasidis
+  version: 9.2.1
+  title: ""
+  date: 2025-04-08T17:35:53.981Z
+- commits:
     - subject: Add react-query linting warnings
       hash: 674e1c8e97dfad0479b100705943b43db2db8b06
       body: ""

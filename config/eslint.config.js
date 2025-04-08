@@ -3,6 +3,7 @@ const jsdoc = require('eslint-plugin-jsdoc');
 const react = require('eslint-plugin-react');
 const reactHooks = require('eslint-plugin-react-hooks');
 const typescriptEslint = require('@typescript-eslint/eslint-plugin');
+const tanstackQuery = require('@tanstack/eslint-plugin-query');
 const noOnlyTests = require('eslint-plugin-no-only-tests');
 const chaiFriendly = require('eslint-plugin-chai-friendly');
 const globals = require('globals');
@@ -24,6 +25,7 @@ module.exports = tseslint.config(
 			'no-only-tests': noOnlyTests,
 			chaiFriendly,
 			'react-hooks': reactHooks,
+			'@tanstack/query': tanstackQuery,
 		},
 		languageOptions: {
 			globals: {
@@ -49,6 +51,16 @@ module.exports = tseslint.config(
 		},
 		rules: {
 			...reactHooks.configs.recommended.rules,
+			// TODO-next-major: Elevate exhaustive-deps v as an error
+			// 'react-hooks/exhaustive-deps': 'error',
+			// TODO-next-major: Use the flat/recommended rules directly
+			...Object.fromEntries(
+				Object.keys(tanstackQuery.configs.recommended.rules).map((key) => [
+					key,
+					'warn',
+				]),
+			),
+
 			'@typescript-eslint/adjacent-overload-signatures': 'error',
 			'@typescript-eslint/array-type': [
 				'error',

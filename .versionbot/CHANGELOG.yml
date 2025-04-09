@@ -1,4 +1,16 @@
 - commits:
+    - subject: Fix throwing b/c of the export changes in tanstack/eslint-plugin-query
+        5.72.2
+      hash: 3f2fee238e698e3a7eac06f718a0cbd345d49885
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Thodoris Greasidis
+  version: 9.2.2
+  title: ""
+  date: 2025-04-09T16:21:12.651Z
+- commits:
     - subject: Move @tanstack/eslint-plugin-query to a prod dependency
       hash: f9ec159f2e3fedca8d8eafa8a17483336fb894b3
       body: ""

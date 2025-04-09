@@ -3,7 +3,7 @@ const jsdoc = require('eslint-plugin-jsdoc');
 const react = require('eslint-plugin-react');
 const reactHooks = require('eslint-plugin-react-hooks');
 const typescriptEslint = require('@typescript-eslint/eslint-plugin');
-const tanstackQuery = require('@tanstack/eslint-plugin-query');
+let tanstackQuery = require('@tanstack/eslint-plugin-query');
 const noOnlyTests = require('eslint-plugin-no-only-tests');
 const chaiFriendly = require('eslint-plugin-chai-friendly');
 const globals = require('globals');
@@ -11,6 +11,12 @@ const tsParser = require('@typescript-eslint/parser');
 const js = require('@eslint/js');
 const prettier = require('eslint-config-prettier');
 const tseslint = require('typescript-eslint');
+
+if (tanstackQuery.configs == null && tanstackQuery.default != null) {
+	// Workaround for the changes in the exports in 5.72.2 in case they rollback the changes.
+	// See: https://github.com/TanStack/query/pull/8972
+	tanstackQuery = tanstackQuery.plugin;
+}
 
 module.exports = tseslint.config(
 	js.configs.recommended,

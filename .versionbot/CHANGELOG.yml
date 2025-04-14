@@ -1,4 +1,19 @@
 - commits:
+    - subject: Enable @typescript/no-missused-promises
+      hash: 55b8cda269e0a149189a34ba225588652177fc50
+      body: |
+        Detects `if (promise)` (TS 5.6 also detects
+        this), `if (!promise)` & `[...promise]`
+      footer:
+        Change-type: minor
+        change-type: minor
+        See: https://typescript-eslint.io/rules/no-misused-promises
+        see: https://typescript-eslint.io/rules/no-misused-promises
+      author: Thodoris Greasidis
+  version: 9.3.0
+  title: ""
+  date: 2025-04-14T16:18:57.260Z
+- commits:
     - subject: Fix throwing b/c of the export changes in tanstack/eslint-plugin-query
         5.72.2
       hash: 3f2fee238e698e3a7eac06f718a0cbd345d49885

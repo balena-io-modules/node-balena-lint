@@ -1,4 +1,16 @@
 - commits:
+    - subject: Update dependency lint-staged to v16
+      hash: 1c8d74ce7422c949a730c59e4214326a8916e93b
+      body: |
+        Update lint-staged from 15.5.2 to 16.0.0
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+  version: 9.3.1
+  title: ""
+  date: 2025-06-07T23:31:29.238Z
+- commits:
     - subject: Enable @typescript/no-missused-promises
       hash: 55b8cda269e0a149189a34ba225588652177fc50
       body: |

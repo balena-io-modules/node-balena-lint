@@ -1,4 +1,15 @@
 - commits:
+    - subject: Specify tsconfigRootDir so local configs are used
+      hash: 7fe2fd24142edfbc15d6975b559cc1e72d4edfd7
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: joshbwlng
+  version: 9.3.2
+  title: ""
+  date: 2025-07-15T09:31:02.207Z
+- commits:
     - subject: Update dependency lint-staged to v16
       hash: 1c8d74ce7422c949a730c59e4214326a8916e93b
       body: |

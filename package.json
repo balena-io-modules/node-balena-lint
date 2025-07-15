@@ -22,7 +22,7 @@
     "lint": "node ./bin/balena-lint -t tsconfig.json lib/ config/eslint.config.js",
     "prepublish": "require-npm4-to-publish",
     "prepublishOnly": "npm run test",
-    "lint-fix": "node ./bin/balena-lint -t tsconfig.json --fix -e ts -e js -t tsconfig.json lib/ config/eslint.config.js",
+    "lint-fix": "node ./bin/balena-lint -t tsconfig.json --fix -e ts -e js lib/ config/eslint.config.js",
     "test": "npm run build && npm run test:typescript",
     "test:typescript": "node ./bin/balena-lint -t tsconfig.json test/typescript/prettier -i",
     "prepare": "node -e \"try { (await import('husky')).default() } catch (e) { if (e.code !== 'ERR_MODULE_NOT_FOUND') throw e }\" --input-type module"

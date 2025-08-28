@@ -272,7 +272,7 @@ export const lint = async (passedParams: any) => {
 			languageOptions: {
 				parserOptions: {
 					project: argv.t,
-					tsconfigRootDir: './',
+					tsconfigRootDir: process.cwd(),
 				},
 			},
 		};

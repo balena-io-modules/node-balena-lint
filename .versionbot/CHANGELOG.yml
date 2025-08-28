@@ -1,4 +1,15 @@
 - commits:
+    - subject: Fix tsconfigRootDir must be an absolute path issue
+      hash: 8c78329b78507f0ed19fc80db422122fcbe988e8
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Otavio Jacobi
+  version: 9.3.3
+  title: ""
+  date: 2025-08-28T14:09:43.243Z
+- commits:
     - subject: Specify tsconfigRootDir so local configs are used
       hash: 7fe2fd24142edfbc15d6975b559cc1e72d4edfd7
       body: ""

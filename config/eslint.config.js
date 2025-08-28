@@ -45,7 +45,7 @@ module.exports = tseslint.config(
 
 			parserOptions: {
 				project: 'tsconfig.json',
-				tsconfigRootDir: './',
+				tsconfigRootDir: process.cwd(),
 				ecmaFeatures: {
 					jsx: true,
 				},

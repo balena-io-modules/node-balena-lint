@@ -1,4 +1,16 @@
 - commits:
+    - subject: Update dependency eslint-plugin-jsdoc to v52
+      hash: b0fa6eb33ce807cd91b54b8272efe300274f8ea0
+      body: |
+        Update eslint-plugin-jsdoc from 51.4.1 to 52.0.4
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+  version: 9.3.5
+  title: ""
+  date: 2025-09-11T12:17:58.348Z
+- commits:
     - subject: Update dependency eslint-plugin-jsdoc to v51
       hash: 4d25099964e01f44f440428e8c875793f319fc85
       body: |

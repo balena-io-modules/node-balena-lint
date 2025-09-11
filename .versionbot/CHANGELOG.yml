@@ -1,4 +1,16 @@
 - commits:
+    - subject: Update dependency eslint-plugin-jsdoc to v51
+      hash: 4d25099964e01f44f440428e8c875793f319fc85
+      body: |
+        Update eslint-plugin-jsdoc from 50.8.0 to 51.4.1
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+  version: 9.3.4
+  title: ""
+  date: 2025-09-11T11:44:22.398Z
+- commits:
     - subject: Fix tsconfigRootDir must be an absolute path issue
       hash: 8c78329b78507f0ed19fc80db422122fcbe988e8
       body: ""

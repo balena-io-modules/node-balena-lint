@@ -1,4 +1,17 @@
 - commits:
+    - subject: Set prettier eol config to auto
+      hash: 6a1d030d68345da71a7ab58f40e0565097c047f3
+      body: |
+        This avoids annoying issues on windows when using autocrlf with git
+        where prettier will complain a file has not been linted
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Pagan Gazzard
+  version: 9.3.7
+  title: ""
+  date: 2025-09-17T12:40:50.337Z
+- commits:
     - subject: Update dependency eslint-plugin-jsdoc to v54
       hash: 2aaf51156874ee7589eedc6986aaccb4fc4a9bb8
       body: |

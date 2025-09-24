@@ -1,4 +1,15 @@
 - commits:
+    - subject: Update typescript-eslint to 8.44.1
+      hash: dfb7f9f205f80cbfce761367171be5c2439054c8
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Thodoris Greasidis
+  version: 9.3.8
+  title: ""
+  date: 2025-09-24T11:44:15.505Z
+- commits:
     - subject: Set prettier eol config to auto
       hash: 6a1d030d68345da71a7ab58f40e0565097c047f3
       body: |

@@ -8,6 +8,7 @@ import yargs from 'yargs';
 import * as path from 'path';
 import type { Linter } from 'eslint';
 import { ESLint } from 'eslint';
+import { pathToFileURL } from 'url';
 
 const exists = async (filename: string) => {
 	try {
@@ -212,7 +213,7 @@ export const lint = async (passedParams: any) => {
 	}
 
 	if (argv.u) {
-		const depcheck = await import('depcheck');
+		const { default: depcheck } = await import('depcheck');
 		await Promise.all(
 			argv._.map(async (dir) => {
 				dir = await getPackageJsonDir(`${dir}`);
@@ -245,9 +246,9 @@ export const lint = async (passedParams: any) => {
 		process.exit(0);
 	}
 
-	const baseConfig: Linter.Config | Linter.Config[] = await import(
-		lintConfiguration.configPath
-	);
+	const baseConfig: Linter.Config | Linter.Config[] = (
+		await import(pathToFileURL(lintConfiguration.configPath).href)
+	).default;
 
 	const lintOptions: ESLintOptions = {
 		baseConfig,

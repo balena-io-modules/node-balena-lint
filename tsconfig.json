@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"module": "commonjs",
+		"module": "Node20",
 		"target": "es2023",
 		"strict": true,
 		"noUnusedLocals": true,
@@ -8,7 +8,6 @@
 		"preserveConstEnums": true,
 		"removeComments": true,
 		"sourceMap": true,
-		"moduleResolution": "node",
 		"baseUrl": ".",
 		"skipLibCheck": true,
 		"allowJs": true

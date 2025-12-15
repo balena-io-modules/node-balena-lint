@@ -1,4 +1,17 @@
 - commits:
+    - subject: Switch tsconfig target to node20
+      hash: 21f25bb29382baea56b95786fdea770ac790b846
+      body: |
+        We remain as generating commonjs for compatibility but it paves the way
+        for future improvements/ESM migration
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Pagan Gazzard
+  version: 9.3.11
+  title: ""
+  date: 2025-12-15T19:02:22.947Z
+- commits:
     - subject: Update dependencies
       hash: 0d4a61b0ecb3e1c5d4cc3cfcbd167e8b3f931273
       body: ""

@@ -1,4 +1,17 @@
 - commits:
+    - subject: "Add id-token: write permission for NPM OIDC publishing"
+      hash: 16725cd9be68dc5b83768ede563b206012349580
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Kyle Harding <kyle@balena.io>
+        signed-off-by: Kyle Harding <kyle@balena.io>
+      author: Kyle Harding
+  version: 9.3.13
+  title: ""
+  date: 2026-02-19T01:34:48.200Z
+- commits:
     - subject: Update dependency yargs to v18
       hash: d19d3d7d7280ac16f7411b3e668c416234d2b995
       body: |

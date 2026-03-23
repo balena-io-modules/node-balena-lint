@@ -1,4 +1,16 @@
 - commits:
+    - subject: Update dependency globals to v17
+      hash: 7ed4210b3a7923d6508d40f3e85c450197fdfb79
+      body: |
+        Update globals from 16.5.0 to 17.3.0
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+  version: 9.3.14
+  title: ""
+  date: 2026-03-23T18:19:00.966Z
+- commits:
     - subject: "Add id-token: write permission for NPM OIDC publishing"
       hash: 16725cd9be68dc5b83768ede563b206012349580
       body: ""

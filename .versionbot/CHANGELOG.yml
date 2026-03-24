@@ -1,4 +1,16 @@
 - commits:
+    - subject: Update dependency eslint-plugin-jsdoc to v62
+      hash: 6c1db9b199d9ff5dde16bf6ac5d77d5ecacab876
+      body: |
+        Update eslint-plugin-jsdoc from 61.7.1 to 62.5.5
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+  version: 9.3.15
+  title: ""
+  date: 2026-03-24T12:21:07.170Z
+- commits:
     - subject: Update dependency globals to v17
       hash: 7ed4210b3a7923d6508d40f3e85c450197fdfb79
       body: |

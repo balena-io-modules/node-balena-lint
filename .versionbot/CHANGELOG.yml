@@ -1,4 +1,15 @@
 - commits:
+    - subject: Add support for typescript 6.x
+      hash: ac78d4e15cb5b02963add1d5ac342e168df29d78
+      body: ""
+      footer:
+        Change-type: minor
+        change-type: minor
+      author: Pagan Gazzard
+  version: 9.4.0
+  title: ""
+  date: 2026-03-31T16:12:03.246Z
+- commits:
     - subject: Update dependency eslint-plugin-jsdoc to v62
       hash: 6c1db9b199d9ff5dde16bf6ac5d77d5ecacab876
       body: |

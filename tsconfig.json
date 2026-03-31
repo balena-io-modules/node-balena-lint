@@ -8,9 +8,12 @@
 		"preserveConstEnums": true,
 		"removeComments": true,
 		"sourceMap": true,
-		"baseUrl": ".",
+		"rootDir": "lib",
 		"skipLibCheck": true,
-		"allowJs": true
+		"allowJs": true,
+		"types": [
+			"node"
+		]
 	},
 	"include": [
 		"./lib/**/*",

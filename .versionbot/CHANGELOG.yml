@@ -1,4 +1,15 @@
 - commits:
+    - subject: Update dependencies
+      hash: 8f83efbb690dcdb5939dc08449c1c2369d7206e1
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Pagan Gazzard
+  version: 9.4.1
+  title: ""
+  date: 2026-04-14T15:42:59.621Z
+- commits:
     - subject: Add support for typescript 6.x
       hash: ac78d4e15cb5b02963add1d5ac342e168df29d78
       body: ""

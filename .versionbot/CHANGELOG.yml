@@ -1,4 +1,16 @@
 - commits:
+    - subject: Rename .lintstagedrc to .lintstagedrc.json
+      hash: 88b2574a0abda057fc7589df86e3f95c0f6a60cf
+      body: |
+        In preparation for lint-staged v17 which recommends this rename
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: joshbwlng
+  version: 9.4.2
+  title: ""
+  date: 2026-05-12T08:54:59.067Z
+- commits:
     - subject: Update dependencies
       hash: 8f83efbb690dcdb5939dc08449c1c2369d7206e1
       body: ""

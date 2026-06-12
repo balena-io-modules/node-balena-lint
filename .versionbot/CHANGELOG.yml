@@ -1,4 +1,16 @@
 - commits:
+    - subject: Update dependency eslint-plugin-jsdoc to v63
+      hash: 84dcbad7aafd32e59ea796319141ef302ffc4b3d
+      body: |
+        Update eslint-plugin-jsdoc from 62.9.0 to 63.0.0
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+  version: 9.4.4
+  title: ""
+  date: 2026-06-12T15:00:41.520Z
+- commits:
     - subject: Update dependency lint-staged to v17
       hash: 6728040b590291234fbfd659b354d45217f8951d
       body: |

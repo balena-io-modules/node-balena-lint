@@ -57,12 +57,12 @@
     "yargs": "^18.0.0"
   },
   "devDependencies": {
-    "@types/eslint": "^9.6.1",
-    "@types/node": "^20.19.39",
-    "@types/yargs": "^17.0.35",
-    "husky": "^9.1.7",
-    "lint-staged": "^17.0.0",
-    "require-npm4-to-publish": "^1.0.0"
+    "@types/eslint": "9.6.1",
+    "@types/node": "20.19.43",
+    "@types/yargs": "17.0.35",
+    "husky": "9.1.7",
+    "lint-staged": "17.0.7",
+    "require-npm4-to-publish": "1.0.0"
   },
   "versionist": {
     "publishedAt": "2026-06-12T15:00:41.641Z"

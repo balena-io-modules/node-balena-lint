@@ -1,4 +1,16 @@
 - commits:
+    - subject: Pin dependencies
+      hash: 9fcc059a8ef59a20014fa8f1e38f9017000ad1f8
+      body: |
+        Update @types/eslint
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+  version: 9.4.5
+  title: ""
+  date: 2026-06-13T00:24:47.094Z
+- commits:
     - subject: Update dependency eslint-plugin-jsdoc to v63
       hash: 84dcbad7aafd32e59ea796319141ef302ffc4b3d
       body: |

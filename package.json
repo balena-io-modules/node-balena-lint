@@ -52,7 +52,7 @@
     "glob": "^13.0.6",
     "globals": "^17.5.0",
     "prettier": "^3.8.2",
-    "typescript": "^6.0.2",
+    "typescript": "^7.0.0",
     "typescript-eslint": "^8.58.2",
     "yargs": "^18.0.0"
   },

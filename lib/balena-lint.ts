@@ -246,7 +246,7 @@ export const lint = async (passedParams: any) => {
 		process.exit(0);
 	}
 
-	const baseConfig: Linter.Config | Linter.Config[] = (
+	const baseConfig: Linter.Config | Linter.Config[] = await (
 		await import(pathToFileURL(lintConfiguration.configPath).href)
 	).default;
 

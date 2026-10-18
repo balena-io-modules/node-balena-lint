@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 const jsdoc = require('eslint-plugin-jsdoc');
-const react = require('eslint-plugin-react');
-const reactHooks = require('eslint-plugin-react-hooks');
 const typescriptEslint = require('@typescript-eslint/eslint-plugin');
 let tanstackQuery = require('@tanstack/eslint-plugin-query');
 const noOnlyTests = require('eslint-plugin-no-only-tests');
@@ -18,11 +16,10 @@ if (tanstackQuery.configs == null && tanstackQuery.default != null) {
 	tanstackQuery = tanstackQuery.plugin;
 }
 
-module.exports = tseslint.config(
+const config = tseslint.config(
 	js.configs.recommended,
 	...tseslint.configs.recommended,
 	chaiFriendly.configs.recommendedFlat,
-	react.configs.flat.recommended,
 	prettier,
 	{
 		plugins: {
@@ -30,7 +27,6 @@ module.exports = tseslint.config(
 			typescriptEslint,
 			'no-only-tests': noOnlyTests,
 			chaiFriendly,
-			'react-hooks': reactHooks,
 			'@tanstack/query': tanstackQuery,
 		},
 		languageOptions: {
@@ -51,15 +47,9 @@ module.exports = tseslint.config(
 				},
 			},
 		},
-		settings: {
-			react: {
-				version: 'detect',
-			},
-		},
 		rules: {
-			...reactHooks.configs.recommended.rules,
 			// TODO-next-major: Elevate exhaustive-deps v as an error
-			// 'react-hooks/exhaustive-deps': 'error',
+			// '@eslint-react/exhaustive-deps': 'error',
 			// TODO-next-major: Use the flat/recommended rules directly
 			...Object.fromEntries(
 				Object.keys(tanstackQuery.configs.recommended.rules).map((key) => [
@@ -239,4 +229,13 @@ module.exports = tseslint.config(
 			'@typescript-eslint/no-unused-expressions': 'off',
 		},
 	},
+);
+
+// @eslint-react/eslint-plugin is ESM-only, so it can only be loaded with a dynamic import.
+// That makes the exported config a promise, which ESLint and balena-lint await.
+module.exports = import('@eslint-react/eslint-plugin').then(
+	({ default: eslintReact }) => [
+		eslintReact.configs['recommended-typescript'],
+		...config,
+	],
 );

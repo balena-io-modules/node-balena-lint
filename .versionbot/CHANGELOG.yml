@@ -1,4 +1,18 @@
 - commits:
+    - subject: Switch from eslint-plugin-react to @eslint-react/eslint-plugin
+      hash: b482e9c24f143e0d1506aa792bdef5c7baf6b7ac
+      body: |
+        eslint-plugin-react does not support eslint 10 whereas
+        @eslint-react/eslint-plugin does, which will enable us to move off of
+        eslint 9 which is EOL
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Pagan Gazzard
+  version: 9.4.12
+  title: ""
+  date: 2026-10-23T15:07:34.609Z
+- commits:
     - subject: Update dependency lint-staged to v17.6.0
       hash: c4aa78ddebd0af0bf94263976e2d1dd934c73678
       body: |

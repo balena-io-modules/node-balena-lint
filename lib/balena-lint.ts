@@ -250,14 +250,15 @@ export const lint = async (passedParams: any) => {
 		await import(pathToFileURL(lintConfiguration.configPath).href)
 	).default;
 
+	const overrideConfig: Linter.Config = {
+		linterOptions: {
+			reportUnusedDisableDirectives: 'error',
+		},
+	};
 	const lintOptions: ESLintOptions = {
 		baseConfig,
 		fix: argv.fix === true,
-		overrideConfig: {
-			linterOptions: {
-				reportUnusedDisableDirectives: 'error',
-			},
-		},
+		overrideConfig,
 	};
 	if (argv.f) {
 		lintOptions.overrideConfigFile = await fs.realpath(argv.f);
@@ -269,12 +270,10 @@ export const lint = async (passedParams: any) => {
 	}
 
 	if (argv.t) {
-		lintOptions.overrideConfig = {
-			languageOptions: {
-				parserOptions: {
-					project: argv.t,
-					tsconfigRootDir: process.cwd(),
-				},
+		overrideConfig.languageOptions = {
+			parserOptions: {
+				project: argv.t,
+				tsconfigRootDir: process.cwd(),
 			},
 		};
 	}

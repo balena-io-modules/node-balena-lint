@@ -48,8 +48,7 @@ const config = defineConfig(
 			},
 		},
 		rules: {
-			// TODO-next-major: Elevate exhaustive-deps v as an error
-			// '@eslint-react/exhaustive-deps': 'error',
+			'@eslint-react/exhaustive-deps': 'error',
 			// TODO-next-major: Use the flat/recommended rules directly
 			...Object.fromEntries(
 				Object.keys(tanstackQuery.configs.recommended.rules).map((key) => [

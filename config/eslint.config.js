@@ -227,7 +227,7 @@ const config = defineConfig(
 // That makes the exported config a promise, which ESLint and balena-lint await.
 module.exports = import('@eslint-react/eslint-plugin').then(
 	({ default: eslintReact }) => [
-		eslintReact.configs['recommended-typescript'],
+		eslintReact.configs['recommended-type-checked'],
 		...config,
 	],
 );

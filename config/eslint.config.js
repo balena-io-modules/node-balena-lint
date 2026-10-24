@@ -21,6 +21,7 @@ const config = defineConfig(
 	js.configs.recommended,
 	...tseslint.configs.recommended,
 	chaiFriendly.configs.recommendedFlat,
+	...tanstackQuery.configs['flat/recommended'],
 	prettier,
 	{
 		plugins: {
@@ -28,7 +29,6 @@ const config = defineConfig(
 			typescriptEslint,
 			'no-only-tests': noOnlyTests,
 			chaiFriendly,
-			'@tanstack/query': tanstackQuery,
 		},
 		languageOptions: {
 			globals: {
@@ -49,13 +49,6 @@ const config = defineConfig(
 		},
 		rules: {
 			'@eslint-react/exhaustive-deps': 'error',
-			// TODO-next-major: Use the flat/recommended rules directly
-			...Object.fromEntries(
-				Object.keys(tanstackQuery.configs.recommended.rules).map((key) => [
-					key,
-					'warn',
-				]),
-			),
 
 			'@typescript-eslint/adjacent-overload-signatures': 'error',
 			'@typescript-eslint/array-type': [

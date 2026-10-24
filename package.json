@@ -56,7 +56,7 @@
     "yargs": "^18.0.0"
   },
   "devDependencies": {
-    "@types/node": "20.19.43",
+    "@types/node": "22.20.5",
     "@types/yargs": "17.0.35",
     "husky": "9.1.7",
     "lint-staged": "17.6.0",
@@ -66,7 +66,7 @@
     "publishedAt": "2026-10-25T22:54:11.776Z"
   },
   "engines": {
-    "node": "^20.19.0 || ^22.13.0 || >=24",
+    "node": "^22.13.0 || >=24",
     "npm": ">=9.8.1"
   }
 }

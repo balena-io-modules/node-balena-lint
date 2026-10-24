@@ -6,6 +6,6 @@
 		"node bin/balena-lint --fix"
 	],
 	"test/**/*.ts": [
-		"node bin/balena-lint --fix --tests -t tsconfig.test.json"
+		"node bin/balena-lint --fix -t tsconfig.json -i"
 	]
 }

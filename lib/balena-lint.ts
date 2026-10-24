@@ -267,8 +267,11 @@ export const lint = async (passedParams: any) => {
 		lintOptions.overrideConfigFile = await fs.realpath(argv.f);
 	}
 
-	if (!argv.i && !lintOptions.overrideConfigFile) {
-		lintOptions.overrideConfigFile =
+	if (argv.i) {
+		// `true` stops eslint from looking for a config file
+		lintOptions.overrideConfigFile ??= true;
+	} else {
+		lintOptions.overrideConfigFile ??=
 			(await findFile(lintConfiguration.configFileName)) ?? true;
 	}
 

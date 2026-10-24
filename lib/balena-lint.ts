@@ -26,12 +26,15 @@ interface LintConfig {
 }
 
 const lintConfiguration: LintConfig = {
-	configPath: path.join(__dirname, '../config/eslint.config.js'),
+	configPath: path.join(import.meta.dirname, '../config/eslint.config.js'),
 	configFileName: 'eslint.config.js',
 	extensions: ['ts', 'tsx'],
 };
 
-const prettierConfigPath = path.join(__dirname, '../config/.prettierrc');
+const prettierConfigPath = path.join(
+	import.meta.dirname,
+	'../config/.prettierrc',
+);
 
 /**
  * The linter expects the path to actual source files, for example:

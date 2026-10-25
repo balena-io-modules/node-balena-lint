@@ -1,4 +1,18 @@
 - commits:
+    - subject: Error on unused disable directives when using `-t`
+      hash: 54136ae9ab2617377c3f35387553367abdc3b076
+      body: |
+        The `-t` option replaced the whole `overrideConfig`, which dropped the
+        `reportUnusedDisableDirectives: 'error'` setting so that unused
+        directives were only reported as warnings (eslint's default).
+      footer:
+        Change-type: major
+        change-type: major
+      author: Pagan Gazzard
+  version: 10.0.0
+  title: ""
+  date: 2026-10-25T22:54:11.652Z
+- commits:
     - subject: Replace deprecated `tseslint.config()` with `defineConfig()`
       hash: 409e271c364fc79af9d9fc385e3dbb0197c1fbcd
       body: ""

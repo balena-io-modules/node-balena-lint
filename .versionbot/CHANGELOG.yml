@@ -1,4 +1,15 @@
 - commits:
+    - subject: Replace deprecated `tseslint.config()` with `defineConfig()`
+      hash: 409e271c364fc79af9d9fc385e3dbb0197c1fbcd
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Pagan Gazzard
+  version: 9.4.15
+  title: ""
+  date: 2026-10-25T22:46:19.035Z
+- commits:
     - subject: Update eslint plugins to their latest minor versions
       hash: 1925059bba85fac2f64050976918ec7cb2f26443
       body: |

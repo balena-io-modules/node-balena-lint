@@ -36,7 +36,6 @@ const config = tseslint.config(
 			},
 
 			parser: tsParser,
-			ecmaVersion: 5,
 			sourceType: 'module',
 
 			parserOptions: {

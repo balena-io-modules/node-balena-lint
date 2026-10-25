@@ -1,4 +1,25 @@
 - commits:
+    - subject: Update eslint plugins to their latest minor versions
+      hash: 1925059bba85fac2f64050976918ec7cb2f26443
+      body: |
+        These versions declare support for both eslint 9 and 10.
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Pagan Gazzard
+    - subject: Remove unused @types/eslint
+      hash: cc45247aa9f81347253a91e41a8bdab7bcad4d01
+      body: |
+        ESLint ships its own type definitions, which take precedence over the
+        `@types/eslint` package.
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Pagan Gazzard
+  version: 9.4.14
+  title: ""
+  date: 2026-10-25T22:30:13.893Z
+- commits:
     - subject: "Remove `ecmaVersion: 5` from the eslint config"
       hash: 0089003186583efcca28d30e45f963855c595e37
       body: |

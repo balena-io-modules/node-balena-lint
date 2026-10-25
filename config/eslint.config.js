@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
+const { defineConfig } = require('eslint/config');
 const jsdoc = require('eslint-plugin-jsdoc');
 const typescriptEslint = require('@typescript-eslint/eslint-plugin');
 let tanstackQuery = require('@tanstack/eslint-plugin-query');
@@ -16,7 +17,7 @@ if (tanstackQuery.configs == null && tanstackQuery.default != null) {
 	tanstackQuery = tanstackQuery.plugin;
 }
 
-const config = tseslint.config(
+const config = defineConfig(
 	js.configs.recommended,
 	...tseslint.configs.recommended,
 	chaiFriendly.configs.recommendedFlat,

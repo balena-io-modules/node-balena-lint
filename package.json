@@ -56,7 +56,7 @@
     "yargs": "^18.0.0"
   },
   "devDependencies": {
-    "@types/node": "20.19.43",
+    "@types/node": "22.20.5",
     "@types/yargs": "17.0.35",
     "husky": "9.1.7",
     "lint-staged": "17.6.0",

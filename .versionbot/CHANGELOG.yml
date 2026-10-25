@@ -1,4 +1,23 @@
 - commits:
+    - subject: "Remove `ecmaVersion: 5` from the eslint config"
+      hash: 0089003186583efcca28d30e45f963855c595e37
+      body: |
+        This was added by accident when migrating to flat config.
+
+        This defaults to `latest` instead. In flat config, `ecmaVersion` also
+        determines which ES built-in globals are defined, so with `5` linting
+        `.js` files reported `no-undef` errors for `Promise`, `Symbol`,
+        `globalThis` etc. It also stopped `no-misleading-character-class` from
+        suggesting the `u` flag. The typescript-eslint parser doesn't use it for
+        parsing.
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Pagan Gazzard
+  version: 9.4.13
+  title: ""
+  date: 2026-10-25T22:20:27.241Z
+- commits:
     - subject: Switch from eslint-plugin-react to @eslint-react/eslint-plugin
       hash: b482e9c24f143e0d1506aa792bdef5c7baf6b7ac
       body: |

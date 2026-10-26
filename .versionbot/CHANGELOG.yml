@@ -1,4 +1,128 @@
 - commits:
+    - subject: Make `-i` ignore project eslint config files
+      hash: c4a29c404973b712f5b12d836c8e15b6e0b3677a
+      body: >
+        `-i` left `overrideConfigFile` unset, so eslint did its own config
+        lookup.
+
+        That meant `-i` used any `eslint.config.*` it found, including nested
+
+        ones (since eslint 10, the lookup starts from each linted file's
+
+        directory), and it failed with "Could not find config file" when there
+
+        was none. It now only uses the balena-lint config. A config passed with
+
+        `-f` still takes precedence.
+      footer:
+        Change-type: major
+        change-type: major
+      author: Pagan Gazzard
+    - subject: Update README for flat config and ESM
+      hash: 84f8b9cd3de0309aa83bd1f51702893c3c08f00d
+      body: |
+        The `.eslintrc.js` config format is no longer supported by eslint 10,
+        and the type information section described TSLint-era behaviour.
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Pagan Gazzard
+    - subject: Convert to ESM
+      hash: 266b9f85f2f7cc55a65c4afe86c8344a87d4736f
+      body: |
+        The package, CLI and eslint config are now ES modules. Because
+        @eslint-react/eslint-plugin is ESM-only, the config previously had to
+        load it with a dynamic import and export a promise. It now exports the
+        config array directly.
+
+        Consumers that `require()` the config now receive a module namespace
+        (via Node.js's require(esm) support), so they need `.default`, or should
+        switch to `import`.
+      footer:
+        Change-type: major
+        change-type: major
+      author: Pagan Gazzard
+    - subject: Update eslint-plugin-jsdoc to v65
+      hash: e0b8be73bb31152ab8e4e5f333b3ab6c70ea9e22
+      body: |
+        eslint-plugin-jsdoc v65 requires Node.js `^22.22.2 || >=24.15.0`, so
+        the supported Node.js versions are narrowed to match.
+      footer:
+        Change-type: major
+        change-type: major
+      author: Pagan Gazzard
+    - subject: Update tsconfig target to es2024
+      hash: 0ac11d5ce122d9a401bb55f22fdc75fa8e92c02d
+      body: |
+        All supported Node.js versions (22.13+) support ES2024.
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Pagan Gazzard
+    - subject: Drop support for Node.js 20
+      hash: 2d50d5a077c52f49fe84a62cb5acb7f2d29ecbc5
+      body: |
+        Node.js 20 reached end-of-life on 2026-04-30, and eslint-plugin-jsdoc
+        already requires `^22.13.0 || >=24`.
+      footer:
+        Change-type: major
+        change-type: major
+      author: Pagan Gazzard
+    - subject: Use the type-checked @eslint-react recommended config
+      hash: f21d32fcb2bd55cf6db60999729bd4669fe89ae6
+      body: |
+        balena-lint always lints with type information, so we can enable the
+        type-aware `@eslint-react/no-leaked-conditional-rendering` rule.
+      footer:
+        Change-type: major
+        change-type: major
+      author: Pagan Gazzard
+    - subject: Use the recommended @tanstack/query rule levels
+      hash: 8c4e9050f95d98341d1c1cc8fc2696db2721ecfc
+      body: |
+        Rules that were previously downgraded to warnings now error:
+        `exhaustive-deps`, `stable-query-client`, `no-unstable-deps`,
+        `infinite-query-property-order`, `no-void-query-fn` and
+        `mutation-property-order`. `no-rest-destructuring` stays a warning.
+      footer:
+        Change-type: major
+        change-type: major
+      author: Pagan Gazzard
+    - subject: Make `@eslint-react/exhaustive-deps` an error
+      hash: b5a4b3338a2c28e74cf7d42f819a0bcb2f3a2b68
+      body: ""
+      footer:
+        Change-type: major
+        change-type: major
+      author: Pagan Gazzard
+    - subject: Fix lint-staged config for test files
+      hash: 7279afd10822cb1e6912c2a60b0f5366e668a3bf
+      body: |
+        The `--tests` flag doesn't exist and there is no `tsconfig.test.json`,
+        so match the `test:typescript` script instead.
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Pagan Gazzard
+    - subject: Update to eslint 10
+      hash: 734f0f9f6660354eb1967dc48a99b026b6ba8478
+      body: |
+        See https://eslint.org/docs/latest/use/migrate-to-10.0.0
+
+        Breaking changes for consumers include:
+        - `eslint:recommended` now also enables `no-unassigned-vars`,
+          `no-useless-assignment` and `preserve-caught-error`
+        - Node.js 21, 23 and 22 below 22.13.0 are no longer supported, matching
+          eslint's own engine requirements
+        - Files containing `/* eslint-env */` comments now error
+      footer:
+        Change-type: major
+        change-type: major
+      author: Pagan Gazzard
+  version: 11.0.0
+  title: ""
+  date: 2026-10-26T14:14:34.072Z
+- commits:
     - subject: Error on unused disable directives when using `-t`
       hash: 54136ae9ab2617377c3f35387553367abdc3b076
       body: |

@@ -6,10 +6,10 @@
 Overview
 --------
 
-`@balena/lint` uses balena's `.eslintrc.js` and `.prettierrc`.
-If a `.eslintrc.js` is found in the to-be-linted project
-directory or its parents then the rules found in it will be merged with the default `@balena/lint` ones.
-Another way to to override the default balena lint rules is by specifying a configuration
+`@balena/lint` uses balena's `config/eslint.config.js` and `config/.prettierrc`.
+If an `eslint.config.js` is found in the current directory or its parents then
+the config in it will be merged with the default `@balena/lint` one.
+Another way to override the default balena lint rules is by specifying a configuration
 file with the `-f` parameter.
 
 ## Files checked
@@ -63,45 +63,37 @@ You can use this module as:
 
 3. A development dependency, that will get picked up by your IDE/Editor eslint/prettier.
 
-Manually create these config files in your project root:
+**Recommended**: Configure your plugins to use the `@balena/lint/config/eslint.config.js` / `@balena/lint/config/.prettierrc` files directly
 
-`.eslintrc.js`
+**Not Recommended**: Manually create these config files in your project root:
+
+`eslint.config.js`
 
 ```js
-{
-  "extends": [
-    "./node_modules/@balena/lint/config/.eslintrc.js"
-  ]
-}
+import balenaLint from '@balena/lint/config/eslint.config.js';
+
+export default [
+	...balenaLint,
+	// Your overrides
+];
 ```
 
-For prettier config create `.prettierrc.js`
+In a CommonJS project, use `module.exports = require('@balena/lint/config/eslint.config.js').default;` instead.
+
+For prettier config create `.prettierrc.mjs`
 
 ```js
-const fs = require('fs');
+import fs from 'fs';
 
-module.exports = JSON.parse(fs.readFileSync('./node_modules/@balena/lint/config/.prettierrc', 'utf8'));
+export default JSON.parse(fs.readFileSync(new URL(import.meta.resolve('@balena/lint/config/.prettierrc')), 'utf8'));
 ```
 
 Rules that require type information
 -----------------------------------
 
-Some linting rules such as `no-floating-promises` require Typescript type information.
-To enable these rules, use the `-t` option to point to your project's `tsconfig.json`
-file, if any. Without the `-t` option, those rules will be disabled but may still print
-a warning message such as:  
-`Warning: The 'no-floating-promises' rule requires type information.`  
-To prevent this warning message from being printed, override the rules by creating a
-`.eslintrc.js` file as described in the previous sections. For example:
-
-```json
-{
-    "extends": "./node_modules/@balena/lint/config/.eslintrc.js",
-    "rules": {
-        "no-floating-promises": false
-    }
-}
-```
+Some linting rules such as `@typescript-eslint/no-floating-promises` require Typescript type information.
+By default the `tsconfig.json` in the current directory is used. Use the `-t` option to point
+to a different `tsconfig.json` file. Every linted file must be included by that `tsconfig.json`.
 
 Support
 -------

@@ -1,4 +1,4 @@
 // prettier doesn't support "extends" so we have to load it manually
-const fs = require('fs');
+import fs from 'fs';
 
-module.exports = JSON.parse(fs.readFileSync('./config/.prettierrc', 'utf8'));
+export default JSON.parse(fs.readFileSync('./config/.prettierrc', 'utf8'));

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var lint = require('../build/balena-lint').lint
+import { lint } from '../build/balena-lint.js'
 lint(process.argv.slice(2)).catch((err) => {
 	console.error(err)
 	process.exit(1)

@@ -1,2 +1,1 @@
-
-module.exports = require("./config/eslint.config.js");
+export { default } from './config/eslint.config.js';

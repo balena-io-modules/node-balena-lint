@@ -1,26 +1,22 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
-const { defineConfig } = require('eslint/config');
-const jsdoc = require('eslint-plugin-jsdoc');
-const typescriptEslint = require('@typescript-eslint/eslint-plugin');
-let tanstackQuery = require('@tanstack/eslint-plugin-query');
-const noOnlyTests = require('eslint-plugin-no-only-tests');
-const chaiFriendly = require('eslint-plugin-chai-friendly');
-const globals = require('globals');
-const tsParser = require('@typescript-eslint/parser');
-const js = require('@eslint/js');
-const prettier = require('eslint-config-prettier');
-const tseslint = require('typescript-eslint');
+import { defineConfig } from 'eslint/config';
+import eslintReact from '@eslint-react/eslint-plugin';
+import jsdoc from 'eslint-plugin-jsdoc';
+import typescriptEslint from '@typescript-eslint/eslint-plugin';
+import tanstackQuery from '@tanstack/eslint-plugin-query';
+import noOnlyTests from 'eslint-plugin-no-only-tests';
+import chaiFriendly from 'eslint-plugin-chai-friendly';
+import globals from 'globals';
+import tsParser from '@typescript-eslint/parser';
+import js from '@eslint/js';
+import prettier from 'eslint-config-prettier';
+import tseslint from 'typescript-eslint';
 
-if (tanstackQuery.configs == null && tanstackQuery.default != null) {
-	// Workaround for the changes in the exports in 5.72.2 in case they rollback the changes.
-	// See: https://github.com/TanStack/query/pull/8972
-	tanstackQuery = tanstackQuery.plugin;
-}
-
-const config = defineConfig(
+export default defineConfig(
+	eslintReact.configs['recommended-type-checked'],
 	js.configs.recommended,
 	...tseslint.configs.recommended,
 	chaiFriendly.configs.recommendedFlat,
+	...tanstackQuery.configs['flat/recommended'],
 	prettier,
 	{
 		plugins: {
@@ -28,7 +24,6 @@ const config = defineConfig(
 			typescriptEslint,
 			'no-only-tests': noOnlyTests,
 			chaiFriendly,
-			'@tanstack/query': tanstackQuery,
 		},
 		languageOptions: {
 			globals: {
@@ -48,15 +43,7 @@ const config = defineConfig(
 			},
 		},
 		rules: {
-			// TODO-next-major: Elevate exhaustive-deps v as an error
-			// '@eslint-react/exhaustive-deps': 'error',
-			// TODO-next-major: Use the flat/recommended rules directly
-			...Object.fromEntries(
-				Object.keys(tanstackQuery.configs.recommended.rules).map((key) => [
-					key,
-					'warn',
-				]),
-			),
+			'@eslint-react/exhaustive-deps': 'error',
 
 			'@typescript-eslint/adjacent-overload-signatures': 'error',
 			'@typescript-eslint/array-type': [
@@ -229,13 +216,4 @@ const config = defineConfig(
 			'@typescript-eslint/no-unused-expressions': 'off',
 		},
 	},
-);
-
-// @eslint-react/eslint-plugin is ESM-only, so it can only be loaded with a dynamic import.
-// That makes the exported config a promise, which ESLint and balena-lint await.
-module.exports = import('@eslint-react/eslint-plugin').then(
-	({ default: eslintReact }) => [
-		eslintReact.configs['recommended-typescript'],
-		...config,
-	],
 );

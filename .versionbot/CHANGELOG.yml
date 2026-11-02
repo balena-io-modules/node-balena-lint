@@ -1,4 +1,16 @@
 - commits:
+    - subject: Update dependency glob to v14
+      hash: a9ac7f484c9b7e60e407efb30b7ad74a1ab3e722
+      body: |
+        Update glob from 13.0.6 to 14.0.0
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+  version: 11.0.1
+  title: ""
+  date: 2026-11-02T22:41:22.193Z
+- commits:
     - subject: Make `-i` ignore project eslint config files
       hash: c4a29c404973b712f5b12d836c8e15b6e0b3677a
       body: >

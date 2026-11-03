@@ -1,4 +1,16 @@
 - commits:
+    - subject: Allow using `node:test` without worrying about
+        `@typescript-eslint/no-floating-promises`
+      hash: 3939f108320e24a9d662b24276e5865c822b9273
+      body: ""
+      footer:
+        Change-type: minor
+        change-type: minor
+      author: Pagan Gazzard
+  version: 11.1.0
+  title: ""
+  date: 2026-11-03T23:56:28.860Z
+- commits:
     - subject: Update dependency glob to v14
       hash: a9ac7f484c9b7e60e407efb30b7ad74a1ab3e722
       body: |

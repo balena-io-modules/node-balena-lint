@@ -84,7 +84,17 @@ export default defineConfig(
 			'@typescript-eslint/no-explicit-any': 'off',
 			'@typescript-eslint/no-floating-promises': [
 				'error',
-				{ ignoreVoid: true },
+				{
+					ignoreVoid: true,
+					allowForKnownSafeCalls: [
+						{
+							// Node.js test functions that are safe to call without awaiting
+							from: 'package',
+							package: 'node:test',
+							name: ['describe', 'it', 'suite', 'test'],
+						},
+					],
+				},
 			],
 			'@typescript-eslint/no-shadow': [
 				'error',

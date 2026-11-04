@@ -10,6 +10,18 @@ import tsParser from '@typescript-eslint/parser';
 import js from '@eslint/js';
 import prettier from 'eslint-config-prettier';
 import tseslint from 'typescript-eslint';
+import noInvalidVoidType from './no-invalid-void-type.js';
+
+// Swap in our wrapper under the upstream rule name, so existing
+// `eslint-disable` comments and overrides for it keep working. The rules are
+// lazy getters that can't be reassigned, so copy them onto a new object.
+typescriptEslint.rules = Object.defineProperties(
+	{},
+	{
+		...Object.getOwnPropertyDescriptors(typescriptEslint.rules),
+		'no-invalid-void-type': { value: noInvalidVoidType, enumerable: true },
+	},
+);
 
 export default defineConfig(
 	eslintReact.configs['recommended-type-checked'],

@@ -18,6 +18,7 @@
 	"include": [
 		"./lib/**/*",
 		"config/eslint.config.js",
+		"config/no-invalid-void-type.js",
 		"./test/**/*.ts",
 		"eslint.config.js"
 	]

@@ -20,12 +20,12 @@
   ],
   "scripts": {
     "build": "tsc -P tsconfig.build.json && npm run lint-fix && npm run lint",
-    "lint": "node ./bin/balena-lint -t tsconfig.json lib/ config/eslint.config.js",
+    "lint": "node ./bin/balena-lint -t tsconfig.json lib/ config/eslint.config.js config/no-invalid-void-type.js",
     "prepublish": "require-npm4-to-publish",
     "prepublishOnly": "npm run test",
-    "lint-fix": "node ./bin/balena-lint -t tsconfig.json --fix -e ts -e js lib/ config/eslint.config.js",
+    "lint-fix": "node ./bin/balena-lint -t tsconfig.json --fix -e ts -e js lib/ config/eslint.config.js config/no-invalid-void-type.js",
     "test": "npm run build && npm run test:typescript",
-    "test:typescript": "node ./bin/balena-lint -t tsconfig.json test/typescript/prettier -i",
+    "test:typescript": "node ./bin/balena-lint -t tsconfig.json test/typescript -i",
     "prepare": "node -e \"try { (await import('husky')).default() } catch (e) { if (e.code !== 'ERR_MODULE_NOT_FOUND') throw e }\" --input-type module"
   },
   "keywords": [

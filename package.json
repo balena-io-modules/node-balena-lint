@@ -59,7 +59,7 @@
     "@types/node": "22.20.5",
     "@types/yargs": "17.0.35",
     "husky": "9.1.7",
-    "lint-staged": "17.6.1",
+    "lint-staged": "17.6.2",
     "require-npm4-to-publish": "1.0.0"
   },
   "versionist": {

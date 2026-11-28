@@ -1,4 +1,16 @@
 - commits:
+    - subject: Update dependency @types/node to v22.20.6
+      hash: a2401289f5d95da76cf2a7029261c2744e67e0b2
+      body: |
+        Update @types/node from 22.20.5 to 22.20.6
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+  version: 11.1.3
+  title: ""
+  date: 2026-11-28T08:04:52.578Z
+- commits:
     - subject: Update dependency lint-staged to v17.6.2
       hash: f40686b93d18dc6901e190e90d7f041f0a33ef41
       body: |
